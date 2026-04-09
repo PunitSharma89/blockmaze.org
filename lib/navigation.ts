@@ -22,9 +22,9 @@ export const mainNavigation: NavItem[] = [
         href: "https://docs.testnet.stackflow.site/",
         external: true,
       },
-      { label: "Tokenomics", href: "/tokenomics" },
     ],
   },
+  { label: "Tokenomics", href: "/tokenomics" },
   {
     label: "Insights",
     href: "#",

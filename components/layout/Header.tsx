@@ -10,14 +10,14 @@ export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-white shadow-sm">
-      <div className="mx-auto w-[80%] max-w-[1596px] flex items-center justify-between h-[80px]">
+    <header className="fixed top-0 left-0 right-0 z-50" style={{ background: "linear-gradient(to left, var(--color-header-navy), var(--color-header-dark) 49%)" }}>
+      <div className="mx-auto w-[80%] max-w-[1596px] flex items-center justify-between h-[71px]">
         {/* Logo */}
         <Link href="/" className="flex-shrink-0">
           <Image
-            src="/images/Logo.png"
+            src="/images/white-logo.svg"
             alt="Blockmaze Foundation"
-            width={250}
+            width={160}
             height={62}
             priority
           />
@@ -28,7 +28,7 @@ export default function Header() {
 
         {/* Mobile Hamburger */}
         <button
-          className="lg:hidden p-2 text-gray-dark hover:text-primary"
+          className="lg:hidden p-2 text-white hover:text-primary"
           onClick={() => setMobileMenuOpen(true)}
           aria-label="Open menu"
         >

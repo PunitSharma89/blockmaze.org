@@ -12,7 +12,7 @@ export default function Container({
   return (
     <div
       className={`mx-auto w-[80%] ${
-        wide ? "max-w-[1596px]" : "max-w-[1080px]"
+        wide ? "max-w-[1596px]" : "max-w-[1440px]"
       } ${className}`}
     >
       {children}

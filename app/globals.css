@@ -2,15 +2,47 @@
 @import "./responsive.css";
 
 @theme inline {
-  /* Colors */
-  --color-primary: #2EA3F2;
-  --color-primary-dark: #2589cc;
-  --color-dark: #0F0F0F;
-  --color-gray-DEFAULT: #666666;
-  --color-gray-dark: #333333;
-  --color-gray-light: #A9A9A9;
-  --color-section-dark: #272727;
+  /* Colors — Figma design system tokens */
+
+  /* Primary (amber) — maps to Figma Primary/500 & Primary/400 */
+  --color-primary: #ffb01e;
+  --color-primary-300: #ffd27a;
+  --color-primary-dark: #ffc04b;
+
+  /* Text — maps to Figma Text/* semantic tokens */
+  --color-dark: #0b0b0b;           /* Text/Heading  = Secondary/500 */
+  --color-gray-DEFAULT: #212121;   /* Text/Body     = Secondary/400 */
+  --color-gray-body: #313131;      /* Text/Body alt = Figma body text */
+  --color-gray-dark: #0b0b0b;      /* Text/Heading  = Secondary/500 */
+  --color-gray-light: #bcbcbc;     /* Text/Tertiary = Secondary/200 */
+  --color-placeholder: #d3d3d3;    /* Text/Placeholder = Secondary/100 */
+
+  /* Backgrounds — maps to Figma Background/* semantic tokens */
+  --color-surface: #f4f8fe;        /* Background/Surface = Neutral/200 */
+  --color-bg-default: #f7fafe;     /* Background/Default = Neutral/100 */
+  --color-bg-warm: #f7f5f3;        /* Background/Warm — card image area */
+  --color-section-dark: #0b0b0b;   /* Background/Dark    = Secondary/500 */
   --color-white: #FFFFFF;
+
+  /* Borders — maps to Figma Borders/* semantic tokens */
+  --color-border-default: #d3d3d3; /* Borders/Default = Secondary/100 */
+  --color-border-subtle: #eef4fd;  /* Borders/Subtle  = Neutral/400 */
+  --color-border-strong: #bcbcbc;  /* Borders/Strong  = Secondary/200 */
+  --color-border-focus: #ffb01e;   /* Borders/Focus   = Primary/500 */
+  --color-border-error: #fb3748;   /* Borders/Error   = Red/100 */
+
+  /* Status — maps to Figma Red/Green/Yellow semantic tokens */
+  --color-success: #1fc16b;        /* Green/200 */
+  --color-error: #fb3748;          /* Red/100 */
+  --color-warning: #dfb400;        /* Yellow/200 */
+
+  /* Primary light — About Mission card background */
+  --color-primary-100: #ffefd2;
+
+  /* Hero / Header dark theme */
+  --color-header-navy: #0e213d;    /* header gradient start */
+  --color-header-dark: #040404;    /* header gradient end */
+  --color-hero-body: #e6e6e6;      /* hero description text */
 
   /* Fonts */
   --font-sans: 'Inter', Arial, sans-serif;
@@ -25,10 +57,14 @@
 
 /* CSS Custom Properties */
 :root {
-  --max-width: 1080px;
+  --max-width: 1440px;
   --max-width-wide: 1596px;
-  --header-height: 80px;
+  --header-height: 71px;
   --transition-speed: 0.3s;
+
+  /* Hero chip */
+  --color-chip-border: #322814;
+  --color-chip-bg: rgba(255, 176, 30, 0.08);
 }
 
 /* Base Styles */
@@ -71,6 +107,7 @@ p {
   font-size: 16px;
 }
 
+/* Text/Link token — all links default to primary amber */
 a {
   color: var(--color-primary);
   text-decoration: none;
@@ -79,6 +116,15 @@ a {
 
 a:hover {
   color: var(--color-primary-dark);
+}
+
+/* Whites/Default token — nav links are always white */
+nav a {
+  color: #ffffff;
+}
+
+nav a:hover {
+  color: var(--color-primary);
 }
 
 /* Selection */
@@ -185,9 +231,379 @@ img {
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
 }
 
+/* Eyebrow chip — same pill style as hero chip */
+.section-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--color-chip-border);
+  background: var(--color-chip-bg);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-primary);
+  white-space: nowrap;
+}
+
+.section-heading {
+  font-size: 46px;
+  font-weight: 600;
+  line-height: 62px;
+  color: var(--color-dark);
+}
+
+.section-subtext {
+  font-size: 16px;
+  line-height: 31px;
+  color: var(--color-gray-body);
+  max-width: 1002px;
+}
+
+/* Accountability Arc — sticky scroll section */
+.accountability-arc-scroll {
+  height: 300vh;
+  position: relative;
+}
+
+.accountability-arc-sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.accountability-arc-wrapper {
+  position: relative;
+  flex: 1;
+  overflow: hidden;
+}
+
+.accountability-arc-bg {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.accountability-arc-stroke {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.accountability-arc-svg {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.accountability-arc-item {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  width: 200px;
+}
+
+/* Exact pixel positions from Figma (within 1186×1041 canvas) */
+.accountability-arc-item-1 { left: 43px;   top: 45px;  }
+.accountability-arc-item-2 { left: 390px;  top: 141px; }
+.accountability-arc-item-3 { left: 706px;  top: 310px; }
+.accountability-arc-item-4 { left: 921px;  top: 530px; }
+.accountability-arc-item-5 { left: 1109px; top: 788px; }
+
+.accountability-arc-text {
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.55;
+  color: var(--color-dark);
+  text-align: center;
+}
+
+/* Accountability Model section */
+.accountability-layout {
+  display: flex;
+  align-items: center;
+  gap: 80px;
+}
+
+.accountability-img-col {
+  flex-shrink: 0;
+  width: 50%;
+}
+
+.accountability-img-col img {
+  width: 100%;
+  height: auto;
+  border-radius: 24px;
+}
+
+.accountability-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.accountability-desc {
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--color-gray-body);
+}
+
+.accountability-list {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.accountability-list-item {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.accountability-list-icon {
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.accountability-list-text {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--color-dark);
+}
+
+/* Problem Slider section */
+.problem-slider-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 60px;
+  gap: 40px;
+}
+
+.problem-slider-heading-col {
+  max-width: 700px;
+}
+
+.problem-slider-arrows {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-shrink: 0;
+  padding-top: 8px;
+}
+
+.problem-slider-arrow {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--color-border-default);
+  background: var(--color-white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--color-dark);
+  font-size: 18px;
+  transition: all var(--transition-speed) ease;
+}
+
+.problem-slider-arrow:hover {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--color-white);
+}
+
+.problem-slider-track {
+  display: flex;
+  gap: 24px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding-top: 8px;
+  padding-bottom: 20px;
+  margin-bottom: -20px;
+  cursor: grab;
+  user-select: none;
+}
+
+.problem-slider-track.dragging {
+  cursor: grabbing;
+  scroll-snap-type: none;
+}
+
+.problem-slider-track::-webkit-scrollbar {
+  display: none;
+}
+
+.problem-slider-card {
+  flex-shrink: 0;
+  width: 340px;
+  background: var(--color-white);
+  border-radius: 16px;
+  overflow: hidden;
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--color-border-subtle);
+  transition: all var(--transition-speed) ease;
+}
+
+.problem-slider-card:hover {
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+  border-color: var(--color-primary-300);
+  transform: translateY(-4px);
+}
+
+.problem-slider-card-img {
+  background: var(--color-bg-warm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 220px;
+  padding: 40px;
+}
+
+.problem-slider-card-body {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+}
+
+.problem-slider-card-title {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--color-dark);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  min-height: calc(20px * 1.3 * 2);
+}
+
+.problem-slider-card-desc {
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--color-gray-body);
+  flex: 1;
+}
+
+.problem-slider-card-link {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-primary);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 8px;
+  transition: color var(--transition-speed) ease;
+}
+
+.problem-slider-card-link:hover {
+  color: var(--color-primary-dark);
+}
+
+/* About section */
+.about-cards-row {
+  display: flex;
+  gap: 40px;
+  align-items: stretch;
+  width: 100%;
+}
+
+.about-card {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  align-items: flex-start;
+  padding: 48px 40px;
+  border-radius: 40px;
+  width: 700px;
+  flex-shrink: 0;
+  border: 1px solid var(--color-border-subtle);
+}
+
+.about-card-vision {
+  background-color: var(--color-surface);
+}
+
+.about-card-mission {
+  background-color: var(--color-primary-100);
+}
+
+.about-card-text {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.about-card-title {
+  font-size: 36px;
+  font-weight: 600;
+  line-height: 32px;
+  color: var(--color-dark);
+}
+
+.about-card-desc {
+  font-size: 16px;
+  line-height: 31px;
+  color: var(--color-gray-body);
+}
+
+.about-card-bullets {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  align-items: flex-start;
+}
+
+.about-card-bullet {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+
+.about-card-bullet p {
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--color-dark);
+  white-space: nowrap;
+}
+
 /* FAQ accordion */
+/* Hero background grid */
+.hero-bg-grid {
+  pointer-events: none;
+  width: 14884.9px;
+  height: 132px;
+  position: absolute;
+  top: 546px;
+  left: -6540px;
+}
+
 .faq-item {
-  border-bottom: 1px solid #e5e5e5;
+  border-bottom: 1px solid var(--color-border-subtle);
 }
 
 .faq-question {

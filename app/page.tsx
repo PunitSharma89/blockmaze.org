@@ -7,6 +7,9 @@ import Blurb from "@/components/ui/Blurb";
 import BlogCard from "@/components/ui/BlogCard";
 import BlogGrid from "@/components/ui/BlogGrid";
 import FAQ from "@/components/ui/FAQ";
+import ProblemSlider from "@/components/ui/ProblemSlider";
+import AccountabilityArc from "@/components/ui/AccountabilityArc";
+
 
 const faqItems = [
   {
@@ -265,135 +268,138 @@ export default function Home() {
   return (
     <>
       {/* SECTION 1: Hero */}
-      <section className="section-padding bg-white">
-        <Container>
-          <div className="flex flex-col lg:flex-row items-center gap-12">
-            <div className="lg:w-1/2">
-              <h4 className="text-primary font-semibold mb-4">
-                Blockmaze Foundation
-              </h4>
-              <h1 className="text-gray-dark mb-6">
-                The Accountability Framework Behind the Blockmaze Layer-0
-                Blockchain Ecosystem
-              </h1>
-              <p className="text-gray-DEFAULT text-lg mb-8 leading-relaxed">
-                Establishing protocol-level governance and verified issuer
-                accountability across the Blockmaze layer 0 blockchain ecosystem
-                while preserving independent and irreversible settlement.
-              </p>
-              <div className="flex flex-wrap gap-4">
-                <Button href="/contact-us" variant="primary">
-                  Contact Us
-                </Button>
-                <Button href="/whitepaper" variant="outline">
-                  Read Whitepaper
-                </Button>
+      <section
+        className="relative h-[677px] overflow-hidden"
+        style={{ background: "linear-gradient(to left, var(--color-header-navy), var(--color-header-dark) 49%)" }}
+      >
+        {/* Perspective grid — bottom of hero */}
+        <div className="hero-bg-grid">
+          <Image src="/images/hero-bg-grid.svg" alt="" fill className="object-fill" />
+        </div>
+
+        {/* Inner layout */}
+        <div className="mx-auto w-[80%] max-w-[1440px] h-full flex items-center gap-[170px] px-0 relative">
+
+          {/* ── LEFT COLUMN ── */}
+          <div className="flex-1 flex flex-col gap-[40px] relative z-10 min-w-0">
+            <div className="flex flex-col gap-[16px]">
+              {/* Chip */}
+              <div
+                className="inline-flex w-fit items-center justify-center px-[16px] py-[12px] rounded-[999px] border"
+                style={{ borderColor: "var(--color-chip-border)", background: "var(--color-chip-bg)" }}
+              >
+                <span className="text-[14px] font-medium tracking-[-0.28px] whitespace-nowrap" style={{ color: "var(--color-primary)" }}>
+                  Blockmaze Foundation
+                </span>
+              </div>
+              {/* Heading + description */}
+              <div className="flex flex-col gap-[20px]">
+                <h1 className="font-bold text-[46px] leading-[68px]" style={{ color: "var(--color-white)" }}>
+                  The Accountability Framework Behind the Blockmaze Layer-0 Blockchain Ecosystem
+                </h1>
+                <p className="text-[16px] leading-[28px]" style={{ color: "var(--color-hero-body)" }}>
+                  Establishing protocol-level governance and verified issuer accountability across the Blockmaze layer 0 blockchain ecosystem while preserving independent and irreversible settlement.
+                </p>
               </div>
             </div>
-            <div className="lg:w-1/2">
-              <Image
-                src="/images/hero-image.png"
-                alt="Blockmaze Layer-0 Blockchain Ecosystem"
-                width={756}
-                height={378}
-                priority
-              />
+            {/* Buttons */}
+            <div className="flex gap-[20px]">
+              <Link
+                href="/contact-us"
+                className="flex items-center justify-center w-[170px] h-[54px] rounded-[200px] text-[18px] font-medium whitespace-nowrap hover:opacity-90 transition-opacity"
+                style={{ background: "var(--color-primary)", color: "var(--color-white)" }}
+              >
+                Contact Us
+              </Link>
+              <Link
+                href="/whitepaper"
+                className="flex items-center justify-center flex-1 max-w-[242px] h-[54px] rounded-[200px] text-[18px] font-medium whitespace-nowrap hover:opacity-90 transition-opacity"
+                style={{ background: "var(--color-white)", color: "var(--color-dark)" }}
+              >
+                Read Whitepaper
+              </Link>
             </div>
           </div>
-        </Container>
+
+          {/* ── RIGHT COLUMN — hero image ── */}
+          <div className="hidden lg:block flex-shrink-0 w-[582px] h-[558px]">
+            <Image
+              src="/images/hero-img.svg"
+              alt="Blockmaze hero"
+              width={582}
+              height={558}
+              priority
+            />
+          </div>
+
+        </div>
       </section>
 
       {/* SECTION 2: About the Foundation */}
-      <section className="section-padding bg-gray-50">
+      <section className="section-padding bg-white">
         <Container>
-          <SectionHeading heading="About the Foundation" />
-          <p className="text-gray-DEFAULT text-center max-w-4xl mx-auto mb-12 leading-relaxed">
-            The Blockmaze foundation is an independent, non-profit organization
-            responsible for the governance architecture and accountability
-            framework of the Blockmaze Layer-0 protocol. As a foundation
-            supporting a regulated blockchain for RWAs, it maintains issuer
-            registries, token standard approvals, proof cadence oversight, and
-            governance processes that apply across all connected chains. Its role
-            is limited to defining issuer eligibility, monitoring ongoing
-            obligations, managing standing transitions, and maintaining protocol
-            registries that record these decisions on-chain within a blockchain
-            governance framework.
-          </p>
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {/* Vision Card */}
-            <div className="card bg-white p-8">
-              <Image
-                src="/images/about-icon001.png"
-                alt="Vision"
-                width={170}
-                height={201}
-                className="mb-6"
-              />
-              <h4 className="text-gray-dark font-semibold text-xl mb-4">
-                Vision
-              </h4>
-              <p className="text-gray-DEFAULT mb-4 leading-relaxed">
-                To support a blockchain foundation where real-world assets can
-                be issued under verified authorization, structured disclosure,
-                and transparent oversight, while transaction settlement remains
-                neutral and final.
+          <div className="flex flex-col gap-[60px] items-start w-full">
+            {/* Heading + Description */}
+            <div className="flex flex-col gap-4 items-center text-center w-full">
+              <h2 className="section-heading">
+                About the <span className="text-primary">Foundation</span>
+              </h2>
+              <p className="section-subtext">
+                The Blockmaze foundation is an independent, non-profit organization responsible for the governance architecture and accountability framework of the Blockmaze Layer-0 protocol. As a foundation supporting a regulated blockchain for RWAs, it maintains issuer registries, token standard approvals, proof cadence oversight, and governance processes that apply across all connected chains. Its role is limited to defining issuer eligibility, monitoring ongoing obligations, managing standing transitions, and maintaining protocol registries that record these decisions on-chain within a blockchain governance framework.
               </p>
-              <ul className="space-y-2">
-                {[
-                  "On-chain verification of issuer identity and authorization",
-                  "Scheduled disclosure requirements tied to asset type",
-                  "Public visibility into issuer standing",
-                  "Separation of governance controls from settlement finality",
-                  "Permanent record of issuer status changes",
-                ].map((item, i) => (
-                  <li
-                    key={i}
-                    className="flex items-start gap-2 text-sm text-gray-DEFAULT"
-                  >
-                    <span className="text-primary mt-0.5">&#8226;</span>
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
             </div>
 
-            {/* Mission Card */}
-            <div className="card bg-white p-8">
-              <Image
-                src="/images/about-icon02.png"
-                alt="Mission"
-                width={170}
-                height={201}
-                className="mb-6"
-              />
-              <h4 className="text-gray-dark font-semibold text-xl mb-4">
-                Mission
-              </h4>
-              <p className="text-gray-DEFAULT mb-4 leading-relaxed">
-                To maintain protocol-level governance structures, issuer
-                verification standards, token templates, and proof enforcement
-                mechanisms that provide a consistent accountability framework
-                for real-world asset tokenization for institutions across the
-                Blockmaze ecosystem.
-              </p>
-              <ul className="space-y-2">
-                {[
-                  "Structured review and admission of corporate issuers",
-                  "Oversight of approved token template versions",
-                  "Monitoring and automatic handling of missed proof deadlines",
-                  "Management of issuer permission states",
-                  "Governance of protocol parameters related to accountability",
-                ].map((item, i) => (
-                  <li
-                    key={i}
-                    className="flex items-start gap-2 text-sm text-gray-DEFAULT"
-                  >
-                    <span className="text-primary mt-0.5">&#8226;</span>
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
+            {/* Cards */}
+            <div className="about-cards-row">
+              {/* Vision Card */}
+              <div className="about-card about-card-vision">
+                <Image src="/images/about-icon001.png" alt="" width={170} height={201} />
+                <div className="about-card-text">
+                  <h3 className="about-card-title">Vision</h3>
+                  <p className="about-card-desc">
+                    To support a blockchain foundation where real-world assets can be issued under verified authorization, structured disclosure, and transparent oversight, while transaction settlement remains neutral and final.
+                  </p>
+                </div>
+                <div className="about-card-bullets">
+                  {[
+                    "On-chain verification of issuer identity and authorization",
+                    "Scheduled disclosure requirements tied to asset type",
+                    "Public visibility into issuer standing",
+                    "Separation of governance controls from settlement finality",
+                    "Permanent record of issuer status changes",
+                  ].map((item, i) => (
+                    <div key={i} className="about-card-bullet">
+                      <Image src="/images/about-arrow.svg" alt="" width={24} height={24} />
+                      <p>{item}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Mission Card */}
+              <div className="about-card about-card-mission">
+                <Image src="/images/about-icon02.png" alt="" width={170} height={201} />
+                <div className="about-card-text">
+                  <h3 className="about-card-title">Mission</h3>
+                  <p className="about-card-desc">
+                    To maintain protocol-level governance structures, issuer verification standards, token templates, and proof enforcement mechanisms that provide a consistent accountability framework for real-world asset tokenization for institutions across the Blockmaze ecosystem.
+                  </p>
+                </div>
+                <div className="about-card-bullets">
+                  {[
+                    "Structured review and admission of corporate issuers",
+                    "Oversight of approved token template versions",
+                    "Monitoring and automatic handling of missed proof deadlines",
+                    "Management of issuer permission states",
+                    "Governance of protocol parameters related to accountability",
+                  ].map((item, i) => (
+                    <div key={i} className="about-card-bullet">
+                      <Image src="/images/about-arrow.svg" alt="" width={24} height={24} />
+                      <p>{item}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
         </Container>
@@ -402,78 +408,13 @@ export default function Home() {
       {/* SECTION 3: Core Problems */}
       <section className="section-padding bg-white">
         <Container>
-          <SectionHeading
-            label="Core Problems"
-            heading="The Accountability Gap in Existing Blockchain Networks"
-          />
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {problemCards.map((card) => (
-              <div key={card.title} className="card bg-gray-50 p-6">
-                <Image
-                  src={card.icon}
-                  alt={card.title}
-                  width={50}
-                  height={50}
-                  className="mb-4"
-                />
-                <h4 className="text-gray-dark font-semibold mb-3">
-                  {card.title}
-                </h4>
-                <p className="text-gray-DEFAULT text-sm leading-relaxed">
-                  {card.description}
-                </p>
-              </div>
-            ))}
-          </div>
+          <ProblemSlider cards={problemCards} />
         </Container>
       </section>
 
       {/* SECTION 4: The Blockmaze Accountability Model */}
-      <section className="section-padding bg-gray-50">
-        <Container>
-          <div className="flex flex-col lg:flex-row items-center gap-12">
-            <div className="lg:w-1/2">
-              <Image
-                src="/images/image-190-1.png"
-                alt="The Blockmaze Accountability Model"
-                width={677}
-                height={505}
-              />
-            </div>
-            <div className="lg:w-1/2">
-              <h2 className="text-gray-dark mb-6">
-                The Blockmaze Accountability Model
-              </h2>
-              <p className="text-gray-DEFAULT mb-6 leading-relaxed">
-                Blockmaze addresses the accountability gap at its foundation by
-                embedding issuer oversight directly at the protocol layer rather
-                than leaving it to individual applications. It separates
-                settlement from issuer responsibility, defining clear boundaries
-                between governance controls and transaction finality within a
-                compliant Web3 infrastructure.
-              </p>
-              <ul className="space-y-3">
-                {[
-                  "Requires bonded commitments as a condition of issuer eligibility",
-                  "Enforces scheduled proof submissions based on asset classification",
-                  "Records standing transitions on-chain when obligations are missed",
-                  "Restricts governance authority to permissions, template approvals, and enforcement actions",
-                  "Maintains an independent settlement governed solely by consensus rules",
-                ].map((item, i) => (
-                  <li
-                    key={i}
-                    className="flex items-start gap-3 text-gray-DEFAULT"
-                  >
-                    <span className="text-primary mt-1 flex-shrink-0">
-                      &#8226;
-                    </span>
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </Container>
+      <section className="bg-white">
+        <AccountabilityArc />
       </section>
 
       {/* SECTION 5: What Distinguishes Blockmaze */}
@@ -486,7 +427,7 @@ export default function Home() {
           />
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {uspCards.map((card) => (
-              <div key={card.title} className="card bg-gray-50 p-6">
+              <div key={card.title} className="card bg-surface p-6">
                 <Image
                   src={card.icon}
                   alt={card.title}
@@ -507,7 +448,7 @@ export default function Home() {
       </section>
 
       {/* SECTION 6: Use Cases */}
-      <section className="section-padding bg-gray-50">
+      <section className="section-padding bg-surface">
         <Container>
           <SectionHeading
             label="Use Cases"
@@ -574,7 +515,7 @@ export default function Home() {
               <Link
                 key={card.title}
                 href={card.href}
-                className="card bg-gray-50 p-6 block hover:shadow-lg transition-shadow"
+                className="card bg-surface p-6 block hover:shadow-lg transition-shadow"
               >
                 <h4 className="text-gray-dark font-semibold mb-3">
                   {card.title}
@@ -600,11 +541,11 @@ export default function Home() {
       </section>
 
       {/* SECTION 8: Documentation & Resources */}
-      <section className="section-padding bg-gray-50">
+      <section className="section-padding bg-surface">
         <Container>
           <div className="flex flex-col lg:flex-row items-center gap-12">
             <div className="lg:w-1/2">
-              <h2 className="text-gray-dark mb-6">
+              <h2 className="section-heading mb-6">
                 Blockmaze Documentation & Resources
               </h2>
               <Button href="/knowledge-hub" variant="primary">
@@ -648,7 +589,7 @@ export default function Home() {
       </section>
 
       {/* SECTION 10: FAQ */}
-      <section className="section-padding bg-gray-50">
+      <section className="section-padding bg-surface">
         <Container>
           <SectionHeading label="FAQ" heading="Frequently Asked Questions" />
           <div className="flex flex-col lg:flex-row gap-12 items-start">
