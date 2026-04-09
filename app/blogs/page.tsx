@@ -4,48 +4,39 @@ import Breadcrumb from "@/components/layout/Breadcrumb";
 import SectionHeading from "@/components/ui/SectionHeading";
 import BlogCard from "@/components/ui/BlogCard";
 import BlogGrid from "@/components/ui/BlogGrid";
+import { sanityFetch } from "@/lib/sanity";
+import { allBlogsQuery } from "@/lib/queries";
+
+export const revalidate = 0;
 
 export const metadata: Metadata = {
   title: "Blogs",
   description:
-    "Explore research, insights, and analysis on blockchain governance, real-world asset tokenization, and institutional blockchain infrastructure.",
+    "Explore published insights across governance, infrastructure, and real-world asset systems.",
 };
 
-// Static blog data (will be replaced with Sanity CMS when configured)
-const blogPosts = [
-  {
-    title: "Why Smart Contracts Cannot Represent Legal Ownership Alone",
-    slug: "why-smart-contracts-cannot-represent-legal-ownership-alone",
-    image: "/images/Code-Executes-Law-Enforces-400x250.jpg",
-    category: "Blockchain Regulation",
-    categorySlug: "blockchain-regulation",
-    excerpt:
-      "A Developing Market Catching Up With Its Legal Framework The data available to date reveals a lot of information about this fast-developing market. The tokenized real-world asset market has recently grown to an approximate $24.9 billion total market value, growing...",
-  },
-  {
-    title:
-      "Why Institutional Capital Requires Verifiable Blockchain Infrastructure",
-    slug: "why-institutional-capital-requires-verifiable-blockchain-infrastructure",
-    image:
-      "/images/Verifiable-Blockchain-for-Institutional-Finance-400x250.jpg",
-    category: "Blockchain Infrastructure",
-    categorySlug: "blockchain-infrastructure",
-    excerpt:
-      '"When Infrastructure Becomes Trustworthy: Financial Institutions Move" Capital markets do not adopt technology because it\'s "new." They do so only when the architecture around it can carry risk.',
-  },
-  {
-    title:
-      "Why Tokenization Infrastructure Must Reflect Legal Ownership Systems",
-    slug: "why-tokenization-infrastructure-must-reflect-legal-ownership-systems",
-    image: "/images/Real-World-Assets-400x250.webp",
-    category: "Blockchain Asset Tokenization",
-    categorySlug: "blockchain-asset-tokenization",
-    excerpt:
-      "The rise of real world asset tokenization as a means of representing ownership rights digitally has been one of the major emerging trends in the modern financial space.",
-  },
-];
+interface SanityBlogPost {
+  _id: string;
+  title: string;
+  slug: { current: string };
+  excerpt?: string;
+  featuredImage?: {
+    asset?: { url: string };
+    alt?: string;
+  };
+  category?: {
+    title: string;
+    slug: { current: string };
+  };
+  publishedAt?: string;
+}
 
-export default function BlogsPage() {
+export default async function BlogsPage() {
+  let posts: SanityBlogPost[] = [];
+
+  const result = await sanityFetch<SanityBlogPost[]>(allBlogsQuery);
+  posts = result ?? [];
+
   return (
     <>
       <Container>
@@ -54,22 +45,29 @@ export default function BlogsPage() {
       <section className="section-padding">
         <Container>
           <SectionHeading
-            heading="Blogs"
-            subtext="Explore research, insights, and analysis on blockchain governance, real-world asset tokenization, and institutional blockchain infrastructure."
+            heading="Latest Blogs & Research"
+            subtext="Explore published insights across governance, infrastructure, and real-world asset systems."
           />
-          <BlogGrid>
-            {blogPosts.map((post) => (
-              <BlogCard
-                key={post.slug}
-                title={post.title}
-                excerpt={post.excerpt}
-                slug={post.slug}
-                image={post.image}
-                category={post.category}
-                categorySlug={post.categorySlug}
-              />
-            ))}
-          </BlogGrid>
+
+          {posts.length > 0 ? (
+            <BlogGrid>
+              {posts.map((post) => (
+                <BlogCard
+                  key={post._id}
+                  title={post.title}
+                  slug={post.slug.current}
+                  image={post.featuredImage?.asset?.url ?? ""}
+                  excerpt={post.excerpt}
+                  category={post.category?.title}
+                  categorySlug={post.category?.slug?.current}
+                />
+              ))}
+            </BlogGrid>
+          ) : (
+            <div className="text-center text-gray-DEFAULT py-12">
+              <p>No blog posts published yet. Check back soon.</p>
+            </div>
+          )}
         </Container>
       </section>
     </>

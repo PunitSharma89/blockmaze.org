@@ -3,17 +3,17 @@
 
 @theme inline {
   /* Colors */
-  --color-primary: #2EA3F2;
+  --color-primary: #2ea3f2;
   --color-primary-dark: #2589cc;
-  --color-dark: #0F0F0F;
+  --color-dark: #0f0f0f;
   --color-gray-DEFAULT: #666666;
   --color-gray-dark: #333333;
-  --color-gray-light: #A9A9A9;
+  --color-gray-light: #a9a9a9;
   --color-section-dark: #272727;
-  --color-white: #FFFFFF;
+  --color-white: #ffffff;
 
   /* Fonts */
-  --font-sans: 'Inter', Arial, sans-serif;
+  --font-sans: "Inter", Arial, sans-serif;
 
   /* Breakpoints */
   --breakpoint-sm: 480px;
@@ -51,24 +51,47 @@ body {
 }
 
 /* Typography */
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: var(--font-sans);
   color: var(--color-gray-dark);
   line-height: 1.3;
   font-weight: 600;
+  &.text-white {
+    color: var(--color-white);
+  }
 }
 
-h1 { font-size: 46px; }
-h2 { font-size: 36px; }
-h3 { font-size: 26px; }
-h4 { font-size: 20px; }
-h5 { font-size: 18px; }
-h6 { font-size: 16px; }
+h1 {
+  font-size: 46px;
+}
+h2 {
+  font-size: 36px;
+}
+h3 {
+  font-size: 26px;
+}
+h4 {
+  font-size: 20px;
+}
+h5 {
+  font-size: 18px;
+}
+h6 {
+  font-size: 16px;
+}
 
 p {
   color: var(--color-gray-DEFAULT);
   line-height: 1.8;
   font-size: 16px;
+  &.text-white {
+    color: var(--color-white);
+  }
 }
 
 a {
@@ -204,4 +227,53 @@ img {
   padding-bottom: 20px;
   color: var(--color-gray-DEFAULT);
   line-height: 1.8;
+}
+
+/* Protocol page HTML content */
+.prose-protocol p {
+  color: var(--color-gray-DEFAULT);
+  margin-bottom: 1rem;
+  line-height: 1.75;
+  font-size: 15px;
+}
+.prose-protocol h2 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-gray-dark);
+  margin-bottom: 1rem;
+}
+.prose-protocol h3 {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--color-gray-dark);
+  margin-bottom: 0.75rem;
+  margin-top: 1.5rem;
+}
+.prose-protocol ul {
+  margin-bottom: 1.5rem;
+  list-style: none;
+  padding: 0;
+}
+.prose-protocol ul li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  color: var(--color-gray-DEFAULT);
+  margin-bottom: 0.5rem;
+  font-size: 15px;
+  line-height: 1.75;
+}
+.prose-protocol ul li::before {
+  content: "•";
+  color: var(--color-primary);
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+.prose-protocol strong {
+  font-weight: 600;
+  color: var(--color-gray-dark);
+}
+.prose-protocol a {
+  color: var(--color-gray-DEFAULT);
+  text-decoration: none;
 }

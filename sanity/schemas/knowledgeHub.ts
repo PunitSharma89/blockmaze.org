@@ -18,15 +18,22 @@ export default {
     },
     {
       name: "excerpt",
-      title: "Excerpt",
+      title: "Description",
       type: "text",
       rows: 3,
     },
     {
-      name: "body",
-      title: "Body",
+      name: "bulletPoints",
+      title: "Bullet Points",
       type: "array",
-      of: [{ type: "block" }, { type: "image", options: { hotspot: true } }],
+      of: [{ type: "string" }],
+      description: "List of bullet points shown below the description",
+    },
+    {
+      name: "link",
+      title: "Explore More Link",
+      type: "string",
+      description: "Page path for the Explore more button (e.g. /blockmaze-protocol/)",
     },
     {
       name: "featuredImage",
@@ -41,4 +48,10 @@ export default {
       type: "datetime",
     },
   ],
+  preview: {
+    select: {
+      title: "title",
+      media: "featuredImage",
+    },
+  },
 };

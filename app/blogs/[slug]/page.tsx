@@ -1,70 +1,150 @@
 import { Metadata } from "next";
+import { notFound } from "next/navigation";
+import Image from "next/image";
+import { PortableText, PortableTextComponents } from "@portabletext/react";
 import Container from "@/components/layout/Container";
 import Breadcrumb from "@/components/layout/Breadcrumb";
+import { sanityFetch } from "@/lib/sanity";
+import { blogBySlugQuery, blogSlugsQuery } from "@/lib/queries";
 
-// Static blog data placeholder (will be replaced with Sanity CMS)
-const blogPostsData: Record<
-  string,
-  { title: string; category: string; excerpt: string; content: string }
-> = {
-  "why-smart-contracts-cannot-represent-legal-ownership-alone": {
-    title: "Why Smart Contracts Cannot Represent Legal Ownership Alone",
-    category: "Blockchain Regulation",
-    excerpt:
-      "A Developing Market Catching Up With Its Legal Framework",
-    content:
-      "A Developing Market Catching Up With Its Legal Framework. The data available to date reveals a lot of information about this fast-developing market. The tokenized real-world asset market has recently grown to an approximate $24.9 billion total market value, growing significantly over the past year.",
-  },
-  "why-institutional-capital-requires-verifiable-blockchain-infrastructure": {
-    title:
-      "Why Institutional Capital Requires Verifiable Blockchain Infrastructure",
-    category: "Blockchain Infrastructure",
-    excerpt: "When Infrastructure Becomes Trustworthy: Financial Institutions Move",
-    content:
-      "Capital markets do not adopt technology because it's \"new.\" They do so only when the architecture around it can carry risk. The evolution of institutional blockchain infrastructure can be explained through the lens of trust engineering.",
-  },
-  "why-tokenization-infrastructure-must-reflect-legal-ownership-systems": {
-    title:
-      "Why Tokenization Infrastructure Must Reflect Legal Ownership Systems",
-    category: "Blockchain Asset Tokenization",
-    excerpt:
-      "The rise of real world asset tokenization as a means of representing ownership rights digitally.",
-    content:
-      "The rise of real world asset tokenization as a means of representing ownership rights digitally has been one of the major emerging trends in the modern financial space. Blockchain is rapidly being adopted across real estate, commodities, equities, and various forms of debt instruments.",
-  },
-};
+export const revalidate = 60;
+
+interface SanityBlogPost {
+  _id: string;
+  title: string;
+  slug: { current: string };
+  excerpt?: string;
+  body?: import("@portabletext/react").PortableTextBlock[];
+  rawHtml?: string;
+  featuredImage?: {
+    asset?: { url: string };
+    alt?: string;
+  };
+  category?: {
+    title: string;
+    slug: { current: string };
+  };
+  author?: {
+    name: string;
+    bio?: string;
+    image?: { asset?: { url: string } };
+  };
+  publishedAt?: string;
+  seo?: {
+    metaTitle?: string;
+    metaDescription?: string;
+  };
+}
 
 type Params = Promise<{ slug: string }>;
 
 export async function generateStaticParams() {
-  return Object.keys(blogPostsData).map((slug) => ({ slug }));
+  const slugs = await sanityFetch<{ slug: { current: string } }[]>(blogSlugsQuery);
+  return (slugs ?? []).map((s) => ({ slug: s.slug.current }));
 }
 
 export async function generateMetadata(props: {
   params: Params;
 }): Promise<Metadata> {
   const { slug } = await props.params;
-  const post = blogPostsData[slug];
+  const post = await sanityFetch<SanityBlogPost>(blogBySlugQuery, { slug });
   if (!post) return { title: "Post Not Found" };
   return {
-    title: post.title,
-    description: post.excerpt,
+    title: post.seo?.metaTitle || post.title,
+    description: post.seo?.metaDescription || post.excerpt,
   };
 }
 
+const portableTextComponents: PortableTextComponents = {
+  block: {
+    h1: ({ children }) => (
+      <h1 className="text-3xl font-bold text-gray-dark mt-8 mb-4">{children}</h1>
+    ),
+    h2: ({ children }) => (
+      <h2 className="text-2xl font-bold text-gray-dark mt-8 mb-4">{children}</h2>
+    ),
+    h3: ({ children }) => (
+      <h3 className="text-xl font-semibold text-gray-dark mt-6 mb-3">{children}</h3>
+    ),
+    h4: ({ children }) => (
+      <h4 className="text-lg font-semibold text-gray-dark mt-6 mb-3">{children}</h4>
+    ),
+    normal: ({ children }) => (
+      <p className="text-gray-DEFAULT leading-relaxed mb-4">{children}</p>
+    ),
+    blockquote: ({ children }) => (
+      <blockquote className="border-l-4 border-primary pl-6 italic text-gray-DEFAULT my-6">
+        {children}
+      </blockquote>
+    ),
+  },
+  list: {
+    bullet: ({ children }) => (
+      <ul className="list-disc list-inside text-gray-DEFAULT mb-4 space-y-2">
+        {children}
+      </ul>
+    ),
+    number: ({ children }) => (
+      <ol className="list-decimal list-inside text-gray-DEFAULT mb-4 space-y-2">
+        {children}
+      </ol>
+    ),
+  },
+  listItem: {
+    bullet: ({ children }) => <li className="leading-relaxed">{children}</li>,
+    number: ({ children }) => <li className="leading-relaxed">{children}</li>,
+  },
+  marks: {
+    strong: ({ children }) => (
+      <strong className="font-semibold text-gray-dark">{children}</strong>
+    ),
+    em: ({ children }) => <em className="italic">{children}</em>,
+    link: ({ value, children }) => (
+      <a
+        href={value?.href}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-primary hover:underline"
+      >
+        {children}
+      </a>
+    ),
+  },
+  types: {
+    image: ({ value }) =>
+      value?.asset?.url ? (
+        <div className="my-8 rounded-xl overflow-hidden">
+          <Image
+            src={value.asset.url}
+            alt={value.alt || ""}
+            width={800}
+            height={500}
+            className="w-full object-cover"
+          />
+          {value.caption && (
+            <p className="text-center text-sm text-gray-light mt-2">
+              {value.caption}
+            </p>
+          )}
+        </div>
+      ) : null,
+  },
+};
+
 export default async function BlogPostPage(props: { params: Params }) {
   const { slug } = await props.params;
-  const post = blogPostsData[slug];
 
-  if (!post) {
-    return (
-      <Container>
-        <div className="section-padding text-center">
-          <h1 className="text-gray-dark">Post Not Found</h1>
-        </div>
-      </Container>
-    );
-  }
+  const post = await sanityFetch<SanityBlogPost>(blogBySlugQuery, { slug });
+
+  if (!post) notFound();
+
+  const publishedDate = post.publishedAt
+    ? new Date(post.publishedAt).toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      })
+    : null;
 
   return (
     <>
@@ -73,16 +153,80 @@ export default async function BlogPostPage(props: { params: Params }) {
           items={[{ label: "Blogs", href: "/blogs" }, { label: post.title }]}
         />
       </Container>
+
       <article className="section-padding">
         <Container>
           <div className="max-w-3xl mx-auto">
-            <span className="text-primary text-sm font-semibold uppercase tracking-wider">
-              {post.category}
-            </span>
-            <h1 className="text-gray-dark mt-2 mb-6">{post.title}</h1>
-            <div className="prose prose-lg max-w-none text-gray-DEFAULT leading-relaxed">
-              <p>{post.content}</p>
+            {/* Category + Date */}
+            <div className="flex items-center gap-4 mb-4">
+              {post.category && (
+                <span className="text-primary text-sm font-semibold uppercase tracking-wider">
+                  {post.category.title}
+                </span>
+              )}
+              {publishedDate && (
+                <span className="text-gray-light text-sm">{publishedDate}</span>
+              )}
             </div>
+
+            {/* Title */}
+            <h1 className="text-gray-dark mb-6">{post.title}</h1>
+
+            {/* Featured Image */}
+            {post.featuredImage?.asset?.url && (
+              <div className="relative rounded-2xl overflow-hidden mb-8 aspect-[16/9]">
+                <Image
+                  src={post.featuredImage.asset.url}
+                  alt={post.featuredImage.alt || post.title}
+                  fill
+                  className="object-cover"
+                  priority
+                />
+              </div>
+            )}
+
+            {/* Body — rawHtml takes priority, then PortableText, then excerpt */}
+            {post.rawHtml ? (
+              <div
+                className="prose-content"
+                dangerouslySetInnerHTML={{ __html: post.rawHtml }}
+              />
+            ) : post.body && post.body.length > 0 ? (
+              <div className="prose-content">
+                <PortableText
+                  value={post.body}
+                  components={portableTextComponents}
+                />
+              </div>
+            ) : post.excerpt ? (
+              <p className="text-gray-DEFAULT leading-relaxed text-lg">
+                {post.excerpt}
+              </p>
+            ) : null}
+
+            {/* Author */}
+            {post.author && (
+              <div className="mt-12 pt-8 border-t border-gray-200 flex items-center gap-4">
+                {post.author.image?.asset?.url && (
+                  <div className="relative w-12 h-12 rounded-full overflow-hidden flex-shrink-0">
+                    <Image
+                      src={post.author.image.asset.url}
+                      alt={post.author.name}
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                )}
+                <div>
+                  <p className="font-semibold text-gray-dark">
+                    {post.author.name}
+                  </p>
+                  {post.author.bio && (
+                    <p className="text-sm text-gray-DEFAULT">{post.author.bio}</p>
+                  )}
+                </div>
+              </div>
+            )}
           </div>
         </Container>
       </article>

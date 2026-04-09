@@ -69,6 +69,13 @@ export default {
       type: "datetime",
     },
     {
+      name: "rawHtml",
+      title: "Body (HTML)",
+      description: "Paste your full HTML content here. This will be rendered on the blog post page.",
+      type: "text",
+      rows: 20,
+    },
+    {
       name: "seo",
       title: "SEO",
       type: "object",

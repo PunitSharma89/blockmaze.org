@@ -1,4 +1,4 @@
-export const allBlogsQuery = `*[_type == "blog"] | order(publishedAt desc) {
+export const allBlogsQuery = `*[_type == "blog" && !(_id in path("drafts.**"))] | order(publishedAt desc) {
   _id,
   title,
   slug,
@@ -22,12 +22,13 @@ export const allBlogsQuery = `*[_type == "blog"] | order(publishedAt desc) {
   seo
 }`;
 
-export const blogBySlugQuery = `*[_type == "blog" && slug.current == $slug][0] {
+export const blogBySlugQuery = `*[_type == "blog" && !(_id in path("drafts.**")) && slug.current == $slug][0] {
   _id,
   title,
   slug,
   excerpt,
   body,
+  rawHtml,
   featuredImage {
     asset-> {
       _id,
@@ -92,11 +93,13 @@ export const allNewsQuery = `*[_type == "news"] | order(publishedAt desc) {
   publishedAt
 }`;
 
-export const allKnowledgeHubQuery = `*[_type == "knowledgeHub"] | order(publishedAt desc) {
+export const allKnowledgeHubQuery = `*[_type == "knowledgeHub" && !(_id in path("drafts.**"))] | order(publishedAt desc) {
   _id,
   title,
   slug,
   excerpt,
+  bulletPoints,
+  link,
   featuredImage {
     asset-> {
       _id,
@@ -105,6 +108,17 @@ export const allKnowledgeHubQuery = `*[_type == "knowledgeHub"] | order(publishe
     alt
   },
   publishedAt
+}`;
+
+export const technicalPageQuery = `*[_type == "technicalPage" && slug.current == $slug && !(_id in path("drafts.**"))][0] {
+  _id,
+  title,
+  slug,
+  sections[] {
+    sectionId,
+    heading,
+    rawHtml
+  }
 }`;
 
 export const blogSlugsQuery = `*[_type == "blog"] { slug }`;

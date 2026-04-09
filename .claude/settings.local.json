@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(grep -E \"^sanity$|^@sanity\")",
+      "Bash(node -e \"const s = require\\('d:/blockmaze.org-main/blockmaze.org/node_modules/sanity/package.json'\\); console.log\\(s.version\\)\")",
+      "Bash(node -e \"const s = require\\('d:/blockmaze.org-main/blockmaze.org/node_modules/sanity/package.json'\\); console.log\\(Object.keys\\(s.exports || {}\\).filter\\(k => k.includes\\('action'\\) || k.includes\\('publish'\\)\\)\\)\")",
+      "Bash(node -e \"const s = require\\('d:/blockmaze.org-main/blockmaze.org/node_modules/sanity/package.json'\\); console.log\\(JSON.stringify\\(Object.keys\\(s.exports || {}\\), null, 2\\)\\)\")",
+      "Bash(node -e ':*)",
+      "Bash(node scripts/publish-drafts.mjs)",
+      "WebFetch(domain:blockmaze.org)",
+      "Bash(curl -s \"https://blockmaze.org/knowledge-hub/\")",
+      "Bash(sed 's/<[^>]*>//g')",
+      "Bash(grep -v '^[[:space:]]*$')",
+      "Bash(python3)",
+      "Bash(grep -v '^$')"
+    ]
+  }
+}
