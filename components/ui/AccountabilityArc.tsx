@@ -3,6 +3,7 @@
 import { useRef, useState } from 'react'
 import { motion, useScroll, useSpring, useMotionValueEvent } from 'framer-motion'
 import Image from 'next/image'
+import Container from '@/components/layout/Container'
 
 const items = [
   "Requires bonded commitments as a condition of issuer eligibility",
@@ -65,6 +66,7 @@ export default function AccountabilityArc() {
         </div>
 
         {/* Arc canvas */}
+        <Container>
         <div className="accountability-arc-wrapper">
 
           {/* Background arc fill */}
@@ -119,6 +121,7 @@ export default function AccountabilityArc() {
           ))}
 
         </div>
+        </Container>
       </div>
     </div>
   )
