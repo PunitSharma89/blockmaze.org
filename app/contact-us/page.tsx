@@ -17,9 +17,9 @@ export default function ContactUsPage() {
       </Container>
       <section className="section-padding">
         <Container>
-          <div className="max-w-3xl mx-auto bg-[#fafafa] rounded-[30px] p-8 md:p-12">
+          <div className="mx-auto bg-[#fafafa] rounded-[30px] p-8 md:p-12">
             <div className="flex flex-col lg:flex-row gap-12">
-              <div className="lg:w-3/5">
+              <div className="max-w-3xl">
                 <h1 className="text-gray-dark mb-4">
                   Need help? We&apos;ve got you covered.
                 </h1>
@@ -27,9 +27,8 @@ export default function ContactUsPage() {
                   Our team is ready to assist users, partners, developers, and
                   media, and will reply within 24-48 hours.
                 </p>
-                <ContactForm />
               </div>
-              <div className="lg:w-2/5" />
+              <ContactForm />
             </div>
           </div>
         </Container>
