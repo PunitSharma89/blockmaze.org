@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Image from "next/image";
+import Link from "next/link";
 import { PortableText, PortableTextComponents } from "@portabletext/react";
 import Container from "@/components/layout/Container";
 import Breadcrumb from "@/components/layout/Breadcrumb";
@@ -39,7 +40,8 @@ interface SanityBlogPost {
 type Params = Promise<{ slug: string }>;
 
 export async function generateStaticParams() {
-  const slugs = await sanityFetch<{ slug: { current: string } }[]>(blogSlugsQuery);
+  const slugs =
+    await sanityFetch<{ slug: { current: string } }[]>(blogSlugsQuery);
   return (slugs ?? []).map((s) => ({ slug: s.slug.current }));
 }
 
@@ -58,16 +60,24 @@ export async function generateMetadata(props: {
 const portableTextComponents: PortableTextComponents = {
   block: {
     h1: ({ children }) => (
-      <h1 className="text-3xl font-bold text-gray-dark mt-8 mb-4">{children}</h1>
+      <h1 className="text-3xl font-bold text-gray-dark mt-8 mb-4">
+        {children}
+      </h1>
     ),
     h2: ({ children }) => (
-      <h2 className="text-2xl font-bold text-gray-dark mt-8 mb-4">{children}</h2>
+      <h2 className="text-2xl font-bold text-gray-dark mt-8 mb-4">
+        {children}
+      </h2>
     ),
     h3: ({ children }) => (
-      <h3 className="text-xl font-semibold text-gray-dark mt-6 mb-3">{children}</h3>
+      <h3 className="text-xl font-semibold text-gray-dark mt-6 mb-3">
+        {children}
+      </h3>
     ),
     h4: ({ children }) => (
-      <h4 className="text-lg font-semibold text-gray-dark mt-6 mb-3">{children}</h4>
+      <h4 className="text-lg font-semibold text-gray-dark mt-6 mb-3">
+        {children}
+      </h4>
     ),
     normal: ({ children }) => (
       <p className="text-gray-DEFAULT leading-relaxed mb-4">{children}</p>
@@ -148,15 +158,26 @@ export default async function BlogPostPage(props: { params: Params }) {
 
   return (
     <>
-      <Container>
+      {/* <Container>
         <Breadcrumb
           items={[{ label: "Blogs", href: "/blogs" }, { label: post.title }]}
         />
-      </Container>
+      </Container> */}
 
       <article className="section-padding">
         <Container>
-          <div className="max-w-3xl mx-auto">
+          <div className="max-w-[1200px] mx-auto">
+            {/* Back Button */}
+            <Link
+              href="/blogs"
+              className="inline-flex items-center gap-2 text-sm text-gray-DEFAULT hover:text-primary transition-colors duration-200 mb-6"
+            >
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M10 12L6 8L10 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+              Back to Blogs
+            </Link>
+
             {/* Category + Date */}
             <div className="flex items-center gap-4 mb-4">
               {post.category && (
@@ -222,7 +243,9 @@ export default async function BlogPostPage(props: { params: Params }) {
                     {post.author.name}
                   </p>
                   {post.author.bio && (
-                    <p className="text-sm text-gray-DEFAULT">{post.author.bio}</p>
+                    <p className="text-sm text-gray-DEFAULT">
+                      {post.author.bio}
+                    </p>
                   )}
                 </div>
               </div>

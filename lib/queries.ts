@@ -1,4 +1,4 @@
-export const allBlogsQuery = `*[_type == "blog" && !(_id in path("drafts.**"))] | order(publishedAt desc) {
+export const allBlogsQuery = `*[_type == "blog" && !(_id in path("drafts.**"))] | order(_createdAt desc) {
   _id,
   title,
   slug,
@@ -18,7 +18,7 @@ export const allBlogsQuery = `*[_type == "blog" && !(_id in path("drafts.**"))] 
     name,
     slug
   },
-  publishedAt,
+  "publishedAt": coalesce(publishedAt, _createdAt),
   seo
 }`;
 
@@ -93,7 +93,7 @@ export const allNewsQuery = `*[_type == "news"] | order(publishedAt desc) {
   publishedAt
 }`;
 
-export const allKnowledgeHubQuery = `*[_type == "knowledgeHub" && !(_id in path("drafts.**"))] | order(publishedAt desc) {
+export const allKnowledgeHubQuery = `*[_type == "knowledgeHub" && !(_id in path("drafts.**"))] | order(_createdAt desc) {
   _id,
   title,
   slug,
@@ -110,20 +110,43 @@ export const allKnowledgeHubQuery = `*[_type == "knowledgeHub" && !(_id in path(
   publishedAt
 }`;
 
-export const technicalPageQuery = `*[_type == "technicalPage" && slug.current == $slug && !(_id in path("drafts.**"))][0] {
+export const technicalPageQuery = `*[_type == "technicalPage" && !(_id in path("drafts.**")) && slug.current == $slug][0] {
   _id,
   title,
   slug,
   sections[] {
     sectionId,
     heading,
-    rawHtml
+    rawHtml,
+    image {
+      asset-> { url },
+      alt,
+      caption
+    }
   }
+}`;
+
+export const governancePageQuery = `*[_type == "governancePage" && !(_id in path("drafts.**"))][0] {
+  hero {
+    badge, heading, subtext, buttonText, buttonHref,
+    image { asset-> { url }, alt }
+  },
+  about { heading, text },
+  roles[] { iconKey, title, description },
+  scopeItems[] { iconKey, title, description },
+  structure[] { iconKey, title, description },
+  steps[] { num, title, description },
+  compliance {
+    heading, text, tags,
+    image { asset-> { url }, alt }
+  },
+  getInvolved[] { iconKey, title, description },
+  faqs[] { question, answer }
 }`;
 
 export const blogSlugsQuery = `*[_type == "blog"] { slug }`;
 
-export const latestBlogsQuery = `*[_type == "blog"] | order(publishedAt desc)[0...3] {
+export const latestBlogsQuery = `*[_type == "blog"] | order(_createdAt desc)[0...3] {
   _id,
   title,
   slug,

@@ -7,6 +7,8 @@ import news from "./sanity/schemas/news";
 import knowledgeHub from "./sanity/schemas/knowledgeHub";
 import siteSettings from "./sanity/schemas/siteSettings";
 import technicalPage from "./sanity/schemas/technicalPage";
+import governancePage from "./sanity/schemas/governancePage";
+import { PublishAction } from "./sanity/actions/PublishAction";
 
 export default defineConfig({
   name: "blockmaze",
@@ -16,6 +18,9 @@ export default defineConfig({
   basePath: "/studio",
   plugins: [structureTool()],
   schema: {
-    types: [blog, category, author, news, knowledgeHub, siteSettings, technicalPage],
+    types: [blog, category, author, news, knowledgeHub, siteSettings, technicalPage, governancePage],
+  },
+  document: {
+    actions: (prev) => [PublishAction, ...prev],
   },
 });

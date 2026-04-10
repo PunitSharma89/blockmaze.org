@@ -7,7 +7,7 @@ import BlogGrid from "@/components/ui/BlogGrid";
 import { sanityFetch } from "@/lib/sanity";
 import { allBlogsQuery } from "@/lib/queries";
 
-export const revalidate = 0;
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Blogs",
@@ -60,6 +60,7 @@ export default async function BlogsPage() {
                   excerpt={post.excerpt}
                   category={post.category?.title}
                   categorySlug={post.category?.slug?.current}
+                  publishedAt={post.publishedAt}
                 />
               ))}
             </BlogGrid>
