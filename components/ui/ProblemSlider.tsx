@@ -2,7 +2,6 @@
 
 import { useRef, useState } from 'react'
 import Image from 'next/image'
-import Link from 'next/link'
 
 interface ProblemCard {
   icon: string
@@ -42,7 +41,7 @@ export default function ProblemSlider({ cards }: { cards: ProblemCard[] }) {
     <div>
       <div className="problem-slider-top">
         <div className="problem-slider-heading-col">
-          <h2 className="section-heading">The Accountability Gap in Existing Blockchain Networks</h2>
+          <h2 className="section-heading">The Accountability Gap in Existing <span className="text-primary">Blockchain Networks</span></h2>
         </div>
         <div className="problem-slider-arrows">
           <button className="problem-slider-arrow" onClick={() => scroll(-1)} aria-label="Previous">
@@ -65,12 +64,11 @@ export default function ProblemSlider({ cards }: { cards: ProblemCard[] }) {
         {cards.map((card) => (
           <div key={card.title} className="problem-slider-card">
             <div className="problem-slider-card-img">
-              <Image src={card.icon} alt={card.title} width={80} height={80} draggable={false} />
+              <Image src={card.icon} alt={card.title} width={340} height={220} draggable={false} />
             </div>
             <div className="problem-slider-card-body">
               <h4 className="problem-slider-card-title">{card.title}</h4>
               <p className="problem-slider-card-desc">{card.description}</p>
-              <Link href="#" className="problem-slider-card-link">Learn More &#8594;</Link>
             </div>
           </div>
         ))}

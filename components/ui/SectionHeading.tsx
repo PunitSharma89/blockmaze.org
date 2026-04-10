@@ -1,6 +1,6 @@
 interface SectionHeadingProps {
   label?: string;
-  heading: string;
+  heading: React.ReactNode;
   subtext?: string;
   className?: string;
 }
