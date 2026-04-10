@@ -1,55 +1,36 @@
-import Link from "next/link";
+"use client";
 
-interface ButtonProps {
-  href?: string;
-  variant?: "primary" | "outline" | "white";
-  children: React.ReactNode;
-  className?: string;
-  external?: boolean;
-  onClick?: () => void;
-  type?: "button" | "submit";
+import React from "react";
+
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  variant?: "primary" | "secondary";
 }
 
 export default function Button({
-  href,
-  variant = "primary",
   children,
   className = "",
-  external = false,
-  onClick,
-  type = "button",
+  variant = "primary",
+  disabled,
+  ...props
 }: ButtonProps) {
-  const baseClasses = "btn";
-  const variantClasses = {
-    primary: "btn-primary",
-    outline: "btn-outline",
-    white: "btn-white",
+  const baseStyles = "px-4 py-3 rounded-lg transition-all duration-200";
+
+  const variants = {
+    primary: "bg-primary text-white hover:opacity-90",
+    secondary: "bg-gray-200 text-black hover:bg-gray-300",
   };
 
-  const classes = `${baseClasses} ${variantClasses[variant]} ${className}`;
-
-  if (href) {
-    if (external) {
-      return (
-        <a
-          href={href}
-          target="_blank"
-          rel="noopener noreferrer"
-          className={classes}
-        >
-          {children}
-        </a>
-      );
-    }
-    return (
-      <Link href={href} className={classes}>
-        {children}
-      </Link>
-    );
-  }
-
   return (
-    <button type={type} onClick={onClick} className={classes}>
+    <button
+      {...props}
+      disabled={disabled}
+      className={`
+        ${baseStyles}
+        ${variants[variant]}
+        ${disabled ? "opacity-50 cursor-not-allowed" : ""}
+        ${className}
+      `}
+    >
       {children}
     </button>
   );
