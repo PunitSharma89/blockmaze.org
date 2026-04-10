@@ -12,15 +12,31 @@ export default function ContactForm() {
   });
 
   const [errors, setErrors] = useState<any>({});
+  const [status, setStatus] = useState("");
   const [loading, setLoading] = useState(false);
-  const [status, setStatus] = useState(""); // success / error message
 
-  // ✅ Validation function
+  // ✅ Handle Change (clean + removes error)
+  const handleChange = (field: string, value: string) => {
+    setFormData((prev) => ({ ...prev, [field]: value }));
+
+    setErrors((prev: any) => ({
+      ...prev,
+      [field]: "",
+    }));
+  };
+
+  // ✅ Validation (with email check)
   const validate = () => {
     const newErrors: any = {};
 
     if (!formData.name.trim()) newErrors.name = "Name is required";
-    if (!formData.email.trim()) newErrors.email = "Email is required";
+
+    if (!formData.email.trim()) {
+      newErrors.email = "Email is required";
+    } else if (!/^\S+@\S+\.\S+$/.test(formData.email)) {
+      newErrors.email = "Enter a valid email";
+    }
+
     if (!formData.subject.trim()) newErrors.subject = "Subject is required";
     if (!formData.message.trim()) newErrors.message = "Message is required";
 
@@ -33,7 +49,6 @@ export default function ContactForm() {
 
     setStatus("");
 
-    // ❌ stop if validation fails
     if (!validate()) return;
 
     setLoading(true);
@@ -70,6 +85,7 @@ export default function ContactForm() {
         setErrors({});
       } else {
         setStatus("error");
+        console.log(data);
       }
     } catch (error) {
       console.error(error);
@@ -79,16 +95,22 @@ export default function ContactForm() {
     }
   };
 
+  // ✅ Input styles (with error border)
+  const inputClass = (field: string) =>
+    `w-full px-4 py-3 border rounded-lg outline-none focus:ring-0 ${
+      errors[field] ? "border-red-500" : "border-gray-200"
+    }`;
+
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
-      {/* ✅ Success Message */}
+    <form onSubmit={handleSubmit} noValidate className="space-y-6">
+      {/* ✅ Success */}
       {status === "success" && (
         <div className="p-3 border border-green-500 text-green-600 rounded">
           Thank you! Your message has been sent.
         </div>
       )}
 
-      {/* ❌ Error Message */}
+      {/* ❌ Error */}
       {status === "error" && (
         <div className="p-3 border border-red-500 text-red-600 rounded">
           Something went wrong. Please try again.
@@ -101,15 +123,8 @@ export default function ContactForm() {
           type="text"
           placeholder="Name"
           value={formData.name}
-          onChange={(e) => {
-            setFormData({ ...formData, name: e.target.value });
-
-            setErrors((prev: any) => ({
-              ...prev,
-              name: "",
-            }));
-          }}
-          className="w-full px-4 py-3 border rounded-lg"
+          onChange={(e) => handleChange("name", e.target.value)}
+          className={inputClass("name")}
         />
         {errors.name && (
           <p className="text-red-500 text-sm mt-1">{errors.name}</p>
@@ -122,15 +137,8 @@ export default function ContactForm() {
           type="email"
           placeholder="Email Address"
           value={formData.email}
-          onChange={(e) => {
-            setFormData({ ...formData, email: e.target.value });
-
-            setErrors((prev: any) => ({
-              ...prev,
-              email: "",
-            }));
-          }}
-          className="w-full px-4 py-3 border rounded-lg"
+          onChange={(e) => handleChange("email", e.target.value)}
+          className={inputClass("email")}
         />
         {errors.email && (
           <p className="text-red-500 text-sm mt-1">{errors.email}</p>
@@ -143,15 +151,8 @@ export default function ContactForm() {
           type="text"
           placeholder="Subject"
           value={formData.subject}
-          onChange={(e) => {
-            setFormData({ ...formData, subject: e.target.value });
-
-            setErrors((prev: any) => ({
-              ...prev,
-              subject: "",
-            }));
-          }}
-          className="w-full px-4 py-3 border rounded-lg"
+          onChange={(e) => handleChange("subject", e.target.value)}
+          className={inputClass("subject")}
         />
         {errors.subject && (
           <p className="text-red-500 text-sm mt-1">{errors.subject}</p>
@@ -164,22 +165,21 @@ export default function ContactForm() {
           placeholder="Message"
           rows={6}
           value={formData.message}
-          onChange={(e) => {
-            setFormData({ ...formData, message: e.target.value });
-
-            setErrors((prev: any) => ({
-              ...prev,
-              message: "",
-            }));
-          }}
-          className="w-full px-4 py-3 border rounded-lg"
+          onChange={(e) => handleChange("message", e.target.value)}
+          className={inputClass("message")}
         />
         {errors.message && (
           <p className="text-red-500 text-sm mt-1">{errors.message}</p>
         )}
       </div>
 
-      <Button type="submit" variant="primary">
+      {/* Button */}
+      <Button
+        className="w-full"
+        type="submit"
+        variant="primary"
+        disabled={loading}
+      >
         {loading ? "Sending..." : "Submit"}
       </Button>
     </form>
