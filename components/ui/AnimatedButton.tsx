@@ -1,5 +1,12 @@
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
+
+function ArrowUpRight() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M4 12L12 4M5 4h7v7" />
+    </svg>
+  );
+}
 
 interface AnimatedButtonProps {
   href: string;
@@ -37,7 +44,7 @@ export default function AnimatedButton({
     <>
       <span className="animated-btn-text">{children}</span>
       <span className={`animated-btn-icon ${v.icon}`}>
-        <ArrowUpRight size={16} />
+        <ArrowUpRight />
       </span>
     </>
   );
