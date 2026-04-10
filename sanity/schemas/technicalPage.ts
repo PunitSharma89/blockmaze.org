@@ -47,6 +47,25 @@ export default {
               rows: 10,
               description: "Paste your HTML content here",
             },
+            {
+              name: "image",
+              title: "Section Image",
+              type: "image",
+              options: { hotspot: true },
+              description: "Optional image displayed below the HTML content",
+              fields: [
+                {
+                  name: "alt",
+                  title: "Alt Text",
+                  type: "string",
+                },
+                {
+                  name: "caption",
+                  title: "Caption",
+                  type: "string",
+                },
+              ],
+            },
           ],
           preview: {
             select: { title: "heading" },

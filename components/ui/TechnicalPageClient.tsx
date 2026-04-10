@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import { sanityFetch } from "@/lib/sanity";
 import { technicalPageQuery } from "@/lib/queries";
 
@@ -8,6 +9,11 @@ interface TechnicalSection {
   sectionId: string;
   heading: string;
   rawHtml?: string;
+  image?: {
+    asset?: { url: string };
+    alt?: string;
+    caption?: string;
+  };
 }
 
 interface TechnicalPageData {
@@ -95,6 +101,22 @@ export default function TechnicalPageClient({ slug, fallbackTitle }: Props) {
                 />
               ) : (
                 <h2 className="text-xl font-bold text-gray-dark mb-4">{section.heading}</h2>
+              )}
+              {section.image?.asset?.url && (
+                <figure className="my-6">
+                  <Image
+                    src={section.image.asset.url}
+                    alt={section.image.alt || section.heading}
+                    width={900}
+                    height={500}
+                    className="w-full h-auto rounded"
+                  />
+                  {section.image.caption && (
+                    <figcaption className="text-sm text-gray-light mt-2 text-center">
+                      {section.image.caption}
+                    </figcaption>
+                  )}
+                </figure>
               )}
             </section>
           ))}

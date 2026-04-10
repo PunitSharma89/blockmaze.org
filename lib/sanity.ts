@@ -21,6 +21,14 @@ export async function sanityFetch<T>(
   query: string,
   params?: QueryParams
 ): Promise<T | null> {
-  if (!client) return null;
-  return client.fetch<T>(query, params ?? {});
+  if (!client) {
+    console.error("[Sanity] Client not initialized — check NEXT_PUBLIC_SANITY_PROJECT_ID");
+    return null;
+  }
+  try {
+    return await client.fetch<T>(query, params ?? {}, { cache: "no-store" });
+  } catch (err) {
+    console.error("[Sanity] Fetch error:", err);
+    return null;
+  }
 }
