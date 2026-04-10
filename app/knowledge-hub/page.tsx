@@ -74,7 +74,7 @@ export default async function KnowledgeHubPage() {
               {items.map((item, index) => {
                 const isEven = index % 2 !== 0;
                 const textBlock = (
-                  <div className="flex-1">
+                  <div className="flex-1 text-start">
                     <h2 className="text-2xl font-bold text-gray-dark mb-4">
                       {item.title}
                     </h2>
@@ -86,7 +86,10 @@ export default async function KnowledgeHubPage() {
                     {item.bulletPoints && item.bulletPoints.length > 0 && (
                       <ul className="mb-8 space-y-3">
                         {item.bulletPoints.map((point, i) => (
-                          <li key={i} className="flex items-start gap-3 text-gray-DEFAULT">
+                          <li
+                            key={i}
+                            className="flex items-start gap-3 text-gray-DEFAULT"
+                          >
                             <span className="text-gray-dark">♦</span>
                             <span>{point}</span>
                           </li>
@@ -116,8 +119,21 @@ export default async function KnowledgeHubPage() {
                   </div>
                 ) : null;
                 return (
-                  <div key={item._id} className="flex flex-col lg:flex-row items-center gap-12">
-                    {isEven ? <>{imageBlock}{textBlock}</> : <>{textBlock}{imageBlock}</>}
+                  <div
+                    key={item._id}
+                    className="flex flex-col lg:flex-row items-center gap-12"
+                  >
+                    {isEven ? (
+                      <>
+                        {imageBlock}
+                        {textBlock}
+                      </>
+                    ) : (
+                      <>
+                        {textBlock}
+                        {imageBlock}
+                      </>
+                    )}
                   </div>
                 );
               })}

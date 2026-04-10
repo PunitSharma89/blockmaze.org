@@ -12,7 +12,8 @@
       "Bash(sed 's/<[^>]*>//g')",
       "Bash(grep -v '^[[:space:]]*$')",
       "Bash(python3)",
-      "Bash(grep -v '^$')"
+      "Bash(grep -v '^$')",
+      "Bash(ls \"d:/blockmaze.org-main/blockmaze.org/public/images/image-\"*)"
     ]
   }
 }
