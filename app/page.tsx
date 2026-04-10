@@ -415,6 +415,16 @@ export default function Home() {
       <section className="distinguishes-section">
         <Container>
           <div className="distinguishes-inner">
+            {/* Video background */}
+            <video
+              className="distinguishes-bg-video"
+              src="/images/bg-line-1.mp4"
+              autoPlay
+              loop
+              muted
+              playsInline
+            />
+            <div className="distinguishes-content">
             <div className="distinguishes-heading">
               <span className="section-eyebrow section-eyebrow--dark">Primary USPs</span>
               <h2 className="distinguishes-title">
@@ -472,6 +482,7 @@ export default function Home() {
                   </div>
                 ))}
               </div>
+            </div>
             </div>
           </div>
         </Container>

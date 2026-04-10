@@ -612,11 +612,73 @@ img {
   }
 }
 
+/* ── Accountability — scroll-triggered animations ──────────────────────── */
+
+@keyframes arc-draw {
+  from { stroke-dashoffset: 1; opacity: 0.1; }
+  to   { stroke-dashoffset: 0; opacity: 0.5; }
+}
+
+/* Arc paths — hidden until section is visible */
+.arc-path {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  opacity: 0;
+}
+
+.accountability-section.is-visible .arc-path-1 {
+  animation: arc-draw 1.4s cubic-bezier(0.4, 0, 0.2, 1) 0.05s forwards;
+}
+.accountability-section.is-visible .arc-path-2 {
+  animation: arc-draw 1.4s cubic-bezier(0.4, 0, 0.2, 1) 0.25s forwards;
+}
+.accountability-section.is-visible .arc-path-3 {
+  animation: arc-draw 1.4s cubic-bezier(0.4, 0, 0.2, 1) 0.45s forwards;
+}
+.accountability-section.is-visible .arc-path-4 {
+  animation: arc-draw 1.4s cubic-bezier(0.4, 0, 0.2, 1) 0.65s forwards;
+}
+
+/* Flash beam — trapezoid rises from bottom like a spotlight */
+@keyframes beam-rise {
+  0%   { transform: translateY(80px); opacity: 0; }
+  30%  { opacity: 1; }
+  65%  { transform: translateY(-6px); }
+  100% { transform: translateY(0px);  opacity: 1; }
+}
+
+@keyframes beam-pulse {
+  0%, 100% { opacity: 0.75; }
+  50%       { opacity: 1; }
+}
+
+.accountability-flash-beam {
+  opacity: 0;
+  transform: translateY(80px);
+}
+
+.accountability-section.is-visible .accountability-flash-beam {
+  animation:
+    beam-rise  0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.5s forwards,
+    beam-pulse 2.4s ease-in-out 1.4s infinite;
+}
+
 /* ── What Distinguishes Blockmaze ─────────────────────────────────────── */
 
 .distinguishes-section {
   padding-top: 0;
   padding-bottom: 80px;
+}
+
+.distinguishes-bg-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  z-index: 0;
+  pointer-events: none;
 }
 
 .distinguishes-inner {
@@ -626,12 +688,17 @@ img {
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  background-color: var(--color-section-dark);
+}
+
+.distinguishes-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
   gap: 48px;
   align-items: center;
-  background-color: var(--color-section-dark);
-  background-image: url('/images/bg-line.png');
-  background-size: cover;
-  background-position: center;
+  width: 100%;
 }
 
 .distinguishes-heading {
