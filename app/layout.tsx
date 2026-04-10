@@ -35,7 +35,7 @@ export default function RootLayout({
     <html lang="en" className={inter.variable}>
       <body className="font-sans antialiased">
         <Header />
-        <main className="pt-[80px]">{children}</main>
+        <main className="pt-[71px]">{children}</main>
         <Footer />
         <Analytics />
       </body>

@@ -12,14 +12,14 @@ export default function NavDropdown({ items, isOpen }: NavDropdownProps) {
   if (!isOpen) return null;
 
   return (
-    <ul className="absolute top-full left-0 z-50 min-w-[220px] bg-white py-2 shadow-lg rounded-b-md">
+    <ul className="absolute top-full left-0 z-50 min-w-[220px] bg-[#0e213d] py-2 shadow-lg rounded-b-md">
       {items.map((item) => (
         <li key={item.href}>
           <Link
             href={item.href}
             target={item.external ? "_blank" : undefined}
             rel={item.external ? "noopener noreferrer" : undefined}
-            className="block px-5 py-2 text-sm text-gray-dark hover:bg-gray-50 hover:text-primary transition-colors"
+            className="block px-5 py-2 text-sm text-white hover:text-[#ffb01e] transition-colors"
           >
             {item.label}
           </Link>

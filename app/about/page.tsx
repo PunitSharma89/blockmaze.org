@@ -4,6 +4,7 @@ import Container from "@/components/layout/Container";
 import Breadcrumb from "@/components/layout/Breadcrumb";
 import SectionHeading from "@/components/ui/SectionHeading";
 import FAQ from "@/components/ui/FAQ";
+import RoleTabs from "@/components/ui/RoleTabs";
 
 export const metadata: Metadata = {
   title: "About",
@@ -121,19 +122,19 @@ const team = [
     name: "Tajinder Virk",
     role: "Co-Founder & CEO, Blockmaze",
     photo: "/images/Mask-group-18.png",
-    bio: "Tajinder Virk is a global fintech architect and institution builder with a track record of launching and scaling regulated financial ecosystems across multiple jurisdictions. As Co-Founder and CEO of Blockmaze, he leads the strategic vision of building a sovereign-ready, trust-enforced real-world asset blockchain designed to bridge traditional finance with programmable infrastructure. With deep expertise spanning wealth management, investment banking, payments, and cross-border regulatory frameworks, Tajinder focuses on designing systems that eliminate structural conflicts of interest, restore transparency, and create durable financial rails for the next generation of global asset ownership.",
+    bio: "Tajinder Virk is a global fintech architect and institution builder with a track record of launching and scaling regulated financial ecosystems across multiple jurisdictions. As Co-Founder and CEO of Blockmaze, he leads the strategic vision of building a sovereign-ready, trust-enforced real-world asset blockchain designed to bridge traditional finance with programmable infrastructure.",
   },
   {
     name: "Puneet Mangal",
     role: "Co-Founder & Chief Operating Officer, Blockmaze",
     photo: "/images/Mask-group-19.png",
-    bio: "Puneet Mangal is a seasoned entrepreneur with extensive experience in manufacturing, distribution, and global trade of metals and steel products, along with strategic venture-style investments in emerging businesses. As Co-Founder and COO of Blockmaze, he oversees operational execution, infrastructure build-out, and institutional partnerships. His background in real-world asset industries brings grounded commercial insight to Blockmaze\u2019s tokenization framework, ensuring that digital representations of assets are anchored in practical supply chain realities, capital discipline, and scalable operational processes.",
+    bio: "Puneet Mangal is a seasoned entrepreneur with extensive experience in manufacturing, distribution, and global trade of metals and steel products, along with strategic venture-style investments in emerging businesses. As Co-Founder and COO of Blockmaze, he oversees operational execution, infrastructure build-out, and institutional partnerships.",
   },
   {
     name: "Sarvjeet Virk",
     role: "Strategic Advisor, Blockmaze",
     photo: "/images/Mask-group-20.png",
-    bio: "Sarvjeet Virk is a technology-focused entrepreneur with deep experience in building regulated financial platforms and high-performance trading infrastructure. As an Advisor to Blockmaze, he provides strategic oversight on technology architecture, scalability, and governance design. With a strong foundation in developing compliant, resilient financial systems across global markets, Sarvjeet plays a critical role in shaping Blockmaze\u2019s institutional-grade reliability and long-term technological durability.",
+    bio: "Sarvjeet Virk is a technology-focused entrepreneur with deep experience in building regulated financial platforms and high-performance trading infrastructure. As an Advisor to Blockmaze, he provides strategic oversight on technology architecture, scalability, and governance design.",
   },
 ];
 
@@ -169,19 +170,16 @@ const faqItems = [
 export default function AboutPage() {
   return (
     <>
-      {/* Hero */}
-      <section
-        className="section-padding bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: "url(/images/banner-bg01.png)" }}
-      >
+      {/* Hero — dark gradient matching home page */}
+      <section className="about-hero">
         <Container>
           <Breadcrumb items={[{ label: "About" }]} />
-          <div className="max-w-3xl">
-            <h1 className="text-gray-dark mb-4">
-              Independent Governance for Regulated, Real-World Blockchain
-              Infrastructure
+          <div className="about-hero-content">
+            <h1 className="about-hero-title">
+              Independent Governance for Regulated, Real-World{" "}
+              <span className="text-primary">Blockchain Infrastructure</span>
             </h1>
-            <p className="text-gray-DEFAULT text-lg leading-relaxed">
+            <p className="about-hero-desc">
               The Blockmaze foundation maintains the governance architecture of
               the Blockmaze Layer-0 network, including issuer admission
               standards, on-chain registries, and permission frameworks.
@@ -191,21 +189,22 @@ export default function AboutPage() {
       </section>
 
       {/* The Blockmaze Foundation */}
-      <section className="section-padding">
+      <section className="section-padding bg-white">
         <Container>
-          <SectionHeading heading="About the Blockmaze Foundation & Ecosystem" />
-          <div className="flex flex-col lg:flex-row items-center gap-12 mb-16">
-            <div className="lg:w-1/2">
+          <SectionHeading heading={<>About the Blockmaze <span className="text-primary">Foundation</span> &amp; Ecosystem</>} />
+          <div className="about-foundation-grid">
+            <div className="about-foundation-img">
               <Image
                 src="/images/about-img.png"
                 alt="The Blockmaze Foundation"
                 width={500}
                 height={400}
+                className="about-rounded-img"
               />
             </div>
-            <div className="lg:w-1/2">
-              <h3 className="text-gray-dark mb-4">The Blockmaze Foundation</h3>
-              <p className="text-gray-DEFAULT mb-6 leading-relaxed">
+            <div className="about-foundation-text">
+              <h3 className="about-section-title">The Blockmaze Foundation</h3>
+              <p className="about-body-text">
                 The Blockmaze foundation is an independent, non-profit entity
                 responsible for overseeing governance and issuer accountability
                 at the Layer-0 level. It defines issuer eligibility, manages
@@ -215,10 +214,8 @@ export default function AboutPage() {
                 strengthen validator participation and developer engagement
                 within the network&apos;s governance framework.
               </p>
-              <h4 className="text-gray-dark font-semibold mb-3">
-                Key responsibilities:
-              </h4>
-              <ul className="space-y-2">
+              <h4 className="about-subsection-title">Key responsibilities:</h4>
+              <ul className="about-bullet-list">
                 {[
                   "Define issuer admission and authorization requirements",
                   "Approve and maintain standardized token templates",
@@ -227,11 +224,8 @@ export default function AboutPage() {
                   "Execute governance decisions within defined limits",
                   "Support ecosystem programs aligned with protocol standards",
                 ].map((item, i) => (
-                  <li
-                    key={i}
-                    className="flex items-start gap-2 text-gray-DEFAULT"
-                  >
-                    <span className="text-primary mt-1">&#8226;</span>
+                  <li key={i} className="about-bullet-item">
+                    <span className="about-bullet-dot" />
                     <span>{item}</span>
                   </li>
                 ))}
@@ -242,67 +236,36 @@ export default function AboutPage() {
       </section>
 
       {/* The Role of the Blockmaze Foundation */}
-      <section className="section-padding bg-gray-50">
+      <section className="section-padding bg-white">
         <Container>
-          <div className="flex flex-col lg:flex-row items-start gap-12">
-            <div className="lg:w-5/12">
-              <h2 className="text-gray-dark mb-6">
-                The Role of the Blockmaze Foundation
-              </h2>
-              <Image
-                src="/images/image-191-1.png"
-                alt="The Role of the Blockmaze Foundation"
-                width={500}
-                height={400}
-              />
-            </div>
-            <div className="lg:w-7/12">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {roles.map((role) => (
-                  <div key={role.title} className="card bg-white p-6">
-                    <Image
-                      src={role.icon}
-                      alt={role.title}
-                      width={50}
-                      height={50}
-                      className="mb-4"
-                    />
-                    <h4 className="text-gray-dark font-semibold mb-2">
-                      {role.title}
-                    </h4>
-                    <p className="text-gray-DEFAULT text-sm leading-relaxed">
-                      {role.description}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
+          <SectionHeading
+            heading={<>The Role of the Blockmaze <span className="text-primary">Foundation</span></>}
+          />
+          <RoleTabs roles={roles} />
         </Container>
       </section>
 
       {/* How the Blockmaze Ecosystem Works */}
-      <section className="section-padding">
+      <section className="section-padding bg-white">
         <Container>
-          <SectionHeading heading="How the Blockmaze Ecosystem Works" />
-          <div className="flex flex-col lg:flex-row items-start gap-12">
-            <div className="lg:w-1/2">
+          <SectionHeading
+            heading={<>How the Blockmaze <span className="text-primary">Ecosystem</span> Works</>}
+          />
+          <div className="about-ecosystem-grid">
+            <div className="about-ecosystem-img">
               <Image
                 src="/images/ecosystem-work.png"
                 alt="How the Blockmaze Ecosystem Works"
                 width={600}
                 height={450}
+                className="about-rounded-img"
               />
             </div>
-            <div className="lg:w-1/2 space-y-6">
+            <div className="about-ecosystem-list">
               {ecosystemComponents.map((item) => (
-                <div key={item.title}>
-                  <h4 className="text-gray-dark font-semibold mb-2">
-                    {item.title}
-                  </h4>
-                  <p className="text-gray-DEFAULT text-sm leading-relaxed">
-                    {item.description}
-                  </p>
+                <div key={item.title} className="about-ecosystem-item">
+                  <h4 className="about-subsection-title">{item.title}</h4>
+                  <p className="about-body-text-sm">{item.description}</p>
                 </div>
               ))}
             </div>
@@ -311,30 +274,28 @@ export default function AboutPage() {
       </section>
 
       {/* Why Accountability Must Be Embedded at the Protocol Layer */}
-      <section className="section-padding bg-gray-50">
+      <section className="section-padding bg-surface">
         <Container>
-          <div className="flex flex-col lg:flex-row items-start gap-12">
-            <div className="lg:w-1/2 space-y-6">
-              <h2 className="text-gray-dark">
-                Why Accountability Must Be Embedded at the Protocol Layer
+          <div className="about-accountability-grid">
+            <div className="about-accountability-list">
+              <h2 className="section-heading about-heading-left">
+                Why Accountability Must Be Embedded at the{" "}
+                <span className="text-primary">Protocol</span> Layer
               </h2>
               {accountabilityPoints.map((point) => (
-                <div key={point.title}>
-                  <h4 className="text-gray-dark font-semibold mb-2">
-                    {point.title}
-                  </h4>
-                  <p className="text-gray-DEFAULT text-sm leading-relaxed">
-                    {point.description}
-                  </p>
+                <div key={point.title} className="about-ecosystem-item">
+                  <h4 className="about-subsection-title">{point.title}</h4>
+                  <p className="about-body-text-sm">{point.description}</p>
                 </div>
               ))}
             </div>
-            <div className="lg:w-1/2">
+            <div className="about-accountability-img">
               <Image
                 src="/images/image-192.png"
                 alt="Why Accountability Must Be Embedded"
                 width={600}
                 height={450}
+                className="about-rounded-img"
               />
             </div>
           </div>
@@ -342,16 +303,16 @@ export default function AboutPage() {
       </section>
 
       {/* Long-Term Vision */}
-      <section className="section-padding">
+      <section className="section-padding bg-white">
         <Container>
-          <SectionHeading heading="Long-Term Vision for Blockmaze" />
-          <p className="text-gray-DEFAULT text-center max-w-3xl mx-auto mb-8 leading-relaxed">
+          <SectionHeading heading={<>Long-Term <span className="text-primary">Vision</span> for Blockmaze</>} />
+          <p className="about-vision-desc">
             The long-term vision of Blockmaze is to serve as foundational
             infrastructure for real-world asset issuance across jurisdictions
             while preserving settlement integrity and defined governance
             boundaries.
           </p>
-          <ul className="max-w-2xl mx-auto space-y-3">
+          <ul className="about-vision-list">
             {[
               "Broader participation from regulated issuers",
               "Expansion of sovereign domains aligned with local requirements",
@@ -360,11 +321,8 @@ export default function AboutPage() {
               "Gradual expansion of governance participation",
               "Ongoing refinement of accountability standards",
             ].map((item, i) => (
-              <li
-                key={i}
-                className="flex items-start gap-3 text-gray-DEFAULT"
-              >
-                <span className="text-primary mt-1">&#8226;</span>
+              <li key={i} className="about-bullet-item">
+                <span className="about-bullet-dot" />
                 <span>{item}</span>
               </li>
             ))}
@@ -373,36 +331,27 @@ export default function AboutPage() {
       </section>
 
       {/* Leadership & Management */}
-      <section className="section-padding bg-gray-50">
+      <section className="section-padding bg-surface">
         <Container>
-          <SectionHeading heading="Leadership & Management" />
-          <p className="text-gray-DEFAULT text-center max-w-4xl mx-auto mb-12 leading-relaxed">
+          <SectionHeading heading={<>Leadership &amp; <span className="text-primary">Management</span></>} />
+          <p className="about-vision-desc">
             The Blockmaze foundation is guided by a management team responsible
             for maintaining governance integrity, operational discipline, and
-            structured oversight across the Layer-0 network. The team brings
-            experience across blockchain architecture, regulatory frameworks,
-            financial systems, and protocol governance. Their responsibility is
-            to ensure that accountability standards remain consistent,
-            documented, and enforceable as the ecosystem expands.
+            structured oversight across the Layer-0 network.
           </p>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="about-team-grid">
             {team.map((member) => (
-              <div
-                key={member.name}
-                className="card bg-white p-6 text-center"
-              >
+              <div key={member.name} className="about-team-card">
                 <Image
                   src={member.photo}
                   alt={member.name}
                   width={200}
                   height={200}
-                  className="rounded-full mx-auto mb-4"
+                  className="about-team-photo"
                 />
-                <h4 className="text-gray-dark font-semibold">{member.name}</h4>
-                <p className="text-primary text-sm mb-4">{member.role}</p>
-                <p className="text-gray-DEFAULT text-sm leading-relaxed">
-                  {member.bio}
-                </p>
+                <h4 className="about-team-name">{member.name}</h4>
+                <p className="about-team-role">{member.role}</p>
+                <p className="about-body-text-sm">{member.bio}</p>
               </div>
             ))}
           </div>
@@ -410,11 +359,11 @@ export default function AboutPage() {
       </section>
 
       {/* FAQ */}
-      <section className="section-padding">
+      <section className="section-padding bg-white">
         <Container>
-          <SectionHeading heading="Frequently Asked Questions" />
-          <div className="flex flex-col lg:flex-row gap-12 items-start">
-            <div className="lg:w-5/12">
+          <SectionHeading heading={<>Frequently Asked <span className="text-primary">Questions</span></>} />
+          <div className="about-faq-grid">
+            <div className="about-faq-img">
               <Image
                 src="/images/faq-img.png"
                 alt="Frequently Asked Questions"
@@ -422,7 +371,7 @@ export default function AboutPage() {
                 height={425}
               />
             </div>
-            <div className="lg:w-7/12">
+            <div className="about-faq-content">
               <FAQ items={faqItems} />
             </div>
           </div>

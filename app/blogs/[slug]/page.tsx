@@ -45,9 +45,7 @@ export async function generateStaticParams() {
   return (slugs ?? []).map((s) => ({ slug: s.slug.current }));
 }
 
-export async function generateMetadata(props: {
-  params: Params;
-}): Promise<Metadata> {
+export async function generateMetadata(props: { params: Params }): Promise<Metadata> {
   const { slug } = await props.params;
   const post = await sanityFetch<SanityBlogPost>(blogBySlugQuery, { slug });
   if (!post) return { title: "Post Not Found" };

@@ -9,7 +9,7 @@ export default function Navbar() {
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
 
   return (
-    <nav className="hidden lg:flex items-center gap-8">
+    <nav className="hidden lg:flex items-center gap-5">
       {mainNavigation.map((item) => (
         <div
           key={item.label}
@@ -21,7 +21,7 @@ export default function Navbar() {
         >
           {item.children ? (
             <button
-              className="flex items-center gap-1 text-sm font-medium text-gray-dark hover:text-primary transition-colors py-2"
+              className="flex items-center gap-[6px] px-3 text-[14px] font-medium leading-6 text-white hover:text-[#ffb01e] transition-colors py-2"
               onClick={() =>
                 setOpenDropdown(
                   openDropdown === item.label ? null : item.label
@@ -30,7 +30,7 @@ export default function Navbar() {
             >
               {item.label}
               <svg
-                className={`w-3 h-3 transition-transform ${
+                className={`w-[14px] h-[14px] transition-transform ${
                   openDropdown === item.label ? "rotate-180" : ""
                 }`}
                 fill="none"
@@ -48,7 +48,7 @@ export default function Navbar() {
           ) : (
             <Link
               href={item.href}
-              className="text-sm font-medium text-gray-dark hover:text-primary transition-colors py-2"
+              className="block px-3 text-[14px] font-medium leading-6 text-white hover:text-[#ffb01e] transition-colors py-2"
             >
               {item.label}
             </Link>
