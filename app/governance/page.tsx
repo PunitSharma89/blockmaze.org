@@ -1,9 +1,9 @@
 import { Metadata } from "next";
 import Image from "next/image";
-import Link from "next/link";
 import Container from "@/components/layout/Container";
-import Breadcrumb from "@/components/layout/Breadcrumb";
-import GovernanceFAQ from "@/components/ui/GovernanceFAQ";
+import AnimatedButton from "@/components/ui/AnimatedButton";
+import SectionHeading from "@/components/ui/SectionHeading";
+import FAQ from "@/components/ui/FAQ";
 import { sanityFetch } from "@/lib/sanity";
 import { governancePageQuery } from "@/lib/queries";
 
@@ -27,20 +27,29 @@ interface GovernanceData {
     subtext?: string;
     buttonText?: string;
     buttonHref?: string;
+    secondButtonText?: string;
+    secondButtonHref?: string;
     image?: SanityImage;
   };
-  about?: { heading?: string; text?: string };
+  about?: { eyebrow?: string; heading?: string; text?: string };
+  rolesSection?: { eyebrow?: string; heading?: string };
   roles?: { iconKey: string; title: string; description: string }[];
+  scopeSection?: { eyebrow?: string; heading?: string };
   scopeItems?: { iconKey: string; title: string; description: string }[];
+  structureSection?: { eyebrow?: string; heading?: string };
   structure?: { iconKey: string; title: string; description: string }[];
+  stepsSection?: { eyebrow?: string; heading?: string };
   steps?: { num: string; title: string; description: string }[];
   compliance?: {
+    eyebrow?: string;
     heading?: string;
     text?: string;
     tags?: string[];
     image?: SanityImage;
   };
+  getInvolvedSection?: { eyebrow?: string; heading?: string };
   getInvolved?: { iconKey: string; title: string; description: string }[];
+  faqSection?: { eyebrow?: string; heading?: string };
   faqs?: { question: string; answer: string }[];
 }
 
@@ -49,6 +58,7 @@ interface GovernanceData {
 function RoleIcon({ iconKey, size = 28 }: { iconKey: string; size?: number }) {
   const s = size;
   const sw = "1.6";
+  const color = "var(--color-primary)";
   switch (iconKey) {
     case "shield":
       return (
@@ -57,7 +67,7 @@ function RoleIcon({ iconKey, size = 28 }: { iconKey: string; size?: number }) {
           height={s}
           viewBox="0 0 28 28"
           fill="none"
-          stroke="#2EA3F2"
+          stroke={color}
           strokeWidth={sw}
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -72,7 +82,7 @@ function RoleIcon({ iconKey, size = 28 }: { iconKey: string; size?: number }) {
           height={s}
           viewBox="0 0 28 28"
           fill="none"
-          stroke="#2EA3F2"
+          stroke={color}
           strokeWidth={sw}
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -88,7 +98,7 @@ function RoleIcon({ iconKey, size = 28 }: { iconKey: string; size?: number }) {
           height={s}
           viewBox="0 0 28 28"
           fill="none"
-          stroke="#2EA3F2"
+          stroke={color}
           strokeWidth={sw}
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -104,7 +114,7 @@ function RoleIcon({ iconKey, size = 28 }: { iconKey: string; size?: number }) {
           height={s}
           viewBox="0 0 28 28"
           fill="none"
-          stroke="#2EA3F2"
+          stroke={color}
           strokeWidth={sw}
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -122,7 +132,7 @@ function RoleIcon({ iconKey, size = 28 }: { iconKey: string; size?: number }) {
           height={s}
           viewBox="0 0 28 28"
           fill="none"
-          stroke="#2EA3F2"
+          stroke={color}
           strokeWidth={sw}
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -138,7 +148,7 @@ function RoleIcon({ iconKey, size = 28 }: { iconKey: string; size?: number }) {
           height={s}
           viewBox="0 0 28 28"
           fill="none"
-          stroke="#2EA3F2"
+          stroke={color}
           strokeWidth={sw}
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -154,7 +164,7 @@ function RoleIcon({ iconKey, size = 28 }: { iconKey: string; size?: number }) {
           height={s}
           viewBox="0 0 28 28"
           fill="none"
-          stroke="#2EA3F2"
+          stroke={color}
           strokeWidth={sw}
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -171,7 +181,7 @@ function RoleIcon({ iconKey, size = 28 }: { iconKey: string; size?: number }) {
           height={s}
           viewBox="0 0 28 28"
           fill="none"
-          stroke="#2EA3F2"
+          stroke={color}
           strokeWidth={sw}
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -186,7 +196,7 @@ function RoleIcon({ iconKey, size = 28 }: { iconKey: string; size?: number }) {
           height={s}
           viewBox="0 0 28 28"
           fill="none"
-          stroke="#2EA3F2"
+          stroke={color}
           strokeWidth={sw}
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -203,7 +213,7 @@ function RoleIcon({ iconKey, size = 28 }: { iconKey: string; size?: number }) {
           height={s}
           viewBox="0 0 28 28"
           fill="none"
-          stroke="#2EA3F2"
+          stroke={color}
           strokeWidth={sw}
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -219,7 +229,7 @@ function RoleIcon({ iconKey, size = 28 }: { iconKey: string; size?: number }) {
           height={s}
           viewBox="0 0 28 28"
           fill="none"
-          stroke="#2EA3F2"
+          stroke={color}
           strokeWidth={sw}
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -235,7 +245,7 @@ function RoleIcon({ iconKey, size = 28 }: { iconKey: string; size?: number }) {
           height={s}
           viewBox="0 0 28 28"
           fill="none"
-          stroke="#2EA3F2"
+          stroke={color}
           strokeWidth={sw}
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -246,448 +256,363 @@ function RoleIcon({ iconKey, size = 28 }: { iconKey: string; size?: number }) {
   }
 }
 
-function ScopeIcon({ iconKey }: { iconKey: string }) {
-  const sw = "1.6";
-  switch (iconKey) {
-    case "shield":
-      return (
-        <svg
-          width="22"
-          height="22"
-          viewBox="0 0 22 22"
-          fill="none"
-          stroke="#facc15"
-          strokeWidth={sw}
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <path d="M11 2l7 4v6c0 4.5-3 8-7 9.5C7 20 4 16.5 4 12V6l7-4z" />
-        </svg>
-      );
-    case "network":
-      return (
-        <svg
-          width="22"
-          height="22"
-          viewBox="0 0 22 22"
-          fill="none"
-          stroke="#facc15"
-          strokeWidth={sw}
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <circle cx="11" cy="7" r="3" />
-          <path d="M5 19c0-3.3 2.7-6 6-6s6 2.7 6 6" />
-          <path d="M16 10l2 2 4-4" />
-        </svg>
-      );
-    case "document":
-      return (
-        <svg
-          width="22"
-          height="22"
-          viewBox="0 0 22 22"
-          fill="none"
-          stroke="#facc15"
-          strokeWidth={sw}
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <rect x="3" y="5" width="16" height="12" rx="2" />
-          <path d="M7 9h8M7 13h5" />
-        </svg>
-      );
-    case "lock":
-      return (
-        <svg
-          width="22"
-          height="22"
-          viewBox="0 0 22 22"
-          fill="none"
-          stroke="#facc15"
-          strokeWidth={sw}
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <rect x="3" y="9" width="16" height="10" rx="2" />
-          <path d="M7 9V6a4 4 0 0 1 8 0v3" />
-          <circle cx="11" cy="14" r="1.5" />
-        </svg>
-      );
-    case "chart":
-      return (
-        <svg
-          width="22"
-          height="22"
-          viewBox="0 0 22 22"
-          fill="none"
-          stroke="#facc15"
-          strokeWidth={sw}
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <path d="M4 17l4-8 3 3 3-6 4 11" />
-        </svg>
-      );
-    case "clock":
-    default:
-      return (
-        <svg
-          width="22"
-          height="22"
-          viewBox="0 0 22 22"
-          fill="none"
-          stroke="#facc15"
-          strokeWidth={sw}
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <circle cx="11" cy="11" r="8" />
-          <path d="M11 7v4l3 3" />
-        </svg>
-      );
-  }
-}
-
-function Badge({ children }: { children: React.ReactNode }) {
-  return (
-    <span className="inline-flex items-center border border-[#d1d5db] text-[#555] text-[11px] font-semibold uppercase tracking-[0.12em] px-4 py-1.5 rounded-full mb-5">
-      {children}
-    </span>
-  );
-}
-
 /* ─── PAGE ──────────────────────────────────────────────────── */
 
 export default async function GovernancePage() {
   const data = await sanityFetch<GovernanceData>(governancePageQuery);
 
-  const hero = data?.hero;
-  const about = data?.about;
   const roles = data?.roles ?? [];
   const scopeItems = data?.scopeItems ?? [];
   const structure = data?.structure ?? [];
   const steps = data?.steps ?? [];
-  const compliance = data?.compliance;
   const getInvolved = data?.getInvolved ?? [];
   const faqs = data?.faqs ?? [];
 
-  const stepsLeft = steps.slice(0, 3);
-  const stepsRight = steps.slice(3, 6);
+  const stepRows: (typeof steps)[] = [];
+  for (let i = 0; i < steps.length; i += 3) {
+    stepRows.push(steps.slice(i, i + 3));
+  }
 
   return (
-    <div className="bg-white">
-      <Container>
-        <Breadcrumb items={[{ label: "Governance" }]} />
-      </Container>
-
+    <>
       {/* 1 ── HERO */}
-      {hero && (
-        <section className="py-10 bg-white">
-          <Container>
-            <div
-              className="rounded-[32px] overflow-hidden"
-              style={{ background: "#f5f5f5", border: "1px solid #e5e5e5" }}
-            >
-              <div className="text-center px-6 md:px-16 pt-14 pb-10">
-                {hero.badge && (
-                  <div className="flex justify-center mb-5">
-                    <Badge>{hero.badge}</Badge>
-                  </div>
-                )}
-                {hero.heading && (
-                  <h1 className="text-3xl md:text-[44px] font-bold text-[#0f0f0f] leading-[1.2] mb-5">
-                    {hero.heading.split("\n").map((line, i, arr) => (
-                      <span key={i}>
-                        {line}
-                        {i < arr.length - 1 && <br />}
-                      </span>
-                    ))}
-                  </h1>
-                )}
-                {hero.subtext && (
-                  <p className="text-[#555] text-[15px] leading-relaxed mb-8 max-w-[520px] mx-auto">
-                    {hero.subtext}
-                  </p>
-                )}
-                {hero.buttonText && (
-                  <Link
-                    href={hero.buttonHref ?? "/contact-us"}
-                    className="inline-flex items-center gap-2 bg-[#0f0f0f] text-white font-semibold px-8 py-3.5 rounded-xl hover:bg-[#333] transition-colors duration-200 text-[15px]"
-                  >
-                    {hero.buttonText}
-                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                      <path
-                        d="M3 8h10M9 4l4 4-4 4"
-                        stroke="currentColor"
-                        strokeWidth="1.6"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-                  </Link>
-                )}
+      <section
+        className="relative overflow-hidden flex items-center"
+        style={{
+          minHeight: "500px",
+          background:
+            "linear-gradient(to left, var(--color-header-navy), var(--color-header-dark) 49%)",
+        }}
+      >
+        <div className="hero-bg-grid">
+          <Image
+            src="/images/hero-bg-grid.svg"
+            alt=""
+            fill
+            className="object-fill"
+          />
+        </div>
+
+        <div className="mx-auto w-[80%] max-w-[1440px] py-20 relative z-10 flex flex-col lg:flex-row items-center gap-[60px]">
+          <div className="flex-1 flex flex-col gap-[40px]">
+            <div className="flex flex-col gap-[16px]">
+              <div
+                className="inline-flex w-fit items-center justify-center px-[16px] py-[12px] rounded-[999px] border"
+                style={{
+                  borderColor: "var(--color-chip-border)",
+                  background: "var(--color-chip-bg)",
+                }}
+              >
+                <span
+                  className="text-[14px] font-medium tracking-[-0.28px] whitespace-nowrap"
+                  style={{ color: "var(--color-primary)" }}
+                >
+                  {data?.hero?.badge}
+                </span>
               </div>
-              <div className="flex justify-center">
-                {hero.image?.asset?.url ? (
-                  <Image
-                    src={hero.image.asset.url}
-                    alt={hero.image.alt ?? "Governance"}
-                    width={480}
-                    height={280}
-                    className="max-w-full"
-                  />
-                ) : (
-                  <svg
-                    width="480"
-                    height="280"
-                    viewBox="0 0 480 280"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <ellipse
-                      cx="240"
-                      cy="230"
-                      rx="190"
-                      ry="40"
-                      stroke="#ccc"
-                      strokeWidth="1"
-                      strokeDasharray="5 4"
-                      fill="none"
-                    />
-                    <ellipse
-                      cx="240"
-                      cy="230"
-                      rx="140"
-                      ry="28"
-                      stroke="#ddd"
-                      strokeWidth="1"
-                      strokeDasharray="4 3"
-                      fill="none"
-                    />
-                    <rect
-                      x="155"
-                      y="90"
-                      width="130"
-                      height="130"
-                      rx="6"
-                      fill="#e8ecf8"
-                      stroke="#c4cce8"
-                      strokeWidth="1.5"
-                    />
-                    <path
-                      d="M145 93 L220 45 L295 93"
-                      fill="#dde3f5"
-                      stroke="#c4cce8"
-                      strokeWidth="1.5"
-                      strokeLinejoin="round"
-                    />
-                    <rect
-                      x="170"
-                      y="108"
-                      width="28"
-                      height="24"
-                      rx="3"
-                      fill="#c4cce8"
-                      opacity="0.8"
-                    />
-                    <rect
-                      x="206"
-                      y="108"
-                      width="28"
-                      height="24"
-                      rx="3"
-                      fill="#c4cce8"
-                      opacity="0.8"
-                    />
-                    <rect
-                      x="242"
-                      y="108"
-                      width="28"
-                      height="24"
-                      rx="3"
-                      fill="#c4cce8"
-                      opacity="0.8"
-                    />
-                    <rect
-                      x="170"
-                      y="142"
-                      width="28"
-                      height="24"
-                      rx="3"
-                      fill="#c4cce8"
-                      opacity="0.8"
-                    />
-                    <rect
-                      x="206"
-                      y="142"
-                      width="28"
-                      height="24"
-                      rx="3"
-                      fill="#c4cce8"
-                      opacity="0.8"
-                    />
-                    <rect
-                      x="242"
-                      y="142"
-                      width="28"
-                      height="24"
-                      rx="3"
-                      fill="#c4cce8"
-                      opacity="0.8"
-                    />
-                    <rect
-                      x="206"
-                      y="178"
-                      width="32"
-                      height="42"
-                      rx="3"
-                      fill="#b0bbdd"
-                    />
-                    <circle cx="295" cy="72" r="28" fill="#fef9c3" />
-                    <path
-                      d="M295 55 l12 6v8c0 8-5 13-12 15-7-2-12-7-12-15V61z"
-                      fill="#fde68a"
-                      stroke="#f59e0b"
-                      strokeWidth="1.5"
-                    />
-                    <path
-                      d="M289 71 l4 4 8-9"
-                      stroke="#d97706"
-                      strokeWidth="1.8"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                    <rect
-                      x="95"
-                      y="118"
-                      width="42"
-                      height="54"
-                      rx="5"
-                      fill="#e8ecf8"
-                      stroke="#c4cce8"
-                      strokeWidth="1.5"
-                    />
-                    <circle cx="107" cy="132" r="4" fill="#c4cce8" />
-                    <path
-                      d="M115 132h14M103 144h22M103 154h16"
-                      stroke="#c4cce8"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                    />
-                    <circle
-                      cx="68"
-                      cy="218"
-                      r="16"
-                      fill="#facc15"
-                      stroke="#1a1a1a"
-                      strokeWidth="1.2"
-                    />
-                    <circle
-                      cx="68"
-                      cy="218"
-                      r="10"
-                      fill="#fde68a"
-                      stroke="#1a1a1a"
-                      strokeWidth="1"
-                    />
-                    <circle
-                      cx="400"
-                      cy="228"
-                      r="13"
-                      fill="#facc15"
-                      stroke="#1a1a1a"
-                      strokeWidth="1.2"
-                    />
-                    <circle
-                      cx="400"
-                      cy="228"
-                      r="8"
-                      fill="#fde68a"
-                      stroke="#1a1a1a"
-                      strokeWidth="1"
-                    />
-                  </svg>
-                )}
+              <div className="flex flex-col gap-[20px]">
+                <h1
+                  className="font-bold text-[46px] leading-[62px]"
+                  style={{ color: "var(--color-white)" }}
+                >
+                  {data?.hero?.heading}
+                </h1>
+                <p
+                  className="text-[16px] leading-[28px]"
+                  style={{ color: "var(--color-hero-body)" }}
+                >
+                  {data?.hero?.subtext}
+                </p>
               </div>
             </div>
-          </Container>
-        </section>
-      )}
+            <div className="flex gap-[20px]">
+              {data?.hero?.buttonText && (
+                <AnimatedButton
+                  href={data.hero.buttonHref ?? "#"}
+                  variant="primary"
+                >
+                  {data.hero.buttonText}
+                </AnimatedButton>
+              )}
+              {data?.hero?.secondButtonText && (
+                <AnimatedButton
+                  href={data.hero.secondButtonHref ?? "#"}
+                  variant="white"
+                >
+                  {data.hero.secondButtonText}
+                </AnimatedButton>
+              )}
+            </div>
+          </div>
+
+          <div className="hidden lg:flex flex-shrink-0 items-center justify-center w-[460px] h-[400px]">
+            {data?.hero?.image?.asset?.url ? (
+              <Image
+                src={data.hero.image.asset.url}
+                alt={data.hero.image.alt ?? ""}
+                width={460}
+                height={400}
+                priority
+              />
+            ) : (
+              <svg
+                width="460"
+                height="400"
+                viewBox="0 0 460 400"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <ellipse
+                  cx="230"
+                  cy="360"
+                  rx="200"
+                  ry="32"
+                  stroke="#1e3a5f"
+                  strokeWidth="1"
+                  strokeDasharray="6 4"
+                  fill="none"
+                  opacity="0.5"
+                />
+                <rect
+                  x="130"
+                  y="100"
+                  width="200"
+                  height="200"
+                  rx="12"
+                  fill="#0e213d"
+                  stroke="#1e3a5f"
+                  strokeWidth="1.5"
+                />
+                <path
+                  d="M110 104 L230 40 L350 104"
+                  fill="#0b1b30"
+                  stroke="#1e3a5f"
+                  strokeWidth="1.5"
+                  strokeLinejoin="round"
+                />
+                <rect
+                  x="155"
+                  y="150"
+                  width="50"
+                  height="40"
+                  rx="4"
+                  fill="#1a3050"
+                  stroke="#1e3a5f"
+                  strokeWidth="1"
+                />
+                <rect
+                  x="215"
+                  y="150"
+                  width="50"
+                  height="40"
+                  rx="4"
+                  fill="#1a3050"
+                  stroke="#1e3a5f"
+                  strokeWidth="1"
+                />
+                <rect
+                  x="275"
+                  y="150"
+                  width="40"
+                  height="40"
+                  rx="4"
+                  fill="#1a3050"
+                  stroke="#1e3a5f"
+                  strokeWidth="1"
+                />
+                <rect
+                  x="155"
+                  y="205"
+                  width="50"
+                  height="40"
+                  rx="4"
+                  fill="#1a3050"
+                  stroke="#1e3a5f"
+                  strokeWidth="1"
+                />
+                <rect
+                  x="215"
+                  y="205"
+                  width="50"
+                  height="40"
+                  rx="4"
+                  fill="#1a3050"
+                  stroke="#1e3a5f"
+                  strokeWidth="1"
+                />
+                <rect
+                  x="195"
+                  y="260"
+                  width="70"
+                  height="40"
+                  rx="4"
+                  fill="#172840"
+                  stroke="#1e3a5f"
+                  strokeWidth="1"
+                />
+                <circle
+                  cx="345"
+                  cy="92"
+                  r="38"
+                  fill="rgba(255,176,30,0.08)"
+                  stroke="rgba(255,176,30,0.3)"
+                  strokeWidth="1.5"
+                />
+                <path
+                  d="M345 72l16 8v10c0 10-6 16-16 19-10-3-16-9-16-19V80l16-8z"
+                  fill="rgba(255,176,30,0.15)"
+                  stroke="#ffb01e"
+                  strokeWidth="1.5"
+                />
+                <path
+                  d="M338 91l5 5 10-11"
+                  stroke="#ffb01e"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <circle
+                  cx="100"
+                  cy="310"
+                  r="20"
+                  fill="rgba(255,176,30,0.1)"
+                  stroke="#ffb01e"
+                  strokeWidth="1.2"
+                />
+                <circle
+                  cx="100"
+                  cy="310"
+                  r="12"
+                  fill="rgba(255,176,30,0.15)"
+                  stroke="#ffb01e"
+                  strokeWidth="1"
+                />
+                <circle
+                  cx="370"
+                  cy="320"
+                  r="16"
+                  fill="rgba(255,176,30,0.1)"
+                  stroke="#ffb01e"
+                  strokeWidth="1.2"
+                />
+                <circle
+                  cx="370"
+                  cy="320"
+                  r="9"
+                  fill="rgba(255,176,30,0.15)"
+                  stroke="#ffb01e"
+                  strokeWidth="1"
+                />
+              </svg>
+            )}
+          </div>
+        </div>
+      </section>
 
       {/* 2 ── ABOUT */}
-      {about && (
-        <section className="py-16 bg-white border-t border-[#f0f0f0]">
+      {data?.about && (
+        <section className="section-padding section-padding--lg bg-white">
           <Container>
-            <div className="max-w-[700px] mx-auto text-center">
-              <Badge>Overview</Badge>
-              <h2 className="text-2xl md:text-3xl font-bold text-[#1a1a1a] mb-5">
-                {about.heading}
-              </h2>
-              <p className="text-[#555] leading-relaxed text-[15px]">
-                {about.text}
-              </p>
+            <div className="flex flex-col gap-4 items-center text-center w-full">
+              <span className="section-eyebrow">{data.about.eyebrow}</span>
+              <h2 className="section-heading">{data.about.heading}</h2>
+              <p className="section-subtext">{data.about.text}</p>
             </div>
           </Container>
         </section>
       )}
 
-      {/* 3 ── ROLE CARDS */}
+      {/* 3 ── ROLE CARDS — dark */}
       {roles.length > 0 && (
-        <section className="py-16 bg-[#f8fafc] border-t border-[#f0f0f0]">
+        <section className="distinguishes-section">
           <Container>
-            <div className="text-center mb-12">
-              <Badge>Responsibilities</Badge>
-              <h2 className="text-2xl md:text-3xl font-bold text-[#1a1a1a]">
-                Role Within the Governance Framework
-              </h2>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-              {roles.map((r) => (
-                <div
-                  key={r.title}
-                  className="bg-white border border-[#e5e7eb] rounded-2xl p-7 hover:border-primary hover:shadow-md transition-all duration-200"
-                >
-                  <div className="w-12 h-12 rounded-xl bg-[#eff6ff] flex items-center justify-center mb-5">
-                    <RoleIcon iconKey={r.iconKey} />
-                  </div>
-                  <h3 className="font-bold text-[#1a1a1a] text-[15px] mb-2">
-                    {r.title}
-                  </h3>
-                  <p className="text-[#666] text-sm leading-relaxed">
-                    {r.description}
-                  </p>
+            <div className="distinguishes-inner">
+              <video
+                className="distinguishes-bg-video"
+                src="/images/bg-line-1.mp4"
+                autoPlay
+                loop
+                muted
+                playsInline
+              />
+              <div className="distinguishes-content">
+                <div className="distinguishes-heading">
+                  <span className="section-eyebrow section-eyebrow--dark">
+                    {data?.rolesSection?.eyebrow}
+                  </span>
+                  <h2 className="distinguishes-title">
+                    {data?.rolesSection?.heading}
+                  </h2>
                 </div>
-              ))}
+                <div className="distinguishes-cards">
+                  {[roles.slice(0, 3), roles.slice(3, 6)]
+                    .filter((r) => r.length > 0)
+                    .map((row, rowIdx) => (
+                      <div key={rowIdx} className="distinguishes-row">
+                        {row.map((r) => (
+                          <div key={r.title} className="distinguishes-card">
+                            <div
+                              className="flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center"
+                              style={{ background: "rgba(255,176,30,0.12)" }}
+                            >
+                              <RoleIcon iconKey={r.iconKey} size={22} />
+                            </div>
+                            <div className="distinguishes-card-body">
+                              <h4 className="distinguishes-card-title">
+                                {r.title}
+                              </h4>
+                              <p className="distinguishes-card-text">
+                                {r.description}
+                              </p>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    ))}
+                </div>
+              </div>
             </div>
           </Container>
         </section>
       )}
+
       {/* 4 ── GOVERNANCE SCOPE */}
       {scopeItems.length > 0 && (
-        <section className="py-16 bg-[#1e2433]">
+        <section
+          className="section-padding"
+          style={{ background: "var(--color-surface)" }}
+        >
           <Container>
-            <div className="text-center mb-12">
-              <span className="inline-flex items-center border border-[#facc15]/40 text-[#facc15] text-[11px] font-semibold uppercase tracking-[0.12em] px-4 py-1.5 rounded-full mb-5">
-                Scope
-              </span>
-              <h2 className="text-2xl md:text-3xl font-bold text-white">
-                Governance Scope
-              </h2>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            <SectionHeading
+              label={data?.scopeSection?.eyebrow}
+              heading={data?.scopeSection?.heading ?? ""}
+            />
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {scopeItems.map((s) => (
                 <div
                   key={s.title}
-                  className="bg-[#262d3d] border border-[#2e3750] rounded-2xl p-6 hover:border-[#facc15]/50 transition-colors duration-200"
+                  className="flex flex-col gap-3 p-6 rounded-[20px] transition-all duration-300 hover:-translate-y-1"
+                  style={{
+                    background: "var(--color-white)",
+                    border: "1px solid var(--color-border-subtle)",
+                  }}
                 >
-                  <div className="w-10 h-10 rounded-xl bg-[#facc15]/10 flex items-center justify-center mb-4">
-                    <ScopeIcon iconKey={s.iconKey} />
+                  <div
+                    className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
+                    style={{ background: "rgba(255,176,30,0.1)" }}
+                  >
+                    <RoleIcon iconKey={s.iconKey} size={22} />
                   </div>
-                  <h3 className="font-bold text-white text-[14px] mb-2">
+                  <h4
+                    className="text-[18px] font-medium leading-[1.4]"
+                    style={{ color: "var(--color-dark)" }}
+                  >
                     {s.title}
-                  </h3>
-                  <p className="text-[#8b95a9] text-sm leading-relaxed">
+                  </h4>
+                  <p
+                    className="text-[16px] leading-[31px]"
+                    style={{ color: "var(--color-gray-body)" }}
+                  >
                     {s.description}
                   </p>
                 </div>
@@ -699,27 +624,38 @@ export default async function GovernancePage() {
 
       {/* 5 ── GOVERNANCE STRUCTURE */}
       {structure.length > 0 && (
-        <section className="py-16 bg-white border-t border-[#f0f0f0]">
+        <section className="section-padding bg-white">
           <Container>
-            <div className="text-center mb-12">
-              <Badge>Structure</Badge>
-              <h2 className="text-2xl md:text-3xl font-bold text-[#1a1a1a]">
-                Governance Structure
-              </h2>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            <SectionHeading
+              label={data?.structureSection?.eyebrow}
+              heading={data?.structureSection?.heading ?? ""}
+            />
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {structure.map((s) => (
                 <div
                   key={s.title}
-                  className="bg-[#f8fafc] border border-[#e5e7eb] rounded-2xl p-7 text-center hover:border-primary hover:shadow-md transition-all duration-200"
+                  className="flex flex-col items-center text-center gap-4 p-7 rounded-[20px] transition-all duration-300 hover:-translate-y-1"
+                  style={{
+                    background: "var(--color-bg-default)",
+                    border: "1px solid var(--color-border-subtle)",
+                  }}
                 >
-                  <div className="w-14 h-14 rounded-2xl bg-[#eff6ff] flex items-center justify-center mx-auto mb-5">
-                    <RoleIcon iconKey={s.iconKey} size={32} />
+                  <div
+                    className="w-14 h-14 rounded-2xl flex items-center justify-center"
+                    style={{ background: "rgba(255,176,30,0.1)" }}
+                  >
+                    <RoleIcon iconKey={s.iconKey} size={30} />
                   </div>
-                  <h3 className="font-bold text-[#1a1a1a] text-[15px] mb-2">
+                  <h4
+                    className="text-[18px] font-medium"
+                    style={{ color: "var(--color-dark)" }}
+                  >
                     {s.title}
-                  </h3>
-                  <p className="text-[#666] text-sm leading-relaxed">
+                  </h4>
+                  <p
+                    className="text-[15px] leading-[28px]"
+                    style={{ color: "var(--color-gray-body)" }}
+                  >
                     {s.description}
                   </p>
                 </div>
@@ -731,229 +667,55 @@ export default async function GovernancePage() {
 
       {/* 6 ── HOW IT OPERATES */}
       {steps.length > 0 && (
-        <section className="py-16 bg-[#f8fafc] border-t border-[#f0f0f0]">
+        <section
+          className="section-padding"
+          style={{ background: "var(--color-surface)" }}
+        >
           <Container>
-            <div className="text-center mb-12">
-              <Badge>Process</Badge>
-              <h2 className="text-2xl md:text-3xl font-bold text-[#1a1a1a]">
-                How the Governance Council Operates
-              </h2>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-14 max-w-4xl mx-auto">
-              <div>
-                {stepsLeft.map((s, i) => (
-                  <div
-                    key={s.num}
-                    className={`flex gap-5 py-7 ${i < stepsLeft.length - 1 ? "border-b border-[#e5e7eb]" : ""}`}
-                  >
-                    <span className="flex-shrink-0 w-10 h-10 rounded-full bg-[#1a1a1a] text-white text-sm font-bold flex items-center justify-center">
-                      {s.num}
-                    </span>
-                    <div>
-                      <h3 className="font-bold text-[#1a1a1a] text-[15px] mb-1">
-                        {s.title}
-                      </h3>
-                      <p className="text-[#666] text-sm leading-relaxed">
-                        {s.description}
-                      </p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-              <div>
-                {stepsRight.map((s, i) => (
-                  <div
-                    key={s.num}
-                    className={`flex gap-5 py-7 ${i < stepsRight.length - 1 ? "border-b border-[#e5e7eb]" : ""}`}
-                  >
-                    <span className="flex-shrink-0 w-10 h-10 rounded-full bg-[#1a1a1a] text-white text-sm font-bold flex items-center justify-center">
-                      {s.num}
-                    </span>
-                    <div>
-                      <h3 className="font-bold text-[#1a1a1a] text-[15px] mb-1">
-                        {s.title}
-                      </h3>
-                      <p className="text-[#666] text-sm leading-relaxed">
-                        {s.description}
-                      </p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </Container>
-        </section>
-      )}
-
-      {/* 7 ── COMPLIANCE & RISK */}
-      {compliance && (
-        <section className="py-16 bg-white border-t border-[#f0f0f0]">
-          <Container>
-            <div
-              className="rounded-[32px] overflow-hidden"
-              style={{
-                background: "linear-gradient(135deg, #fef9c3 0%, #fde68a 100%)",
-              }}
-            >
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center px-10 md:px-14 py-14">
-                <div>
-                  <Badge>Compliance</Badge>
-                  <h2 className="text-2xl md:text-3xl font-bold text-[#1a1a1a] mb-4">
-                    {compliance.heading}
-                  </h2>
-                  <p className="text-[#555] text-sm leading-relaxed mb-8">
-                    {compliance.text}
-                  </p>
-                  <div className="flex flex-wrap gap-3">
-                    {(compliance.tags ?? []).map((tag) => (
-                      <span
-                        key={tag}
-                        className="bg-white/80 border border-[#f59e0b]/30 text-[#92400e] text-xs font-semibold px-4 py-2 rounded-full shadow-sm"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-                <div className="flex items-center justify-center">
-                  {compliance.image?.asset?.url ? (
-                    <Image
-                      src={compliance.image.asset.url}
-                      alt={compliance.image.alt ?? "Compliance"}
-                      width={280}
-                      height={220}
-                      className="max-w-full"
-                    />
-                  ) : (
-                    <svg
-                      width="280"
-                      height="220"
-                      viewBox="0 0 280 220"
-                      fill="none"
-                    >
-                      <rect
-                        x="60"
-                        y="40"
-                        width="160"
-                        height="150"
-                        rx="12"
-                        fill="white"
-                        stroke="#f59e0b"
-                        strokeWidth="1.5"
-                      />
-                      <rect
-                        x="100"
-                        y="28"
-                        width="80"
-                        height="28"
-                        rx="8"
-                        fill="#fde68a"
-                        stroke="#f59e0b"
-                        strokeWidth="1.5"
-                      />
-                      <path
-                        d="M84 80h112"
-                        stroke="#fde68a"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                      />
-                      <path
-                        d="M84 100h80"
-                        stroke="#fde68a"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                      />
-                      <path
-                        d="M84 120h112"
-                        stroke="#fde68a"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                      />
-                      <path
-                        d="M84 140h60"
-                        stroke="#fde68a"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                      />
-                      <circle cx="76" cy="80" r="5" fill="#4ade80" />
-                      <path
-                        d="M73 80l2 2 4-4"
-                        stroke="white"
-                        strokeWidth="1.2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                      <circle cx="76" cy="100" r="5" fill="#4ade80" />
-                      <path
-                        d="M73 100l2 2 4-4"
-                        stroke="white"
-                        strokeWidth="1.2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                      <circle cx="76" cy="120" r="5" fill="#4ade80" />
-                      <path
-                        d="M73 120l2 2 4-4"
-                        stroke="white"
-                        strokeWidth="1.2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                      <circle cx="76" cy="140" r="5" fill="#f59e0b" />
-                      <path
-                        d="M76 137v6M73 140h6"
-                        stroke="white"
-                        strokeWidth="1.2"
-                        strokeLinecap="round"
-                      />
-                      <circle cx="210" cy="55" r="28" fill="#fef3c7" />
-                      <path
-                        d="M210 40l12 6v8c0 7-5 11-12 13-7-2-12-6-12-13V46l12-6z"
-                        fill="#fde68a"
-                        stroke="#f59e0b"
-                        strokeWidth="1.5"
-                      />
-                      <path
-                        d="M205 55l4 4 7-8"
-                        stroke="#f59e0b"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-                  )}
-                </div>
-              </div>
-            </div>
-          </Container>
-        </section>
-      )}
-
-      {/* 8 ── GET INVOLVED */}
-      {getInvolved.length > 0 && (
-        <section className="py-16 bg-[#f8fafc] border-t border-[#f0f0f0]">
-          <Container>
-            <div className="text-center mb-12">
-              <Badge>Participate</Badge>
-              <h2 className="text-2xl md:text-3xl font-bold text-[#1a1a1a]">
-                Get Involved
-              </h2>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {getInvolved.map((g) => (
+            <SectionHeading
+              label={data?.stepsSection?.eyebrow}
+              heading={data?.stepsSection?.heading ?? ""}
+            />
+            <div className="flex flex-col gap-4">
+              {stepRows.map((row, rowIdx) => (
                 <div
-                  key={g.title}
-                  className="bg-white border border-[#e5e7eb] rounded-2xl p-8 hover:border-primary hover:shadow-md transition-all duration-200"
+                  key={rowIdx}
+                  className="grid grid-cols-1 md:grid-cols-3 gap-4"
                 >
-                  <div className="w-14 h-14 rounded-2xl bg-[#eff6ff] flex items-center justify-center mb-5">
-                    <RoleIcon iconKey={g.iconKey} size={30} />
-                  </div>
-                  <h3 className="font-bold text-[#1a1a1a] text-[16px] mb-3">
-                    {g.title}
-                  </h3>
-                  <p className="text-[#666] text-sm leading-relaxed">
-                    {g.description}
-                  </p>
+                  {row.map((step, idx) => (
+                    <div
+                      key={idx}
+                      className="flex flex-col gap-3 p-6 rounded-[20px] transition-all duration-300 hover:-translate-y-1"
+                      style={{
+                        background: "var(--color-white)",
+                        border: "1px solid var(--color-border-subtle)",
+                      }}
+                    >
+                      <div
+                        className="inline-flex items-center justify-center w-9 h-9 rounded-full text-sm font-bold flex-shrink-0"
+                        style={{
+                          background: "var(--color-primary)",
+                          color: "var(--color-dark)",
+                        }}
+                      >
+                        {step.num}
+                      </div>
+                      <div className="flex flex-col gap-2">
+                        <h4
+                          className="text-[18px] font-medium leading-[1.4]"
+                          style={{ color: "var(--color-dark)" }}
+                        >
+                          {step.title}
+                        </h4>
+                        <p
+                          className="text-[16px] leading-[31px]"
+                          style={{ color: "var(--color-gray-body)" }}
+                        >
+                          {step.description}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               ))}
             </div>
@@ -961,20 +723,145 @@ export default async function GovernancePage() {
         </section>
       )}
 
-      {/* 9 ── FAQ */}
-      {faqs.length > 0 && (
-        <section className="py-16 bg-white border-t border-[#f0f0f0]">
+      {/* 7 ── COMPLIANCE & RISK */}
+      {data?.compliance && (
+        <section className="section-padding bg-white">
           <Container>
-            <div className="text-center mb-12">
-              <Badge>FAQ</Badge>
-              <h2 className="text-2xl md:text-3xl font-bold text-[#1a1a1a]">
-                Frequently Asked Questions
-              </h2>
+            <div className="docs-banner">
+              <div className="mb-4">
+                <span className="section-eyebrow mb-6 inline-flex">
+                  {data.compliance.eyebrow}
+                </span>
+                <h2
+                  className="text-[36px] font-bold leading-[48px] mb-4"
+                  style={{ color: "var(--color-white)" }}
+                >
+                  {data.compliance.heading}
+                </h2>
+                <p
+                  className="text-[16px] leading-[28px] mb-8 max-w-[500px]"
+                  style={{ color: "var(--color-hero-body)" }}
+                >
+                  {data.compliance.text}
+                </p>
+                <div className="flex flex-wrap gap-3">
+                  {(data.compliance.tags ?? []).map((tag) => (
+                    <span
+                      key={tag}
+                      className="inline-flex items-center px-5 py-2.5 rounded-full text-sm font-medium"
+                      style={{
+                        background: "rgba(255,176,30,0.15)",
+                        border: "1px solid var(--color-primary)",
+                        color: "var(--color-primary)",
+                      }}
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+              <div className="docs-banner-img-wrap">
+                {data.compliance.image?.asset?.url ? (
+                  <Image
+                    src={data.compliance.image.asset.url}
+                    alt={data.compliance.image.alt ?? ""}
+                    width={340}
+                    height={260}
+                    className="docs-banner-img"
+                  />
+                ) : (
+                  <Image
+                    src="/images/reso.png"
+                    alt=""
+                    width={340}
+                    height={260}
+                    className="docs-banner-img"
+                  />
+                )}
+              </div>
             </div>
-            <GovernanceFAQ items={faqs} />
           </Container>
         </section>
       )}
-    </div>
+
+      {/* 8 ── GET INVOLVED — dark */}
+      {getInvolved.length > 0 && (
+        <section className="distinguishes-section">
+          <Container>
+            <div className="distinguishes-inner">
+              <video
+                className="distinguishes-bg-video"
+                src="/images/bg-line-1.mp4"
+                autoPlay
+                loop
+                muted
+                playsInline
+              />
+              <div className="distinguishes-content">
+                <div className="distinguishes-heading">
+                  <span className="section-eyebrow section-eyebrow--dark">
+                    {data?.getInvolvedSection?.eyebrow}
+                  </span>
+                  <h2 className="distinguishes-title">
+                    {data?.getInvolvedSection?.heading}
+                  </h2>
+                </div>
+                <div className="distinguishes-cards">
+                  {[getInvolved.slice(0, 3), getInvolved.slice(3, 6)]
+                    .filter((r) => r.length > 0)
+                    .map((row, rowIdx) => (
+                      <div key={rowIdx} className="distinguishes-row">
+                        {row.map((g) => (
+                          <div key={g.title} className="distinguishes-card">
+                            <div
+                              className="flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center"
+                              style={{ background: "rgba(255,176,30,0.12)" }}
+                            >
+                              <RoleIcon iconKey={g.iconKey} size={22} />
+                            </div>
+                            <div className="distinguishes-card-body">
+                              <h4 className="distinguishes-card-title">
+                                {g.title}
+                              </h4>
+                              <p className="distinguishes-card-text">
+                                {g.description}
+                              </p>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    ))}
+                </div>
+              </div>
+            </div>
+          </Container>
+        </section>
+      )}
+
+      {/* 9 ── FAQ */}
+      {faqs.length > 0 && (
+        <section className="section-padding bg-white">
+          <Container>
+            <SectionHeading
+              label={data?.faqSection?.eyebrow}
+              heading={data?.faqSection?.heading ?? ""}
+            />
+            <div className="flex flex-col lg:flex-row gap-12 items-start">
+              <div className="lg:w-5/12">
+                <Image
+                  src="/images/faq-img.png"
+                  alt="Frequently Asked Questions"
+                  width={454}
+                  height={425}
+                />
+              </div>
+              <div className="lg:w-7/12">
+                <FAQ items={faqs} />
+              </div>
+            </div>
+          </Container>
+        </section>
+      )}
+    </>
   );
 }

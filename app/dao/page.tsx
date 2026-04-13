@@ -1,165 +1,399 @@
 import { Metadata } from "next";
 import Image from "next/image";
 import Container from "@/components/layout/Container";
-import Breadcrumb from "@/components/layout/Breadcrumb";
+import AnimatedButton from "@/components/ui/AnimatedButton";
 import SectionHeading from "@/components/ui/SectionHeading";
-import Button from "@/components/ui/Button";
 import FAQ from "@/components/ui/FAQ";
+import { sanityFetch } from "@/lib/sanity";
+import { daoPageQuery } from "@/lib/queries";
 
 export const metadata: Metadata = {
-  title: "DAO",
-  description: "Enabling on-chain decision-making and protocol participation through the Blockmaze DAO governance platform.",
+  title: "DAO Governance Platform | Quadratic Voting for RWAs",
+  description:
+    "Participate in DAO governance using quadratic voting to approve RWA tokenization, treasury allocation, and regulated blockchain decisions.",
 };
 
-const metrics = [
-  { label: "Total Proposals", value: "79" },
-  { label: "Assets Tokenization", value: "01" },
-  { label: "Council Members", value: "04" },
-  { label: "Total Votes Cast", value: "41" },
-];
+/* ─── TYPES ─────────────────────────────────────────────────── */
 
-const steps = [
-  { icon: "/images/dao-step01.png", title: "Proposal Submission", description: "Governance participants submit proposals for review, including minting requests, proof-of-reserve audits, and protocol or governance actions." },
-  { icon: "/images/dao-step02.png", title: "Active Voting", description: "Eligible members cast votes using GBMZ tokens, with voting power calculated as \u221A(GBMZ allocated) to support balanced representation." },
-  { icon: "/images/dao-step03.png", title: "Resolution and Execution", description: "Votes are tallied at the defined deadline and recorded on-chain. Approved proposals are executed automatically through smart contract workflows." },
-];
+interface DaoData {
+  hero?: {
+    badge?: string;
+    heading?: string;
+    subtext?: string;
+    subtext2?: string;
+    buttonText?: string;
+    buttonHref?: string;
+    secondButtonText?: string;
+    secondButtonHref?: string;
+    image?: { asset?: { url: string }; alt?: string };
+  };
+  aboutSection?: { eyebrow?: string; heading?: string };
+  aboutText?: string;
+  aboutButton?: { text?: string; href?: string };
+  aboutCards?: { title: string; description: string }[];
+  aboutCardsButton?: { text?: string; href?: string };
+  marqueeItems?: string[];
+  stepsSection?: { eyebrow?: string; heading?: string; subtext?: string };
+  steps?: { iconPath: string; title: string; description: string }[];
+  eligibilitySection?: { eyebrow?: string; heading?: string; subtext?: string };
+  eligibilityItems?: string[];
+  mechanismsSection?: { eyebrow?: string; heading?: string; subtext?: string };
+  mechanisms?: { iconPath: string; title: string; description: string }[];
+  faqSection?: { eyebrow?: string; heading?: string };
+  faqs?: { question: string; answer: string }[];
+}
 
-const coreMechanisms = [
-  { icon: "/images/core01.png", title: "Quadratic Voting", description: "Fair governance is supported through a quadratic voting mechanism within the DAO governance platform, where voting power is calculated as \u221A(GBMZ allocated)." },
-  { icon: "/images/core02.png", title: "Proof of Reserve", description: "Governance participants review and vote on proof-of-reserve audits to ensure that all assets issued through real-world asset tokenization remain fully backed." },
-  { icon: "/images/core03.png", title: "Minting Approval", description: "Requests to mint new tokens representing real-world assets are submitted for governance approval, with each proposal undergoing formal review by the Governance Council." },
-];
+/* ─── PAGE ──────────────────────────────────────────────────── */
 
-const faqItems = [
-  { question: "1. Who can participate in DAO governance?", answer: "Participation is available to authorized governance participants who hold GBMZ tokens, meet defined eligibility requirements, and connect an approved wallet during active voting periods." },
-  { question: "2. How are governance proposals created and approved?", answer: "Proposals are submitted through the DAO interface, reviewed by governance participants, voted on using decentralized decision-making, and executed automatically." },
-  { question: "3. How does voting power work?", answer: "Voting power uses quadratic weighting to ensure fair representation and prevent influence concentration." },
-  { question: "4. How is treasury governance managed?", answer: "Treasury governance is managed through proposals and voting, with approved allocations executed on-chain to fund ecosystem programs." },
-  { question: "5. How is transparency maintained?", answer: "All proposals, votes, and execution records are published on-chain to ensure verifiable activity and full transparency across governance operations." },
-];
+export default async function DAOPage() {
+  const data = await sanityFetch<DaoData>(daoPageQuery);
 
-export default function DAOPage() {
+  const aboutCards = data?.aboutCards ?? [];
+  const marqueeItems = data?.marqueeItems ?? [];
+  const steps = data?.steps ?? [];
+  const eligibilityItems = data?.eligibilityItems ?? [];
+  const mechanisms = data?.mechanisms ?? [];
+  const faqs = data?.faqs ?? [];
+
   return (
     <>
-      {/* Hero */}
-      <section className="section-padding bg-section-dark text-white">
-        <Container>
-          <Breadcrumb items={[{ label: "DAO" }]} />
-          <div className="flex flex-col lg:flex-row items-center gap-12">
-            <div className="lg:w-1/2">
-              <h4 className="text-primary font-semibold mb-2">Blockmaze DAO</h4>
-              <h1 className="text-white mb-4">On-chain Governance Platform</h1>
-              <p className="text-gray-light text-lg leading-relaxed mb-6">Enabling Decision-making and Protocol Participation</p>
-              <div className="flex flex-wrap gap-4">
-                <Button href="/contact-us" variant="primary">Contact Us</Button>
-                <Button href="https://dao.blockmaze.org/proposals?tab=active" variant="outline" external>View Proposals</Button>
+      {/* 1 ── HERO */}
+      <section
+        className="relative overflow-hidden flex items-center"
+        style={{
+          minHeight: "500px",
+          background:
+            "linear-gradient(to left, var(--color-header-navy), var(--color-header-dark) 49%)",
+        }}
+      >
+        <div className="hero-bg-grid">
+          <Image src="/images/hero-bg-grid.svg" alt="" fill className="object-fill" />
+        </div>
+
+        <div className="mx-auto w-[80%] max-w-[1440px] py-20 relative z-10 flex flex-col lg:flex-row items-center gap-[60px]">
+          <div className="flex-1 flex flex-col gap-[40px]">
+            <div className="flex flex-col gap-[16px]">
+              {data?.hero?.badge && (
+                <div
+                  className="inline-flex w-fit items-center justify-center px-[16px] py-[12px] rounded-[999px] border"
+                  style={{
+                    borderColor: "var(--color-chip-border)",
+                    background: "var(--color-chip-bg)",
+                  }}
+                >
+                  <span
+                    className="text-[14px] font-medium tracking-[-0.28px] whitespace-nowrap"
+                    style={{ color: "var(--color-primary)" }}
+                  >
+                    {data.hero.badge}
+                  </span>
+                </div>
+              )}
+              <div className="flex flex-col gap-[20px]">
+                <h1
+                  className="font-bold text-[46px] leading-[62px]"
+                  style={{ color: "var(--color-white)" }}
+                >
+                  {data?.hero?.heading}
+                </h1>
+                {data?.hero?.subtext && (
+                  <p
+                    className="text-[18px] font-medium leading-[28px]"
+                    style={{ color: "var(--color-primary)" }}
+                  >
+                    {data.hero.subtext}
+                  </p>
+                )}
+                {data?.hero?.subtext2 && (
+                  <p
+                    className="text-[16px] leading-[28px]"
+                    style={{ color: "var(--color-hero-body)" }}
+                  >
+                    {data.hero.subtext2}
+                  </p>
+                )}
               </div>
             </div>
-            <div className="lg:w-1/2">
-              <Image src="/images/dao-banner-1.png" alt="Blockmaze DAO" width={600} height={400} priority />
+            <div className="flex flex-wrap gap-[20px]">
+              {data?.hero?.buttonText && (
+                <AnimatedButton href={data.hero.buttonHref ?? "#"} variant="primary">
+                  {data.hero.buttonText}
+                </AnimatedButton>
+              )}
+              {data?.hero?.secondButtonText && (
+                <AnimatedButton href={data.hero.secondButtonHref ?? "#"} variant="white">
+                  {data.hero.secondButtonText}
+                </AnimatedButton>
+              )}
             </div>
           </div>
-        </Container>
-      </section>
 
-      {/* Metrics */}
-      <section className="py-12 bg-white">
-        <Container>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-            {metrics.map((m) => (
-              <div key={m.label}>
-                <div className="text-4xl font-bold text-primary mb-2">{m.value}</div>
-                <div className="text-gray-DEFAULT text-sm">{m.label}</div>
-              </div>
-            ))}
+          <div className="hidden lg:flex flex-shrink-0 items-center justify-center w-[460px]">
+            {data?.hero?.image?.asset?.url ? (
+              <Image
+                src={data.hero.image.asset.url}
+                alt={data.hero.image.alt ?? ""}
+                width={600}
+                height={400}
+                priority
+              />
+            ) : (
+              <Image
+                src="/images/dao-banner-1.png"
+                alt="Blockmaze DAO"
+                width={600}
+                height={400}
+                priority
+              />
+            )}
           </div>
-        </Container>
+        </div>
       </section>
 
-      {/* About */}
-      <section className="section-padding bg-gray-50">
-        <Container>
-          <SectionHeading heading="About The Blockmaze DAO" />
-          <p className="text-gray-DEFAULT text-center max-w-3xl mx-auto mb-6 leading-relaxed">
-            The DAO exists to support decentralized decision-making by allowing token holders to propose, review, and vote on governance actions.
-          </p>
-          <p className="text-gray-DEFAULT text-center max-w-3xl mx-auto leading-relaxed">
-            Community governance is executed through a structured DAO governance platform that enables transparent participation, verifiable voting, and accountable execution of approved proposals.
-          </p>
-        </Container>
-      </section>
-
-      {/* How Governance Works */}
-      <section className="section-padding">
-        <Container>
-          <SectionHeading heading="How Governance Works" />
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {steps.map((step, i) => (
-              <div key={step.title} className="card bg-gray-50 p-6 text-center">
-                <Image src={step.icon} alt={step.title} width={80} height={80} className="mx-auto mb-4" />
-                <h4 className="text-gray-dark font-semibold mb-2">Step {i + 1}: {step.title}</h4>
-                <p className="text-gray-DEFAULT text-sm leading-relaxed">{step.description}</p>
-              </div>
-            ))}
-          </div>
-        </Container>
-      </section>
-
-      {/* Voting Eligibility */}
-      <section className="section-padding bg-gray-50">
-        <Container>
-          <SectionHeading heading="Voting Eligibility Requirements" />
-          <ul className="max-w-2xl mx-auto space-y-3">
-            {[
-              "Verified governance participants approved through governance access controls",
-              "Hold GBMZ tokens in connected wallet for decentralized decision-making",
-              "Maintain an active wallet connection during the voting period for on-chain vote submission",
-            ].map((item, i) => (
-              <li key={i} className="flex items-start gap-3 text-gray-DEFAULT">
-                <span className="text-primary mt-1">&#8226;</span><span>{item}</span>
-              </li>
-            ))}
-          </ul>
-        </Container>
-      </section>
-
-      {/* Core Governance Mechanisms */}
-      <section className="section-padding">
-        <Container>
-          <SectionHeading heading="Core Governance Mechanisms" />
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {coreMechanisms.map((m) => (
-              <div key={m.title} className="card bg-gray-50 p-6 text-center">
-                <Image src={m.icon} alt={m.title} width={60} height={60} className="mx-auto mb-4" />
-                <h4 className="text-gray-dark font-semibold mb-2">{m.title}</h4>
-                <p className="text-gray-DEFAULT text-sm leading-relaxed">{m.description}</p>
-              </div>
-            ))}
-          </div>
-        </Container>
-      </section>
-
-      {/* FAQ */}
-      <section className="section-padding bg-gray-50">
-        <Container>
-          <SectionHeading heading="Frequently Asked Questions" />
-          <div className="flex flex-col lg:flex-row gap-12 items-start">
-            <div className="lg:w-5/12">
-              <Image src="/images/faq-img.png" alt="FAQ" width={454} height={425} />
+      {/* 2 ── ABOUT — white */}
+      {(data?.aboutText || data?.aboutButton?.text) && (
+        <section className="section-padding bg-white">
+          <Container>
+            <div className="flex flex-col gap-6 items-center text-center w-full">
+              {data?.aboutSection?.eyebrow && (
+                <span className="section-eyebrow">{data.aboutSection.eyebrow}</span>
+              )}
+              {data?.aboutSection?.heading && (
+                <h2 className="section-heading">{data.aboutSection.heading}</h2>
+              )}
+              {data?.aboutText && (
+                <p className="section-subtext">{data.aboutText}</p>
+              )}
+              {data?.aboutButton?.text && (
+                <AnimatedButton href={data.aboutButton.href ?? "#"} variant="primary">
+                  {data.aboutButton.text}
+                </AnimatedButton>
+              )}
             </div>
-            <div className="lg:w-7/12">
-              <FAQ items={faqItems} />
-            </div>
-          </div>
-        </Container>
-      </section>
+          </Container>
+        </section>
+      )}
 
-      {/* CTA */}
-      <section className="section-padding bg-section-dark text-center">
-        <Container>
-          <Button href="/contact-us" variant="white">Talk to Expert</Button>
-        </Container>
-      </section>
+      {/* 3 ── ABOUT CARDS — dark */}
+      {aboutCards.length > 0 && (
+        <section className="distinguishes-section">
+          <Container>
+            <div className="distinguishes-inner">
+              <video
+                className="distinguishes-bg-video"
+                src="/images/bg-line-1.mp4"
+                autoPlay
+                loop
+                muted
+                playsInline
+              />
+              <div className="distinguishes-content">
+                <div className="distinguishes-cards">
+                  <div className="distinguishes-row">
+                    {aboutCards.map((card) => (
+                      <div key={card.title} className="distinguishes-card">
+                        <div className="distinguishes-card-body">
+                          <h4 className="distinguishes-card-title">{card.title}</h4>
+                          <p className="distinguishes-card-text">{card.description}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                {data?.aboutCardsButton?.text && (
+                  <div className="mt-8">
+                    <AnimatedButton
+                      href={data.aboutCardsButton.href ?? "#"}
+                      variant="primary"
+                    >
+                      {data.aboutCardsButton.text}
+                    </AnimatedButton>
+                  </div>
+                )}
+              </div>
+            </div>
+          </Container>
+        </section>
+      )}
+
+      {/* 4 ── MARQUEE */}
+      {marqueeItems.length > 0 && (
+        <div
+          className="overflow-hidden py-5"
+          style={{
+            background: "var(--color-primary)",
+          }}
+        >
+          <div
+            className="flex gap-10 whitespace-nowrap"
+            style={{
+              animation: "marquee 20s linear infinite",
+            }}
+          >
+            {[...marqueeItems, ...marqueeItems, ...marqueeItems].map((item, i) => (
+              <span
+                key={i}
+                className="text-[15px] font-semibold tracking-wide"
+                style={{ color: "var(--color-dark)" }}
+              >
+                {item} <span className="mx-3 opacity-50">—</span>
+              </span>
+            ))}
+          </div>
+          <style>{`@keyframes marquee { from { transform: translateX(0) } to { transform: translateX(-33.333%) } }`}</style>
+        </div>
+      )}
+
+      {/* 5 ── HOW GOVERNANCE WORKS — white */}
+      {steps.length > 0 && (
+        <section className="section-padding bg-white">
+          <Container>
+            <SectionHeading
+              label={data?.stepsSection?.eyebrow}
+              heading={data?.stepsSection?.heading ?? ""}
+              subtext={data?.stepsSection?.subtext}
+            />
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {steps.map((step, i) => (
+                <div
+                  key={step.title}
+                  className="flex flex-col gap-4 p-6 rounded-[20px] transition-all duration-300 hover:-translate-y-1"
+                  style={{
+                    background: "var(--color-bg-default)",
+                    border: "1px solid var(--color-border-subtle)",
+                  }}
+                >
+                  <div
+                    className="w-14 h-14 rounded-xl flex items-center justify-center flex-shrink-0"
+                    style={{ background: "rgba(255,176,30,0.1)" }}
+                  >
+                    <Image src={step.iconPath} alt={step.title} width={40} height={40} />
+                  </div>
+                  <div className="flex flex-col gap-2">
+                    <h4
+                      className="text-[18px] font-medium leading-[1.4]"
+                      style={{ color: "var(--color-dark)" }}
+                    >
+                      Step {i + 1}: {step.title}
+                    </h4>
+                    <p
+                      className="text-[15px] leading-[28px]"
+                      style={{ color: "var(--color-gray-body)" }}
+                    >
+                      {step.description}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </Container>
+        </section>
+      )}
+
+      {/* 6 ── VOTING ELIGIBILITY — surface */}
+      {eligibilityItems.length > 0 && (
+        <section
+          className="section-padding"
+          style={{ background: "var(--color-surface)" }}
+        >
+          <Container>
+            <SectionHeading
+              label={data?.eligibilitySection?.eyebrow}
+              heading={data?.eligibilitySection?.heading ?? ""}
+              subtext={data?.eligibilitySection?.subtext}
+            />
+            <div className="flex flex-col gap-3 max-w-2xl mx-auto">
+              {eligibilityItems.map((item, i) => (
+                <div key={i} className="about-card-bullet">
+                  <Image src="/images/about-arrow.svg" alt="" width={24} height={24} />
+                  <p
+                    className="text-[16px] leading-[31px]"
+                    style={{ color: "var(--color-gray-body)" }}
+                  >
+                    {item}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </Container>
+        </section>
+      )}
+
+      {/* 7 ── CORE GOVERNANCE MECHANISMS — dark */}
+      {mechanisms.length > 0 && (
+        <section className="distinguishes-section">
+          <Container>
+            <div className="distinguishes-inner">
+              <video
+                className="distinguishes-bg-video"
+                src="/images/bg-line-1.mp4"
+                autoPlay
+                loop
+                muted
+                playsInline
+              />
+              <div className="distinguishes-content">
+                <div className="distinguishes-heading">
+                  <span className="section-eyebrow section-eyebrow--dark">
+                    {data?.mechanismsSection?.eyebrow}
+                  </span>
+                  <h2 className="distinguishes-title">
+                    {data?.mechanismsSection?.heading}
+                  </h2>
+                  {data?.mechanismsSection?.subtext && (
+                    <p className="distinguishes-subtext">
+                      {data.mechanismsSection.subtext}
+                    </p>
+                  )}
+                </div>
+                <div className="distinguishes-cards">
+                  <div className="distinguishes-row">
+                    {mechanisms.map((m) => (
+                      <div key={m.title} className="distinguishes-card">
+                        <div
+                          className="flex-shrink-0 w-14 h-14 rounded-xl flex items-center justify-center"
+                          style={{ background: "rgba(255,176,30,0.12)" }}
+                        >
+                          <Image src={m.iconPath} alt={m.title} width={40} height={40} />
+                        </div>
+                        <div className="distinguishes-card-body">
+                          <h4 className="distinguishes-card-title">{m.title}</h4>
+                          <p className="distinguishes-card-text">{m.description}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </Container>
+        </section>
+      )}
+
+      {/* 8 ── FAQ — white */}
+      {faqs.length > 0 && (
+        <section className="section-padding bg-white">
+          <Container>
+            <SectionHeading
+              label={data?.faqSection?.eyebrow}
+              heading={data?.faqSection?.heading ?? ""}
+            />
+            <div className="flex flex-col lg:flex-row gap-12 items-start">
+              <div className="lg:w-5/12">
+                <Image
+                  src="/images/faq-img.png"
+                  alt="Frequently Asked Questions"
+                  width={454}
+                  height={425}
+                />
+              </div>
+              <div className="lg:w-7/12">
+                <FAQ items={faqs} />
+              </div>
+            </div>
+          </Container>
+        </section>
+      )}
     </>
   );
 }

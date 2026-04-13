@@ -8,6 +8,12 @@ import knowledgeHub from "./sanity/schemas/knowledgeHub";
 import siteSettings from "./sanity/schemas/siteSettings";
 import technicalPage from "./sanity/schemas/technicalPage";
 import governancePage from "./sanity/schemas/governancePage";
+import rfpPage from "./sanity/schemas/rfpPage";
+import daoPage from "./sanity/schemas/daoPage";
+import swapPage from "./sanity/schemas/swapPage";
+import validatorPage from "./sanity/schemas/validatorPage";
+import delegatorPage from "./sanity/schemas/delegatorPage";
+import tokenomicsPage from "./sanity/schemas/tokenomicsPage";
 import { PublishAction } from "./sanity/actions/PublishAction";
 
 export default defineConfig({
@@ -18,7 +24,7 @@ export default defineConfig({
   basePath: "/studio",
   plugins: [structureTool()],
   schema: {
-    types: [blog, category, author, news, knowledgeHub, siteSettings, technicalPage, governancePage],
+    types: [blog, category, author, news, knowledgeHub, siteSettings, technicalPage, governancePage, rfpPage, daoPage, swapPage, validatorPage, delegatorPage, tokenomicsPage],
   },
   document: {
     actions: (prev) => [PublishAction, ...prev],

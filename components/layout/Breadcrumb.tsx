@@ -6,7 +6,7 @@ interface BreadcrumbProps {
 
 export default function Breadcrumb({ items }: BreadcrumbProps) {
   return (
-    <nav aria-label="Breadcrumb" className="py-4">
+    <nav aria-label="Breadcrumb" className="py-4 hidden">
       <ol className="flex items-center gap-2 text-sm text-gray-DEFAULT">
         <li>
           <Link href="/" className="hover:text-primary transition-colors">

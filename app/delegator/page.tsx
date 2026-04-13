@@ -1,205 +1,761 @@
 import { Metadata } from "next";
 import Image from "next/image";
 import Container from "@/components/layout/Container";
-import Breadcrumb from "@/components/layout/Breadcrumb";
+import AnimatedButton from "@/components/ui/AnimatedButton";
 import SectionHeading from "@/components/ui/SectionHeading";
-import Button from "@/components/ui/Button";
+import FAQ from "@/components/ui/FAQ";
+import { sanityFetch } from "@/lib/sanity";
+import { delegatorPageQuery } from "@/lib/queries";
 
 export const metadata: Metadata = {
-  title: "Delegator",
-  description: "The Blockmaze delegator platform enables BMZ holders to participate in network security by delegating stake to active validators.",
+  title:
+    "Blockmaze Delegator | Crypto Staking Platform | Delegate & Earn Rewards",
+  description:
+    "The Blockmaze delegator platform enables BMZ holders to participate in network security by delegating stake to active validators.",
 };
 
-const benefits = [
-  { icon: "/images/Frame-4.png", title: "Earn Passive Income", description: "Stake your BMZ and earn rewards without technical setup" },
-  { icon: "/images/Institutional.png", title: "Retain 100% Control", description: "Blockmaze supports non-custodial delegation, so you always own your tokens" },
-  { icon: "/images/Frame-5.png", title: "Low Barrier to Entry", description: "Start with as little as BMZ and stake as many as you want." },
-  { icon: "/images/Frame-6.png", title: "Flexible Management", description: "Redelegate or unbond anytime through the Blockmaze delegator dashboard" },
-  { icon: "/images/Frame-7.png", title: "Support Network Security", description: "Contribute to Blockmaze blockchain while earning" },
-];
+/* ─── TYPES ─────────────────────────────────────────────────── */
 
-const delegationSteps = [
-  { num: "1", title: "Connect Your Wallet", description: "Access the Blockmaze Delegator Platform and connect a Blockmaze-compatible wallet (MetaMask, Kepler, WalletConnect, etc.)." },
-  { num: "2", title: "Browse Validators", description: "Navigate to the Validators section and review active validators using filters such as uptime, commission, and total stake." },
-  { num: "3", title: "Select a Validator", description: "Open the validator profile and confirm commission parameters, performance history, and active status." },
-  { num: "4", title: "Enter Delegation Amount", description: "Choose the amount of BMZ to delegate and review expected rewards and validator commission." },
-  { num: "5", title: "Confirm and Sign", description: "Approve the transaction in your wallet and wait for on-chain confirmation. Once confirmed, your delegation becomes active and begins earning rewards according to validator performance." },
-];
+interface DelegatorData {
+  hero?: {
+    badge?: string;
+    heading?: string;
+    subtext?: string;
+    buttonText?: string;
+    buttonHref?: string;
+    image?: { asset?: { url: string }; alt?: string };
+  };
+  benefitsSection?: { eyebrow?: string; heading?: string };
+  benefits?: { iconPath: string; title: string; description: string }[];
+  evaluateSection?: {
+    eyebrow?: string;
+    heading?: string;
+    text?: string;
+    subtext?: string;
+    items?: string[];
+    note?: string;
+    image?: { asset?: { url: string }; alt?: string };
+  };
+  stepsSection?: { eyebrow?: string; heading?: string; subtext?: string };
+  steps?: { title: string; description: string }[];
+  stepsButton?: { text?: string; href?: string };
+  dashboardSection?: { eyebrow?: string; heading?: string };
+  dashboardItems?: string[];
+  dashboardImage?: { asset?: { url: string }; alt?: string };
+  rewardsSection?: { eyebrow?: string; heading?: string };
+  earningCard?: {
+    iconPath?: string;
+    heading?: string;
+    text?: string;
+    rewardItems?: string[];
+    note?: string;
+  };
+  unbondingCard?: {
+    iconPath?: string;
+    heading?: string;
+    text?: string;
+    timeline?: string[];
+    text2?: string;
+  };
+  risksCard?: {
+    iconPath?: string;
+    heading?: string;
+    intro?: string;
+    risks?: { title: string; description: string }[];
+  };
+  ctaSection?: {
+    heading?: string;
+    subtext?: string;
+    buttonText?: string;
+    buttonHref?: string;
+  };
+}
 
-const dashboardCapabilities = [
-  "Delegate and redelegate BMZ",
-  "Track rewards and commission impact",
-  "View validator performance",
-  "Unbond and withdraw stake",
-  "Monitor transaction history",
-];
+/* ─── PAGE ──────────────────────────────────────────────────── */
 
-const risks = [
-  { title: "Slashing Risk", description: "If a validator violates protocol rules or experiences extended downtime, a portion of the delegated stake may be slashed proportionally. Severe violations, such as double-signing, may result in higher penalties." },
-  { title: "Liquidity & Opportunity Risk", description: "Delegated BMZ remains locked and cannot be used elsewhere. During the unbonding period, rewards stop accruing, and market price movements may impact value." },
-  { title: "Network & Protocol Risk", description: "Protocol upgrades, governance decisions, or smart contract changes may affect staking parameters. Audits and upgrade notices are published, but network evolution carries inherent risk." },
-  { title: "Commission & Performance Risk", description: "Validators may adjust commission rates within predefined limits. Prolonged downtime or poor performance can reduce rewards until redelegation occurs." },
-];
+export default async function DelegatorPage() {
+  const data = await sanityFetch<DelegatorData>(delegatorPageQuery);
 
-export default function DelegatorPage() {
+  const benefits = data?.benefits ?? [];
+  const steps = data?.steps ?? [];
+  const dashboardItems = data?.dashboardItems ?? [];
+
   return (
     <>
-      {/* Hero */}
-      <section className="section-padding bg-section-dark text-white">
-        <Container>
-          <Breadcrumb items={[{ label: "Delegator" }]} />
-          <div className="flex flex-col lg:flex-row items-center gap-12">
-            <div className="lg:w-1/2">
-              <h1 className="text-white mb-4">Earn Rewards by Delegating Your BMZ</h1>
-              <p className="text-gray-light text-lg leading-relaxed mb-6">
-                The Blockmaze delegator platform enables BMZ holders to participate in network security by delegating stake to active validators on the Blockmaze network. Delegators earn staking rewards without running validator infrastructure, while retaining full ownership of their tokens.
-              </p>
-              <Button href="https://delegator.blockmaze.com/login" variant="primary" external>Log In to Delegator Dashboard</Button>
-            </div>
-            <div className="lg:w-1/2">
-              <Image src="/images/People_counter_system.png" alt="Delegator Platform" width={600} height={400} priority />
-            </div>
-          </div>
-        </Container>
-      </section>
-
-      {/* Why Delegate */}
-      <section className="section-padding">
-        <Container>
-          <SectionHeading heading="Why Delegate on Blockmaze?" />
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {benefits.map((b) => (
-              <div key={b.title} className="card bg-gray-50 p-6">
-                <Image src={b.icon} alt={b.title} width={50} height={50} className="mb-4" />
-                <h4 className="text-gray-dark font-semibold mb-2">{b.title}</h4>
-                <p className="text-gray-DEFAULT text-sm leading-relaxed">{b.description}</p>
+      {/* 1 ── HERO */}
+      <section
+        className="relative overflow-hidden flex items-center"
+        style={{
+          minHeight: "500px",
+          background:
+            "linear-gradient(to left, var(--color-header-navy), var(--color-header-dark) 49%)",
+        }}
+      >
+        <div className="hero-bg-grid">
+          <Image
+            src="/images/hero-bg-grid.svg"
+            alt=""
+            fill
+            className="object-fill"
+          />
+        </div>
+        <div className="mx-auto w-[80%] max-w-[1440px] py-20 relative z-10 flex flex-col lg:flex-row items-center gap-[60px]">
+          <div className="flex-1 flex flex-col gap-[40px]">
+            <div className="flex flex-col gap-[16px]">
+              {data?.hero?.badge && (
+                <div
+                  className="inline-flex w-fit items-center justify-center px-[16px] py-[12px] rounded-[999px] border"
+                  style={{
+                    borderColor: "var(--color-chip-border)",
+                    background: "var(--color-chip-bg)",
+                  }}
+                >
+                  <span
+                    className="text-[14px] font-medium tracking-[-0.28px] whitespace-nowrap"
+                    style={{ color: "var(--color-primary)" }}
+                  >
+                    {data.hero.badge}
+                  </span>
+                </div>
+              )}
+              <div className="flex flex-col gap-[20px]">
+                <h1
+                  className="font-bold text-[46px] leading-[62px]"
+                  style={{ color: "var(--color-white)" }}
+                >
+                  {data?.hero?.heading}
+                </h1>
+                {data?.hero?.subtext && (
+                  <p
+                    className="text-[16px] leading-[28px]"
+                    style={{ color: "var(--color-hero-body)" }}
+                  >
+                    {data.hero.subtext}
+                  </p>
+                )}
               </div>
-            ))}
+            </div>
+            {data?.hero?.buttonText && (
+              <AnimatedButton
+                href={data.hero.buttonHref ?? "#"}
+                variant="primary"
+              >
+                {data.hero.buttonText}
+              </AnimatedButton>
+            )}
           </div>
-        </Container>
+          <div className="hidden lg:flex flex-shrink-0 items-center justify-center w-[460px]">
+            {data?.hero?.image?.asset?.url ? (
+              <Image
+                src={data.hero.image.asset.url}
+                alt={data.hero.image.alt ?? ""}
+                width={600}
+                height={400}
+                priority
+              />
+            ) : (
+              <Image
+                src="/images/People_counter_system.png"
+                alt="Delegator Platform"
+                width={600}
+                height={400}
+                priority
+              />
+            )}
+          </div>
+        </div>
       </section>
 
-      {/* What To Evaluate */}
-      <section className="section-padding bg-gray-50">
-        <Container>
-          <div className="flex flex-col lg:flex-row items-center gap-12">
-            <div className="lg:w-1/2">
-              <h2 className="text-gray-dark mb-4">What To Evaluate Before Delegating</h2>
-              <p className="text-gray-DEFAULT mb-6 leading-relaxed">
-                Delegation enables BMZ holders to support validator operations without running a node. Delegators remain the rightful owners of their stakes and earn passive rewards while validators&apos; rewards and weight in consensus get multiplied.
-              </p>
-              <ul className="space-y-2 mb-4">
-                {["Profile details, including name, description, website, identity reference, security contact, etc.", "Validator status (Active / Inactive / Deactivating)", "Commission rate, maximum commission, and change limits", "Self-stake and total stake", "Uptime and block production history"].map((item, i) => (
-                  <li key={i} className="flex items-start gap-2 text-gray-DEFAULT text-sm">
-                    <span className="text-primary mt-0.5">&#8226;</span><span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-              <p className="text-gray-DEFAULT text-sm italic">
-                Delegation carries shared responsibility. Validator downtime or protocol violations may impact rewards or delegated stake. So, delegators must carefully pick validators.
-              </p>
-            </div>
-            <div className="lg:w-1/2">
-              <Image src="/images/image-40.png" alt="What To Evaluate" width={500} height={400} />
-            </div>
-          </div>
-        </Container>
-      </section>
-
-      {/* How to Delegate */}
-      <section className="section-padding">
-        <Container>
-          <SectionHeading label="Process" heading="How to Delegate Your BMZ" subtext="Delegation allows BMZ holders to support validator operations by assigning stake to active validators. Delegated tokens contribute to validator weight in consensus and earn staking rewards, while remaining under the delegator\u2019s control." />
-          <div className="space-y-6 max-w-3xl mx-auto">
-            {delegationSteps.map((step) => (
-              <div key={step.num} className="card bg-gray-50 p-6">
-                <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center font-bold flex-shrink-0">{step.num}</div>
-                  <div>
-                    <h4 className="text-gray-dark font-semibold mb-2">{step.title}</h4>
-                    <p className="text-gray-DEFAULT text-sm leading-relaxed">{step.description}</p>
-                  </div>
+      {/* 2 ── WHY DELEGATE — dark */}
+      {benefits.length > 0 && (
+        <section className="section-padding">
+          <Container>
+            <div className="distinguishes-inner">
+              <video
+                className="distinguishes-bg-video"
+                src="/images/bg-line-1.mp4"
+                autoPlay
+                loop
+                muted
+                playsInline
+              />
+              <div className="distinguishes-content">
+                <div className="distinguishes-heading">
+                  <span className="section-eyebrow section-eyebrow--dark">
+                    {data?.benefitsSection?.eyebrow}
+                  </span>
+                  <h2 className="distinguishes-title">
+                    {data?.benefitsSection?.heading}
+                  </h2>
+                </div>
+                <div className="distinguishes-cards">
+                  {[benefits.slice(0, 3), benefits.slice(3)]
+                    .filter((r) => r.length > 0)
+                    .map((row, ri) => (
+                      <div key={ri} className="distinguishes-row">
+                        {row.map((b) => (
+                          <div key={b.title} className="distinguishes-card">
+                            <div
+                              className="flex-shrink-0 w-12 h-12 rounded-xl flex items-center justify-center"
+                              style={{ background: "rgba(255,176,30,0.12)" }}
+                            >
+                              <Image
+                                src={b.iconPath}
+                                alt={b.title}
+                                width={32}
+                                height={32}
+                              />
+                            </div>
+                            <div className="distinguishes-card-body">
+                              <h4 className="distinguishes-card-title">
+                                {b.title}
+                              </h4>
+                              <p className="distinguishes-card-text">
+                                {b.description}
+                              </p>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    ))}
                 </div>
               </div>
-            ))}
-          </div>
-        </Container>
-      </section>
+            </div>
+          </Container>
+        </section>
+      )}
 
-      {/* Dashboard */}
-      <section className="section-padding bg-gray-50">
-        <Container>
-          <div className="flex flex-col lg:flex-row items-center gap-12">
-            <div className="lg:w-1/2">
-              <Image src="/images/image-41.png" alt="Delegator Dashboard" width={500} height={400} />
+      {/* 3 ── WHAT TO EVALUATE — white, two-column */}
+      {data?.evaluateSection && (
+        <section className="section-padding bg-white">
+          <Container>
+            <div className="flex flex-col lg:flex-row items-center gap-[60px]">
+              <div className="gap-5">
+                {data.evaluateSection.eyebrow && (
+                  <span className="section-eyebrow mb-3">
+                    {data.evaluateSection.eyebrow}
+                  </span>
+                )}
+                <h2 className="section-heading text-left mb-3">
+                  {data.evaluateSection.heading}
+                </h2>
+                {data.evaluateSection.text && (
+                  <p
+                    className="text-[16px] leading-[31px] mb-3"
+                    style={{ color: "var(--color-gray-body)" }}
+                  >
+                    {data.evaluateSection.text}
+                  </p>
+                )}
+                {data.evaluateSection.subtext && (
+                  <p
+                    className="text-[15px] leading-[28px] font-medium mb-3"
+                    style={{ color: "var(--color-dark)" }}
+                  >
+                    {data.evaluateSection.subtext}
+                  </p>
+                )}
+                {(data.evaluateSection.items ?? []).length > 0 && (
+                  <ul className="flex flex-col gap-2 mb-3">
+                    {(data.evaluateSection.items ?? []).map((item, i) => (
+                      <li key={i} className="flex items-start gap-3">
+                        <span
+                          className="flex-shrink-0 w-1.5 h-1.5 rounded-full mt-[10px]"
+                          style={{ background: "var(--color-primary)" }}
+                        />
+                        <span
+                          className="text-[15px] leading-[28px]"
+                          style={{ color: "var(--color-gray-body)" }}
+                        >
+                          {item}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+                {data.evaluateSection.note && (
+                  <p
+                    className="text-[14px] leading-[24px] italic"
+                    style={{ color: "var(--color-gray-body)", opacity: 0.8 }}
+                  >
+                    {data.evaluateSection.note}
+                  </p>
+                )}
+              </div>
+              <div className="hidden lg:flex flex-shrink-0 w-[50%] justify-center">
+                {data.evaluateSection.image?.asset?.url ? (
+                  <Image
+                    src={data.evaluateSection.image.asset.url}
+                    alt={data.evaluateSection.image.alt ?? ""}
+                    width={500}
+                    height={400}
+                    className="rounded-2xl"
+                  />
+                ) : (
+                  <Image
+                    src="/images/image-40.png"
+                    alt="What To Evaluate"
+                    width={500}
+                    height={400}
+                    className="rounded-2xl"
+                  />
+                )}
+              </div>
             </div>
-            <div className="lg:w-1/2">
-              <h2 className="text-gray-dark mb-6">What Delegators Can Manage From the Dashboard</h2>
-              <ul className="space-y-3">
-                {dashboardCapabilities.map((item, i) => (
-                  <li key={i} className="flex items-center gap-3 text-gray-DEFAULT">
-                    <svg className="w-5 h-5 text-primary flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </Container>
-      </section>
+          </Container>
+        </section>
+      )}
 
-      {/* Rewards & Risks */}
-      <section className="section-padding bg-section-dark text-white">
-        <Container>
-          <h2 className="text-white text-center mb-12">Delegator Rewards, Commitment & Delegation Responsibility</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {/* Earning Rewards */}
-            <div className="card bg-white/5 p-6 border border-white/10">
-              <Image src="/images/earning.png" alt="Earning Rewards" width={50} height={50} className="mb-4" />
-              <h4 className="text-white font-semibold mb-3">1. Earning Rewards Through Delegation</h4>
-              <p className="text-gray-light text-sm leading-relaxed">
-                Delegated BMZ bears staking rewards while bonded to an active validator. Rewards are generated when validators partake in block production and consensus, and are evenly distributed after deducting validator commission.
-              </p>
+      {/* 4 ── HOW TO DELEGATE — surface, timeline */}
+      {steps.length > 0 && (
+        <section
+          className="section-padding"
+          style={{ background: "var(--color-surface)" }}
+        >
+          <Container>
+            <SectionHeading
+              label={data?.stepsSection?.eyebrow}
+              heading={data?.stepsSection?.heading ?? ""}
+              subtext={data?.stepsSection?.subtext}
+            />
+            {/* desktop alternating timeline */}
+            <div className="relative hidden lg:block mx-auto">
+              <div
+                className="absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-[2px]"
+                style={{ background: "var(--color-border-subtle)" }}
+              />
+              <div className="flex flex-col gap-0">
+                {steps.map((step, i) => {
+                  const isLeft = i % 2 === 0;
+                  return (
+                    <div
+                      key={i}
+                      className="relative flex items-start min-h-[100px] pb-10 last:pb-0"
+                    >
+                      <div className="pr-10 flex justify-end">
+                        {isLeft && (
+                          <div
+                            className="w-full max-w-[660px] p-6 rounded-[20px] transition-all duration-300 hover:-translate-y-1"
+                            style={{
+                              background: "var(--color-white)",
+                              border: "1px solid var(--color-border-subtle)",
+                            }}
+                          >
+                            <h4
+                              className="text-[17px] font-semibold mb-2"
+                              style={{ color: "var(--color-dark)" }}
+                            >
+                              {step.title}
+                            </h4>
+                            <p
+                              className="text-[14px] leading-[26px]"
+                              style={{ color: "var(--color-gray-body)" }}
+                            >
+                              {step.description}
+                            </p>
+                          </div>
+                        )}
+                      </div>
+                      <div className="absolute left-1/2 -translate-x-1/2 top-5 z-10 flex items-center justify-center">
+                        <div
+                          className="absolute w-8 h-[2px]"
+                          style={{
+                            background: "var(--color-primary)",
+                            [isLeft ? "right" : "left"]: "100%",
+                          }}
+                        />
+                        <div
+                          className="w-11 h-11 rounded-full flex items-center justify-center text-[15px] font-bold shadow-lg"
+                          style={{
+                            background: "var(--color-primary)",
+                            color: "var(--color-dark)",
+                          }}
+                        >
+                          {i + 1}
+                        </div>
+                      </div>
+                      <div className="pl-10 flex justify-end ms-[auto]">
+                        {!isLeft && (
+                          <div
+                            className="w-full max-w-[660px] p-6 rounded-[20px] transition-all duration-300 hover:-translate-y-1"
+                            style={{
+                              background: "var(--color-white)",
+                              border: "1px solid var(--color-border-subtle)",
+                            }}
+                          >
+                            <h4
+                              className="text-[17px] font-semibold mb-2"
+                              style={{ color: "var(--color-dark)" }}
+                            >
+                              {step.title}
+                            </h4>
+                            <p
+                              className="text-[14px] leading-[26px]"
+                              style={{ color: "var(--color-gray-body)" }}
+                            >
+                              {step.description}
+                            </p>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
-            {/* Unbonding */}
-            <div className="card bg-white/5 p-6 border border-white/10">
-              <Image src="/images/unbounding.png" alt="Unbonding" width={50} height={50} className="mb-4" />
-              <h4 className="text-white font-semibold mb-3">2. Unbonding, Redelegating, and Exit Timeline</h4>
-              <p className="text-gray-light text-sm leading-relaxed mb-3">
-                Delegation is not instantly liquid. When a delegator initiates unbonding, BMZ tokens enter a fixed unbonding period during which they remain locked and stop earning rewards.
-              </p>
-              <ul className="space-y-1 text-sm text-gray-light">
-                <li>Day 0 → Unbonding initiated</li>
-                <li>Days 1-21 → Tokens locked (no rewards; slashing risk remains)</li>
-                <li>Day 21 → Tokens released to wallet</li>
-              </ul>
-            </div>
-          </div>
-
-          {/* Risks */}
-          <div className="mt-8">
-            <div className="card bg-white/5 p-6 border border-white/10">
-              <Image src="/images/dele-risk.png" alt="Delegation Risks" width={50} height={50} className="mb-4" />
-              <h4 className="text-white font-semibold mb-4">3. Understanding Delegation Risks</h4>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {risks.map((risk) => (
-                  <div key={risk.title}>
-                    <h5 className="text-white font-semibold mb-2">{risk.title}</h5>
-                    <p className="text-gray-light text-sm leading-relaxed">{risk.description}</p>
+            {/* mobile left-aligned timeline */}
+            <div className="relative lg:hidden max-w-xl mx-auto">
+              <div
+                className="absolute left-[21px] top-0 bottom-0 w-[2px]"
+                style={{ background: "var(--color-border-subtle)" }}
+              />
+              <div className="flex flex-col gap-0">
+                {steps.map((step, i) => (
+                  <div
+                    key={i}
+                    className="relative flex items-start gap-5 pb-7 last:pb-0"
+                  >
+                    <div
+                      className="relative z-10 flex-shrink-0 w-11 h-11 rounded-full flex items-center justify-center text-[15px] font-bold"
+                      style={{
+                        background: "var(--color-primary)",
+                        color: "var(--color-dark)",
+                      }}
+                    >
+                      {i + 1}
+                    </div>
+                    <div
+                      className="flex-1 p-5 rounded-[20px]"
+                      style={{
+                        background: "var(--color-white)",
+                        border: "1px solid var(--color-border-subtle)",
+                      }}
+                    >
+                      <h4
+                        className="text-[17px] font-semibold mb-1"
+                        style={{ color: "var(--color-dark)" }}
+                      >
+                        {step.title}
+                      </h4>
+                      <p
+                        className="text-[14px] leading-[26px]"
+                        style={{ color: "var(--color-gray-body)" }}
+                      >
+                        {step.description}
+                      </p>
+                    </div>
                   </div>
                 ))}
               </div>
             </div>
-          </div>
-        </Container>
-      </section>
+            {data?.stepsButton?.text && (
+              <div className="flex justify-center mt-12">
+                <AnimatedButton
+                  href={data.stepsButton.href ?? "#"}
+                  variant="primary"
+                >
+                  {data.stepsButton.text}
+                </AnimatedButton>
+              </div>
+            )}
+          </Container>
+        </section>
+      )}
 
-      {/* CTA */}
-      <section className="section-padding text-center">
-        <Container>
-          <Button href="/contact-us" variant="primary">Talk to Expert</Button>
-        </Container>
-      </section>
+      {/* 5 ── DASHBOARD — white, two-column */}
+      {dashboardItems.length > 0 && (
+        <section className="section-padding bg-white">
+          <Container>
+            <div className="flex flex-col lg:flex-row items-center gap-[60px]">
+              <div className="hidden lg:flex flex-shrink-0 w-[50%] justify-center">
+                {data?.dashboardImage?.asset?.url ? (
+                  <Image
+                    src={data.dashboardImage.asset.url}
+                    alt={data.dashboardImage.alt ?? ""}
+                    width={500}
+                    height={400}
+                    className="rounded-2xl"
+                  />
+                ) : (
+                  <Image
+                    src="/images/image-41.png"
+                    alt="Delegator Dashboard"
+                    width={500}
+                    height={400}
+                    className="rounded-2xl"
+                  />
+                )}
+              </div>
+              <div className="gap-6">
+                {data?.dashboardSection?.eyebrow && (
+                  <span className="section-eyebrow mb-3">
+                    {data.dashboardSection.eyebrow}
+                  </span>
+                )}
+                <h2 className="section-heading text-left mb-3">
+                  {data?.dashboardSection?.heading}
+                </h2>
+                <div className="flex flex-col gap-3">
+                  {dashboardItems.map((item, i) => (
+                    <div key={i} className="flex items-center gap-3">
+                      <div
+                        className="flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center"
+                        style={{ background: "rgba(255,176,30,0.15)" }}
+                      >
+                        <svg
+                          width="14"
+                          height="14"
+                          viewBox="0 0 14 14"
+                          fill="none"
+                        >
+                          <path
+                            d="M2.5 7l3 3 6-6"
+                            stroke="var(--color-primary)"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                        </svg>
+                      </div>
+                      <span
+                        className="text-[16px] leading-[28px]"
+                        style={{ color: "var(--color-gray-body)" }}
+                      >
+                        {item}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </Container>
+        </section>
+      )}
+
+      {/* 6 ── REWARDS, UNBONDING & RISKS — dark */}
+      {(data?.earningCard || data?.unbondingCard || data?.risksCard) && (
+        <section className="distinguishes-section pt-[60px]">
+          <Container>
+            <div className="distinguishes-inner">
+              <video
+                className="distinguishes-bg-video"
+                src="/images/bg-line-1.mp4"
+                autoPlay
+                loop
+                muted
+                playsInline
+              />
+              <div className="distinguishes-content bg-transparent">
+                {(data?.rewardsSection?.eyebrow ||
+                  data?.rewardsSection?.heading) && (
+                  <div className="distinguishes-heading">
+                    <span className="section-eyebrow section-eyebrow--dark">
+                      {data.rewardsSection?.eyebrow}
+                    </span>
+                    <h2 className="distinguishes-title">
+                      {data.rewardsSection?.heading}
+                    </h2>
+                  </div>
+                )}
+
+                {/* earning + unbonding row */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
+                  {/* Earning */}
+                  {data?.earningCard && (
+                    <div
+                      className="p-6 rounded-[20px]"
+                      style={{
+                        background: "rgba(255,255,255,0.06)",
+                        border: "1px solid rgba(255,255,255,0.12)",
+                      }}
+                    >
+                      {data.earningCard.iconPath && (
+                        <Image
+                          src={data.earningCard.iconPath}
+                          alt=""
+                          width={44}
+                          height={44}
+                          className="mb-4"
+                        />
+                      )}
+                      <h4
+                        className="text-[17px] font-semibold mb-3"
+                        style={{ color: "var(--color-white)" }}
+                      >
+                        {data.earningCard.heading}
+                      </h4>
+                      <p
+                        className="text-[14px] leading-[26px] mb-4"
+                        style={{ color: "rgba(255,255,255,0.7)" }}
+                      >
+                        {data.earningCard.text}
+                      </p>
+                      {(data.earningCard.rewardItems ?? []).length > 0 && (
+                        <ul className="flex flex-col gap-1.5 mb-3">
+                          {(data.earningCard.rewardItems ?? []).map(
+                            (item, i) => (
+                              <li key={i} className="flex items-start gap-2">
+                                <span
+                                  className="flex-shrink-0 w-1.5 h-1.5 rounded-full mt-[9px]"
+                                  style={{ background: "var(--color-primary)" }}
+                                />
+                                <span
+                                  className="text-[13px] leading-[24px]"
+                                  style={{ color: "rgba(255,255,255,0.65)" }}
+                                >
+                                  {item}
+                                </span>
+                              </li>
+                            ),
+                          )}
+                        </ul>
+                      )}
+                      {data.earningCard.note && (
+                        <p
+                          className="text-[13px] leading-[22px] italic"
+                          style={{ color: "rgba(255,255,255,0.5)" }}
+                        >
+                          {data.earningCard.note}
+                        </p>
+                      )}
+                    </div>
+                  )}
+
+                  {/* Unbonding */}
+                  {data?.unbondingCard && (
+                    <div
+                      className="p-6 rounded-[20px]"
+                      style={{
+                        background: "rgba(255,255,255,0.06)",
+                        border: "1px solid rgba(255,255,255,0.12)",
+                      }}
+                    >
+                      {data.unbondingCard.iconPath && (
+                        <Image
+                          src={data.unbondingCard.iconPath}
+                          alt=""
+                          width={44}
+                          height={44}
+                          className="mb-4"
+                        />
+                      )}
+                      <h4
+                        className="text-[17px] font-semibold mb-3"
+                        style={{ color: "var(--color-white)" }}
+                      >
+                        {data.unbondingCard.heading}
+                      </h4>
+                      <p
+                        className="text-[14px] leading-[26px] mb-4"
+                        style={{ color: "rgba(255,255,255,0.7)" }}
+                      >
+                        {data.unbondingCard.text}
+                      </p>
+                      {(data.unbondingCard.timeline ?? []).length > 0 && (
+                        <ul className="flex flex-col gap-1.5 mb-4">
+                          {(data.unbondingCard.timeline ?? []).map(
+                            (item, i) => (
+                              <li key={i} className="flex items-start gap-2">
+                                <span
+                                  className="flex-shrink-0 w-1.5 h-1.5 rounded-full mt-[9px]"
+                                  style={{ background: "var(--color-primary)" }}
+                                />
+                                <span
+                                  className="text-[13px] leading-[24px]"
+                                  style={{ color: "rgba(255,255,255,0.65)" }}
+                                >
+                                  {item}
+                                </span>
+                              </li>
+                            ),
+                          )}
+                        </ul>
+                      )}
+                      {data.unbondingCard.text2 && (
+                        <p
+                          className="text-[13px] leading-[22px] italic"
+                          style={{ color: "rgba(255,255,255,0.5)" }}
+                        >
+                          {data.unbondingCard.text2}
+                        </p>
+                      )}
+                    </div>
+                  )}
+                </div>
+
+                {/* Risks */}
+                {data?.risksCard && (
+                  <div
+                    className="w-full p-6 rounded-[20px]"
+                    style={{
+                      background: "rgba(255,255,255,0.06)",
+                      border: "1px solid rgba(255,255,255,0.12)",
+                    }}
+                  >
+                    {data.risksCard.iconPath && (
+                      <Image
+                        src={data.risksCard.iconPath}
+                        alt=""
+                        width={44}
+                        height={44}
+                        className="mb-4"
+                      />
+                    )}
+                    <h4
+                      className="text-[17px] font-semibold mb-2"
+                      style={{ color: "var(--color-white)" }}
+                    >
+                      {data.risksCard.heading}
+                    </h4>
+                    {data.risksCard.intro && (
+                      <p
+                        className="text-[14px] leading-[26px] mb-6"
+                        style={{ color: "rgba(255,255,255,0.7)" }}
+                      >
+                        {data.risksCard.intro}
+                      </p>
+                    )}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      {(data.risksCard.risks ?? []).map((risk) => (
+                        <div key={risk.title}>
+                          <h5
+                            className="text-[15px] font-semibold mb-2"
+                            style={{ color: "var(--color-primary)" }}
+                          >
+                            {risk.title}
+                          </h5>
+                          <p
+                            className="text-[14px] leading-[26px]"
+                            style={{ color: "rgba(255,255,255,0.65)" }}
+                          >
+                            {risk.description}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          </Container>
+        </section>
+      )}
+
+      {/* 7 ── CTA */}
+      {/* {data?.ctaSection?.buttonText && (
+        <section className="section-padding bg-white">
+          <Container>
+            <div className="flex justify-center">
+              <AnimatedButton
+                href={data.ctaSection.buttonHref ?? "#"}
+                variant="primary"
+              >
+                {data.ctaSection.buttonText}
+              </AnimatedButton>
+            </div>
+          </Container>
+        </section>
+      )} */}
     </>
   );
 }

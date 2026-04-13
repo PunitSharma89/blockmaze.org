@@ -2,14 +2,15 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { mainNavigation } from "@/lib/navigation";
+import type { SanityNavItem } from "@/components/layout/HeaderClient";
 
 interface MobileMenuProps {
   isOpen: boolean;
   onClose: () => void;
+  navItems: SanityNavItem[];
 }
 
-export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
+export default function MobileMenu({ isOpen, onClose, navItems }: MobileMenuProps) {
   const [expandedItems, setExpandedItems] = useState<string[]>([]);
 
   const toggleExpanded = (label: string) => {
@@ -61,7 +62,7 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
 
         {/* Navigation items */}
         <nav className="px-4 pb-8">
-          {mainNavigation.map((item) => (
+          {navItems.map((item) => (
             <div key={item.label} className="border-b border-gray-100">
               {item.children ? (
                 <>
@@ -69,16 +70,10 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                     onClick={() => toggleExpanded(item.label)}
                     className="flex items-center justify-between w-full py-3 text-sm font-medium text-gray-dark"
                   >
-                    <span>
-                      {item.label === "Ecosystem"
-                        ? "Ecosystem Portals"
-                        : item.label}
-                    </span>
+                    <span>{item.mobileLabel ?? item.label}</span>
                     <svg
                       className={`w-4 h-4 transition-transform ${
-                        expandedItems.includes(item.label)
-                          ? "rotate-180"
-                          : ""
+                        expandedItems.includes(item.label) ? "rotate-180" : ""
                       }`}
                       fill="none"
                       stroke="currentColor"
@@ -99,11 +94,7 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                           key={child.href}
                           href={child.href}
                           target={child.external ? "_blank" : undefined}
-                          rel={
-                            child.external
-                              ? "noopener noreferrer"
-                              : undefined
-                          }
+                          rel={child.external ? "noopener noreferrer" : undefined}
                           onClick={onClose}
                           className="block py-2 text-sm text-gray-DEFAULT hover:text-primary transition-colors"
                         >

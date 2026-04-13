@@ -15,7 +15,11 @@
       "Bash(grep -v '^$')",
       "Bash(ls \"d:/blockmaze.org-main/blockmaze.org/public/images/image-\"*)",
       "mcp__Sanity__patch_document_from_json",
-      "mcp__Sanity__publish_documents"
+      "mcp__Sanity__publish_documents",
+      "Bash(curl -s \"https://blockmaze.org/swap/\")",
+      "Bash(curl -s \"https://blockmaze.org/validator/\")",
+      "Bash(curl -s \"https://blockmaze.org/delegator/\")",
+      "Bash(curl -s \"https://blockmaze.org/tokenomics/\")"
     ]
   }
 }

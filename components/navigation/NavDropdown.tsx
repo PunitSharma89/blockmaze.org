@@ -1,10 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { NavItem } from "@/lib/navigation";
+import type { NavChild } from "@/components/layout/HeaderClient";
 
 interface NavDropdownProps {
-  items: NavItem[];
+  items: NavChild[];
   isOpen: boolean;
 }
 

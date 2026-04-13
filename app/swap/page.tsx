@@ -1,84 +1,279 @@
 import { Metadata } from "next";
 import Image from "next/image";
 import Container from "@/components/layout/Container";
-import Breadcrumb from "@/components/layout/Breadcrumb";
+import AnimatedButton from "@/components/ui/AnimatedButton";
 import SectionHeading from "@/components/ui/SectionHeading";
-import Button from "@/components/ui/Button";
+import { sanityFetch } from "@/lib/sanity";
+import { swapPageQuery } from "@/lib/queries";
 
 export const metadata: Metadata = {
-  title: "Swap",
-  description: "The BMZ Swap platform enables participation in Blockmaze governance by converting BMZ into governance-backed GBMZ.",
+  title: "RWA Swap Platform | On-Chain Asset Exchange Protocol",
+  description:
+    "The BMZ Swap platform enables participation in Blockmaze governance by converting BMZ into governance-backed GBMZ.",
 };
 
-const steps = [
-  { num: "1", title: "Issuers and Participants Hold BMZ", desc: "Issuers, institutions, and ecosystem participants hold BMZ tokens to access governance and platform participation." },
-  { num: "2", title: "BMZ Is Staked on the Governance Platform", desc: "BMZ is staked through the governance staking interface to signal long-term commitment to the ecosystem." },
-  { num: "3", title: "GBMZ Is Issued at a 1:1 Ratio", desc: "For every BMZ staked, an equivalent amount of governance-backed GBMZ is issued." },
-  { num: "4", title: "GBMZ Enables Governance Participation", desc: "GBMZ is used to vote on proposals through the DAO using a Quadratic Voting mechanism." },
-  { num: "5", title: "Tokens Are Locked for Governance Integrity", desc: "Staked BMZ and issued GBMZ remain locked for 15 days to ensure responsible participation." },
-  { num: "6", title: "Unstake or Continue Participation", desc: "After the lock-in period, participants may swap GBMZ back to BMZ at a 1:1 ratio or continue participating in governance." },
-];
+/* ─── TYPES ─────────────────────────────────────────────────── */
 
-export default function SwapPage() {
+interface SwapData {
+  hero?: {
+    badge?: string;
+    heading?: string;
+    subtext?: string;
+    buttonText?: string;
+    buttonHref?: string;
+    image?: { asset?: { url: string }; alt?: string };
+  };
+  stepsSection?: { eyebrow?: string; heading?: string };
+  steps?: { title: string; description: string }[];
+  stepsButton?: { text?: string; href?: string };
+  governanceSection?: {
+    eyebrow?: string;
+    heading?: string;
+    text?: string;
+    text2?: string;
+    image?: { asset?: { url: string }; alt?: string };
+  };
+  lockInSection?: { eyebrow?: string; heading?: string; text?: string };
+  ctaSection?: {
+    heading?: string;
+    subtext?: string;
+    buttonText?: string;
+    buttonHref?: string;
+  };
+}
+
+/* ─── PAGE ──────────────────────────────────────────────────── */
+
+export default async function SwapPage() {
+  const data = await sanityFetch<SwapData>(swapPageQuery);
+
+  const steps = data?.steps ?? [];
+
   return (
     <>
-      <section className="section-padding bg-section-dark text-white">
-        <Container>
-          <Breadcrumb items={[{ label: "Swap" }]} />
-          <div className="flex flex-col lg:flex-row items-center gap-12">
-            <div className="lg:w-1/2">
-              <h1 className="text-white mb-4">BMZ Governance Staking & Swap Platform</h1>
-              <p className="text-gray-light text-lg leading-relaxed mb-6">The BMZ Swap platform enables participation in Blockmaze governance by converting BMZ into governance-backed GBMZ. This platform is designed for issuers, institutions, and ecosystem participants seeking structured, long-term involvement in protocol and market decisions.</p>
-              <Button href="https://dev-staking.stackflow.site/" variant="primary" external>Log In to Staking Dashboard</Button>
+      {/* 1 ── HERO */}
+      <section
+        className="relative overflow-hidden flex items-center"
+        style={{
+          minHeight: "500px",
+          background:
+            "linear-gradient(to left, var(--color-header-navy), var(--color-header-dark) 49%)",
+        }}
+      >
+        <div className="hero-bg-grid">
+          <Image
+            src="/images/hero-bg-grid.svg"
+            alt=""
+            fill
+            className="object-fill"
+          />
+        </div>
+
+        <div className="mx-auto w-[80%] max-w-[1440px] py-20 relative z-10 flex flex-col lg:flex-row items-center gap-[60px]">
+          <div className="flex-1 flex flex-col gap-[40px]">
+            <div className="flex flex-col gap-[16px]">
+              {data?.hero?.badge && (
+                <div
+                  className="inline-flex w-fit items-center justify-center px-[16px] py-[12px] rounded-[999px] border"
+                  style={{
+                    borderColor: "var(--color-chip-border)",
+                    background: "var(--color-chip-bg)",
+                  }}
+                >
+                  <span
+                    className="text-[14px] font-medium tracking-[-0.28px] whitespace-nowrap"
+                    style={{ color: "var(--color-primary)" }}
+                  >
+                    {data.hero.badge}
+                  </span>
+                </div>
+              )}
+              <div className="flex flex-col gap-[20px]">
+                <h1
+                  className="font-bold text-[46px] leading-[62px]"
+                  style={{ color: "var(--color-white)" }}
+                >
+                  {data?.hero?.heading}
+                </h1>
+                {data?.hero?.subtext && (
+                  <p
+                    className="text-[16px] leading-[28px]"
+                    style={{ color: "var(--color-hero-body)" }}
+                  >
+                    {data.hero.subtext}
+                  </p>
+                )}
+              </div>
             </div>
-            <div className="lg:w-1/2">
-              <Image src="/images/bmz_banner.png" alt="BMZ Swap Platform" width={600} height={400} priority />
-            </div>
+            {data?.hero?.buttonText && (
+              <AnimatedButton
+                href={data.hero.buttonHref ?? "#"}
+                variant="primary"
+              >
+                {data.hero.buttonText}
+              </AnimatedButton>
+            )}
           </div>
-        </Container>
+
+          <div className="hidden lg:flex flex-shrink-0 items-center justify-center w-[460px]">
+            {data?.hero?.image?.asset?.url ? (
+              <Image
+                src={data.hero.image.asset.url}
+                alt={data.hero.image.alt ?? ""}
+                width={600}
+                height={400}
+                priority
+              />
+            ) : (
+              <Image
+                src="/images/bmz_banner.png"
+                alt="BMZ Swap Platform"
+                width={600}
+                height={400}
+                priority
+              />
+            )}
+          </div>
+        </div>
       </section>
 
-      <section className="section-padding">
-        <Container>
-          <SectionHeading heading="How BMZ Staking & Swapping Works" />
-          <div className="space-y-6 max-w-3xl mx-auto">
-            {steps.map((step) => (
-              <div key={step.num} className="card bg-gray-50 p-6">
-                <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center font-bold flex-shrink-0">{step.num}</div>
-                  <div>
-                    <h4 className="text-gray-dark font-semibold mb-2">{step.title}</h4>
-                    <p className="text-gray-DEFAULT text-sm leading-relaxed">{step.desc}</p>
+      {/* 2 ── STEPS — white */}
+      {steps.length > 0 && (
+        <section className="section-padding bg-white">
+          <Container>
+            <SectionHeading
+              label={data?.stepsSection?.eyebrow}
+              heading={data?.stepsSection?.heading ?? ""}
+            />
+            <div className="flex flex-col gap-4 max-w-3xl mx-auto">
+              {steps.map((step, i) => (
+                <div
+                  key={i}
+                  className="flex items-start gap-4 p-6 rounded-[20px] transition-all duration-300 hover:-translate-y-1"
+                  style={{
+                    background: "var(--color-bg-default)",
+                    border: "1px solid var(--color-border-subtle)",
+                  }}
+                >
+                  <div
+                    className="inline-flex items-center justify-center w-9 h-9 rounded-full text-sm font-bold flex-shrink-0"
+                    style={{
+                      background: "var(--color-primary)",
+                      color: "var(--color-dark)",
+                    }}
+                  >
+                    {i + 1}
+                  </div>
+                  <div className="flex flex-col gap-1">
+                    <h4
+                      className="text-[18px] font-medium leading-[1.4]"
+                      style={{ color: "var(--color-dark)" }}
+                    >
+                      {step.title}
+                    </h4>
+                    <p
+                      className="text-[15px] leading-[28px]"
+                      style={{ color: "var(--color-gray-body)" }}
+                    >
+                      {step.description}
+                    </p>
                   </div>
                 </div>
+              ))}
+            </div>
+            {data?.stepsButton?.text && (
+              <div className="flex justify-center mt-8">
+                <AnimatedButton
+                  href={data.stepsButton.href ?? "#"}
+                  variant="primary"
+                >
+                  {data.stepsButton.text}
+                </AnimatedButton>
               </div>
-            ))}
-          </div>
-        </Container>
-      </section>
+            )}
+          </Container>
+        </section>
+      )}
 
-      <section className="section-padding bg-gray-50">
-        <Container>
-          <SectionHeading heading="Governance Designed to Prevent Concentration of Power" />
-          <p className="text-gray-DEFAULT text-center max-w-3xl mx-auto mb-8 leading-relaxed">Blockmaze governance uses a Quadratic Voting model, where voting influence increases at a decreasing rate as more tokens are used, preventing any single participant from dominating decisions.</p>
-          <div className="flex justify-center">
-            <Image src="/images/Design.png" alt="Quadratic Voting" width={600} height={400} />
-          </div>
-        </Container>
-      </section>
+      {/* 3 ── GOVERNANCE — dark */}
+      {data?.governanceSection && (
+        <section className="distinguishes-section">
+          <Container>
+            <div className="distinguishes-inner">
+              <video
+                className="distinguishes-bg-video"
+                src="/images/bg-line-1.mp4"
+                autoPlay
+                loop
+                muted
+                playsInline
+              />
+              <div className="distinguishes-content flex-col lg:flex-row items-center gap-[60px]">
+                <div className="mb-3">
+                  {data.governanceSection.eyebrow && (
+                    <span className="section-eyebrow section-eyebrow--dark mb-3">
+                      {data.governanceSection.eyebrow}
+                    </span>
+                  )}
+                  <h2 className="distinguishes-title">
+                    {data.governanceSection.heading}
+                  </h2>
+                  {data.governanceSection.text && (
+                    <p className="distinguishes-subtext">
+                      {data.governanceSection.text}
+                    </p>
+                  )}
+                  {data.governanceSection.text2 && (
+                    <p className="distinguishes-subtext">
+                      {data.governanceSection.text2}
+                    </p>
+                  )}
+                </div>
+                <div className="hidden lg:flex flex-shrink-0 justify-center w-[460px]">
+                  {data.governanceSection.image?.asset?.url ? (
+                    <Image
+                      src={data.governanceSection.image.asset.url}
+                      alt={data.governanceSection.image.alt ?? ""}
+                      width={500}
+                      height={380}
+                    />
+                  ) : (
+                    <Image
+                      src="/images/Design.png"
+                      alt="Quadratic Voting"
+                      width={500}
+                      height={380}
+                    />
+                  )}
+                </div>
+              </div>
+            </div>
+          </Container>
+        </section>
+      )}
 
-      <section className="section-padding">
-        <Container>
-          <SectionHeading heading="Lock-In & Unswap Rules" />
-          <p className="text-gray-DEFAULT text-center max-w-3xl mx-auto leading-relaxed">To ensure responsible governance participation, BMZ staking follows a 15-day commitment period. This design discourages short-term influence and protects issuers from sudden governance swings, ensuring decisions are made by participants with sustained alignment. After the commitment period ends, GBMZ can be seamlessly converted back to BMZ at a 1:1 ratio.</p>
-        </Container>
-      </section>
+      {/* 4 ── LOCK-IN — surface */}
+      {data?.lockInSection?.text && (
+        <section
+          className="section-padding"
+          style={{ background: "var(--color-surface)" }}
+        >
+          <Container>
+            <SectionHeading
+              label={data.lockInSection.eyebrow}
+              heading={data.lockInSection.heading ?? ""}
+            />
+            <p
+              className="text-[16px] leading-[31px] text-center max-w-3xl mx-auto"
+              style={{ color: "var(--color-gray-body)" }}
+            >
+              {data.lockInSection.text}
+            </p>
+          </Container>
+        </section>
+      )}
 
-      <section className="section-padding bg-section-dark text-center">
-        <Container>
-          <Button href="https://dev-staking.stackflow.site/" variant="white" external>Stake BMZ to Receive GBMZ</Button>
-        </Container>
-      </section>
+      {/* 5 ── CTA — dark */}
     </>
   );
 }
