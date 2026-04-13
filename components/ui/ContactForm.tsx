@@ -53,39 +53,28 @@ export default function ContactForm() {
 
     setLoading(true);
 
-    const form = new FormData();
-
-    form.append("your-name", formData.name);
-    form.append("your-email", formData.email);
-    form.append("your-Subjectn", formData.subject);
-    form.append("your-message", formData.message);
-
-    form.append("_wpcf7", "622");
-    form.append("_wpcf7_version", "5.7");
-    form.append("_wpcf7_locale", "en_US");
-    form.append("_wpcf7_unit_tag", "wpcf7-f622-o1");
-    form.append("_wpcf7_container_post", "0");
-
     try {
       const res = await fetch("/api/contact", {
         method: "POST",
-        body: form,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          subject: formData.subject,
+          message: formData.message,
+        }),
       });
 
       const data = await res.json();
 
-      if (data.status === "mail_sent") {
+      if (data.success) {
         setStatus("success");
-        setFormData({
-          name: "",
-          email: "",
-          subject: "",
-          message: "",
-        });
+        setFormData({ name: "", email: "", subject: "", message: "" });
         setErrors({});
+      } else if (data.errors) {
+        setErrors(data.errors);
       } else {
         setStatus("error");
-        console.log(data);
       }
     } catch (error) {
       console.error(error);
