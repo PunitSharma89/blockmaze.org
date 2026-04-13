@@ -1,8 +1,11 @@
+import Image from "next/image";
 import { Metadata } from "next";
 import Container from "@/components/layout/Container";
-import Breadcrumb from "@/components/layout/Breadcrumb";
+import AnimatedButton from "@/components/ui/AnimatedButton";
 import SectionHeading from "@/components/ui/SectionHeading";
-import Button from "@/components/ui/Button";
+import FAQ from "@/components/ui/FAQ";
+import { sanityFetch } from "@/lib/sanity";
+import { rfpPageQuery } from "@/lib/queries";
 
 export const metadata: Metadata = {
   title: "RFP | Blockmaze",
@@ -10,358 +13,402 @@ export const metadata: Metadata = {
     "Official framework for ecosystem funding, validator infrastructure, governance tooling, and RWA tokenization initiatives under a structured review process.",
 };
 
-const processStepsRow1 = [
-  {
-    title: "RFP Issuance",
-    description:
-      "Blockmaze issues formal RFPs outlining ecosystem priorities, funding scope, technical requirements, compliance expectations, and evaluation criteria.",
-  },
-  {
-    title: "Proposal Submission",
-    description:
-      "Applicants submit structured proposals detailing scope, milestones, compliance considerations, and budget requirements.",
-  },
-  {
-    title: "Preliminary Screening",
-    description:
-      "Proposals undergo eligibility checks, compliance assessment, and strategic alignment review.",
-  },
-];
+/* ─── TYPES ─────────────────────────────────────────────────── */
 
-const processStepsRow2 = [
-  {
-    title: "Technical & Risk Review",
-    description:
-      "Subject-matter experts assess feasibility, security, regulatory exposure, and long-term ecosystem impact.",
-  },
-  {
-    title: "Governance Council Review",
-    description:
-      "Major proposals are reviewed for policy alignment, risk management, and institutional compliance.",
-  },
-  {
-    title: "DAO Approval",
-    description:
-      "Funding proposals requiring treasury allocation proceed to DAO voting for decentralized decision-making.",
-  },
-];
+interface RfpData {
+  hero?: {
+    badge?: string;
+    heading?: string;
+    subtext?: string;
+    buttonText?: string;
+    buttonHref?: string;
+  };
+  about?: {
+    eyebrow?: string;
+    heading?: string;
+    text?: string;
+  };
+  programSection?: { eyebrow?: string; heading?: string };
+  programCards?: { title: string; description: string }[];
+  processSection?: { eyebrow?: string; heading?: string };
+  processSteps?: { title: string; description: string }[];
+  eligibility?: {
+    eyebrow?: string;
+    heading?: string;
+    subtext?: string;
+    eligibilityHeading?: string;
+    complianceHeading?: string;
+    eligibilityItems?: string[];
+    complianceItems?: string[];
+  };
+  faqSection?: { eyebrow?: string; heading?: string };
+  evaluation?: {
+    eyebrow?: string;
+    heading?: string;
+    subtext?: string;
+    criteria?: string[];
+  };
+  transparency?: {
+    eyebrow?: string;
+    heading?: string;
+    subtext?: string;
+    features?: string[];
+  };
+  faqs?: { question: string; answer: string }[];
+}
 
-const processStepsRow3 = [
-  {
-    title: "Grant Agreement & Onboarding",
-    description:
-      "Approved applicants enter formal grant or partnership agreements defining milestones and reporting obligations.",
-  },
-  {
-    title: "Milestone-Based Disbursement",
-    description:
-      "Funds are released in phases based on verified milestone completion.",
-  },
-  {
-    title: "Ongoing Reporting & Oversight",
-    description:
-      "Projects submit progress reports and undergo performance monitoring throughout execution.",
-  },
-];
+/* ─── PAGE ──────────────────────────────────────────────────── */
 
-const programCards = [
-  {
-    title: "Open RFPs",
-    description:
-      "Publicly listed funding programs and partnership calls aligned with strategic ecosystem priorities.",
-  },
-  {
-    title: "Rolling Submissions",
-    description:
-      "Proposal intake for high-impact ecosystem initiatives.",
-  },
-  {
-    title: "Strategic RFPs",
-    description:
-      "Invitation-based proposals for major infrastructure, liquidity, and institutional partnerships.",
-  },
-];
+export default async function RfpPage() {
+  const data = await sanityFetch<RfpData>(rfpPageQuery);
 
-const eligibilityItems = [
-  "Registered development teams",
-  "Infrastructure providers, research institutions, or legal entities",
-  "Demonstrated technical or operational capability",
-  "Alignment with Blockmaze ecosystem priorities",
-  "Clear project scope and deliverables",
-];
+  // Split process steps into rows of 3
+  const processSteps = data?.processSteps ?? [];
+  const stepRows: (typeof processSteps)[] = [];
+  for (let i = 0; i < processSteps.length; i += 3) {
+    stepRows.push(processSteps.slice(i, i + 3));
+  }
 
-const complianceItems = [
-  "Jurisdictional eligibility screening",
-  "Conflict-of-interest disclosures",
-  "Regulatory risk assessment",
-  "Acceptance of grant and reporting terms",
-];
-
-const evaluationCriteria = [
-  "Regulatory alignment assessments",
-  "Long-term ecosystem value",
-  "Technical feasibility and security posture",
-  "Budget transparency and cost efficiency",
-  "Compliance and regulatory readiness",
-  "Milestone clarity and measurability",
-  "Team credibility and execution capability",
-];
-
-const transparencyFeatures = [
-  "Public listing of funded proposals",
-  "Periodic ecosystem funding reports",
-  "On-chain tracking of treasury disbursements",
-  "Performance monitoring dashboards",
-  "Published evaluation summaries",
-];
-
-const faqItems = [
-  {
-    question: "Who can submit an RFP?",
-    answer:
-      "Developers, infrastructure providers, research institutions, startups, and established enterprises meeting eligibility and compliance requirements may submit proposals.",
-  },
-  {
-    question: "How are RFPs evaluated?",
-    answer:
-      "Governance is coordinated across the Foundation, the Governance Council, and a dedicated DAO governance platform supporting structured decentralized decision-making.",
-  },
-  {
-    question: "Is DAO approval required for all RFPs?",
-    answer:
-      "Developers, validators, and partners may submit proposals, grant applications, and infrastructure requests through the RFP Portal and access tooling via the Developer Portal for review under structured ecosystem programs.",
-  },
-  {
-    question: "How are funds disbursed?",
-    answer:
-      "The foundation maintains separation from commercial operations, market execution, and protocol authority while supporting governance design, validator standards, developer frameworks, and technical standards.",
-  },
-  {
-    question: "What compliance checks are required?",
-    answer:
-      "The foundation maintains separation from commercial operations, market execution, and protocol authority while supporting governance design, validator standards, developer frameworks, and technical standards.",
-  },
-  {
-    question: "How is transparency maintained?",
-    answer:
-      "The foundation maintains separation from commercial operations, market execution, and protocol authority while supporting governance design, validator standards, developer frameworks, and technical standards.",
-  },
-];
-
-export default function RfpPage() {
   return (
     <>
-      <Container>
-        <Breadcrumb items={[{ label: "RFP" }]} />
-      </Container>
+      {/* SECTION 1: Hero */}
+      <section
+        className="relative overflow-hidden flex items-center"
+        style={{
+          minHeight: "500px",
+          background:
+            "linear-gradient(to left, var(--color-header-navy), var(--color-header-dark) 49%)",
+        }}
+      >
+        <div className="hero-bg-grid">
+          <Image
+            src="/images/hero-bg-grid.svg"
+            alt=""
+            fill
+            className="object-fill"
+          />
+        </div>
 
-      {/* Hero Section */}
-      <section className="py-8 md:py-12">
-        <Container>
-          <div className="bg-[#fafafa] rounded-[50px] border border-[#d8d8d8] px-5 md:px-8 pt-10 md:pt-14 pb-10 md:pb-14 text-center">
-            <div className="inline-block border border-black rounded-full px-8 py-2.5 mb-5">
-              <span className="text-black text-base">Blockmaze RFP Portal</span>
+        <div className="mx-auto w-[80%] max-w-[1440px] py-20 relative z-10 flex flex-col items-center text-center gap-[40px]">
+          <div className="flex flex-col gap-[16px] items-center max-w-[780px]">
+            <div
+              className="inline-flex w-fit items-center justify-center px-[16px] py-[12px] rounded-[999px] border"
+              style={{
+                borderColor: "var(--color-chip-border)",
+                background: "var(--color-chip-bg)",
+              }}
+            >
+              <span
+                className="text-[14px] font-medium tracking-[-0.28px] whitespace-nowrap"
+                style={{ color: "var(--color-primary)" }}
+              >
+                {data?.hero?.badge}
+              </span>
             </div>
-            <h1 className="text-[#0f0f0f] text-3xl md:text-5xl lg:text-[60px] font-medium leading-tight md:leading-[72px] max-w-[1080px] mx-auto mb-4">
-              Structured Ecosystem Funding & Partnership Framework
-            </h1>
-            <p className="text-[#4b4b4b] text-base md:text-lg leading-7 max-w-[900px] mx-auto mb-8">
-              The Blockmaze DAO enables authorized governance participants to take part in transparent, secure decision-making through a structured on-chain governance process.
-            </p>
-            <Button href="#" variant="primary">
-              Submit an RFP
-            </Button>
-          </div>
-        </Container>
-      </section>
-
-      {/* About Section */}
-      <section className="section-padding">
-        <Container>
-          <SectionHeading
-            label="About the Blockmaze RFP Portal"
-            heading="About the Blockmaze RFP Portal"
-          />
-          <p className="text-gray-DEFAULT text-lg leading-relaxed max-w-4xl mx-auto text-center">
-            The Blockmaze RFP Portal is the official ecosystem funding, procurement, and partnership interface of the Blockmaze Foundation. It provides a structured intake, review, and approval framework for proposals supporting protocol development, validator infrastructure, decentralized market operations, governance tooling, and real-world asset tokenization platforms.
-          </p>
-        </Container>
-      </section>
-
-      {/* RFP Program Structure */}
-      <section className="section-padding bg-gray-50">
-        <Container>
-          <SectionHeading
-            label="RFP Program"
-            heading="RFP Program Structure"
-          />
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {programCards.map((card, idx) => (
-              <div
-                key={idx}
-                className="bg-white rounded-2xl p-8 border border-gray-200"
+            <div className="flex flex-col gap-[20px]">
+              <h1
+                className="font-bold text-[46px] leading-[62px]"
+                style={{ color: "var(--color-white)" }}
               >
-                <h3 className="text-gray-dark text-xl font-semibold mb-4">
-                  {card.title}
-                </h3>
-                <p className="text-gray-DEFAULT leading-relaxed">
-                  {card.description}
-                </p>
-              </div>
-            ))}
+                {data?.hero?.heading}
+              </h1>
+              <p
+                className="text-[16px] leading-[28px]"
+                style={{ color: "var(--color-hero-body)" }}
+              >
+                {data?.hero?.subtext}
+              </p>
+            </div>
           </div>
-        </Container>
+          <AnimatedButton
+            href={data?.hero?.buttonHref ?? "#"}
+            variant="primary"
+          >
+            {data?.hero?.buttonText}
+          </AnimatedButton>
+        </div>
       </section>
 
-      {/* How It Works */}
-      <section className="section-padding">
-        <Container>
-          <SectionHeading
-            label="How it Works?"
-            heading="How the RFP Process Works"
-          />
-          {[processStepsRow1, processStepsRow2, processStepsRow3].map(
-            (row, rowIdx) => (
-              <div
-                key={rowIdx}
-                className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8"
-              >
-                {row.map((step, idx) => (
-                  <div
-                    key={idx}
-                    className="bg-gray-50 rounded-2xl p-8 border border-gray-200"
-                  >
-                    <h3 className="text-gray-dark text-lg font-semibold mb-3">
-                      {step.title}
-                    </h3>
-                    <p className="text-gray-DEFAULT text-sm leading-relaxed">
-                      {step.description}
-                    </p>
+      {/* SECTION 2: About */}
+      {data?.about && (
+        <section className="section-padding section-padding--lg bg-white">
+          <Container>
+            <div className="flex flex-col gap-4 items-center text-center w-full">
+              <span className="section-eyebrow">{data.about.eyebrow}</span>
+              <h2 className="section-heading">
+                {data.about.heading?.split(" ").slice(0, -1).join(" ")}{" "}
+                <span className="text-primary">
+                  {data.about.heading?.split(" ").slice(-1)[0]}
+                </span>
+              </h2>
+              <p className="section-subtext">{data.about.text}</p>
+            </div>
+          </Container>
+        </section>
+      )}
+
+      {/* SECTION 3: RFP Program Structure — dark */}
+      {(data?.programCards ?? []).length > 0 && (
+        <section className="distinguishes-section">
+          <Container>
+            <div className="distinguishes-inner">
+              <video
+                className="distinguishes-bg-video"
+                src="/images/bg-line-1.mp4"
+                autoPlay
+                loop
+                muted
+                playsInline
+              />
+              <div className="distinguishes-content">
+                <div className="distinguishes-heading">
+                  <span className="section-eyebrow section-eyebrow--dark">
+                    {data?.programSection?.eyebrow}
+                  </span>
+                  <h2 className="distinguishes-title">
+                    {data?.programSection?.heading}
+                  </h2>
+                </div>
+                <div className="distinguishes-cards">
+                  <div className="distinguishes-row">
+                    {data!.programCards!.map((card, idx) => (
+                      <div key={idx} className="distinguishes-card">
+                        <div className="distinguishes-card-body">
+                          <h4 className="distinguishes-card-title">
+                            {card.title}
+                          </h4>
+                          <p className="distinguishes-card-text">
+                            {card.description}
+                          </p>
+                        </div>
+                      </div>
+                    ))}
                   </div>
-                ))}
+                </div>
               </div>
-            )
-          )}
-        </Container>
-      </section>
-
-      {/* Eligibility & Compliance */}
-      <section className="section-padding bg-gray-50">
-        <Container>
-          <SectionHeading
-            label="Eligibility & Compliance"
-            heading="Eligibility & Compliance Requirements"
-          />
-          <p className="text-gray-DEFAULT text-lg leading-relaxed max-w-4xl mx-auto text-center mb-12">
-            Participation in the RFP program is available to qualified applicants meeting defined eligibility and compliance criteria.
-          </p>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-4xl mx-auto">
-            <div>
-              <h3 className="text-gray-dark text-xl font-semibold mb-6">
-                Eligibility Requirements
-              </h3>
-              <ul className="space-y-3">
-                {eligibilityItems.map((item, idx) => (
-                  <li
-                    key={idx}
-                    className="flex items-start gap-3 text-gray-DEFAULT"
-                  >
-                    <span className="text-primary mt-1">&#8226;</span>
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
             </div>
-            <div>
-              <h3 className="text-gray-dark text-xl font-semibold mb-6">
-                Compliance Requirements
-              </h3>
-              <ul className="space-y-3">
-                {complianceItems.map((item, idx) => (
-                  <li
-                    key={idx}
-                    className="flex items-start gap-3 text-gray-DEFAULT"
-                  >
-                    <span className="text-primary mt-1">&#8226;</span>
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
+          </Container>
+        </section>
+      )}
+
+      {/* SECTION 4: How the RFP Process Works */}
+      {processSteps.length > 0 && (
+        <section className="section-padding bg-white">
+          <Container>
+            <SectionHeading
+              label={data?.processSection?.eyebrow}
+              heading={data?.processSection?.heading ?? ""}
+            />
+            <div className="flex flex-col gap-4">
+              {stepRows.map((row, rowIdx) => (
+                <div
+                  key={rowIdx}
+                  className="grid grid-cols-1 md:grid-cols-3 gap-4"
+                >
+                  {row.map((step, idx) => {
+                    const stepNum = rowIdx * 3 + idx + 1;
+                    return (
+                      <div
+                        key={idx}
+                        className="flex flex-col gap-3 p-6 rounded-[20px] transition-all duration-300 hover:-translate-y-1"
+                        style={{
+                          background: "var(--color-bg-default)",
+                          border: "1px solid var(--color-border-subtle)",
+                        }}
+                      >
+                        <div
+                          className="inline-flex items-center justify-center w-9 h-9 rounded-full text-sm font-bold flex-shrink-0"
+                          style={{
+                            background: "var(--color-primary)",
+                            color: "var(--color-dark)",
+                          }}
+                        >
+                          {stepNum}
+                        </div>
+                        <div className="flex flex-col gap-2">
+                          <h4
+                            className="text-[18px] font-medium leading-[1.4]"
+                            style={{ color: "var(--color-dark)" }}
+                          >
+                            {step.title}
+                          </h4>
+                          <p
+                            className="text-[16px] leading-[31px]"
+                            style={{ color: "var(--color-gray-body)" }}
+                          >
+                            {step.description}
+                          </p>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              ))}
             </div>
-          </div>
-        </Container>
-      </section>
+          </Container>
+        </section>
+      )}
 
-      {/* Evaluation Criteria */}
-      <section className="section-padding">
-        <Container>
-          <SectionHeading
-            label="Evaluation"
-            heading="Evaluation Criteria"
-          />
-          <p className="text-gray-DEFAULT text-lg leading-relaxed max-w-4xl mx-auto text-center mb-12">
-            All proposals are evaluated using a structured, transparent framework.
-          </p>
-          <div className="flex flex-wrap justify-center gap-4 max-w-4xl mx-auto">
-            {evaluationCriteria.map((criteria, idx) => (
-              <span
-                key={idx}
-                className="inline-block bg-gray-50 border border-gray-200 rounded-full px-6 py-3 text-gray-DEFAULT text-sm"
-              >
-                {criteria}
-              </span>
-            ))}
-          </div>
-        </Container>
-      </section>
-
-      {/* Transparency & Reporting */}
-      <section className="section-padding bg-gray-50">
-        <Container>
-          <SectionHeading
-            label="Transparency"
-            heading="Transparency & Reporting"
-          />
-          <p className="text-gray-DEFAULT text-lg leading-relaxed max-w-4xl mx-auto text-center mb-12">
-            The RFP Portal operates under a transparency-first framework to ensure accountable ecosystem funding.
-          </p>
-          <div className="flex flex-wrap justify-center gap-4 max-w-4xl mx-auto">
-            {transparencyFeatures.map((feature, idx) => (
-              <span
-                key={idx}
-                className="inline-block bg-white border border-gray-200 rounded-full px-6 py-3 text-gray-DEFAULT text-sm"
-              >
-                {feature}
-              </span>
-            ))}
-          </div>
-        </Container>
-      </section>
-
-      {/* FAQ */}
-      <section className="section-padding">
-        <Container>
-          <SectionHeading
-            label="FAQ"
-            heading="Frequently Asked Questions"
-          />
-          <div className="max-w-4xl mx-auto space-y-6">
-            {faqItems.map((faq, idx) => (
-              <div
-                key={idx}
-                className="bg-gray-50 rounded-2xl p-8 border border-gray-200"
-              >
-                <h3 className="text-gray-dark text-lg font-semibold mb-3">
-                  {idx + 1}. {faq.question}
+      {/* SECTION 5: Eligibility & Compliance */}
+      {data?.eligibility && (
+        <section
+          className="section-padding"
+          style={{ background: "var(--color-surface)" }}
+        >
+          <Container>
+            <SectionHeading
+              label={data.eligibility.eyebrow}
+              heading={data.eligibility.heading ?? ""}
+              subtext={data.eligibility.subtext}
+            />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-4xl mx-auto items-start">
+              <div>
+                <h3
+                  className="text-[22px] font-semibold mb-6"
+                  style={{ color: "var(--color-dark)" }}
+                >
+                  {data.eligibility.eligibilityHeading}
                 </h3>
-                <p className="text-gray-DEFAULT leading-relaxed">
-                  {faq.answer}
-                </p>
+                <div className="flex flex-col gap-3">
+                  {(data.eligibility.eligibilityItems ?? []).map(
+                    (item, idx) => (
+                      <div key={idx} className="flex items-start gap-3">
+                        <Image
+                          src="/images/about-arrow.svg"
+                          alt=""
+                          width={24}
+                          height={24}
+                        />
+                        <p className="break-words leading-relaxed">{item}</p>
+                      </div>
+                    ),
+                  )}
+                </div>
               </div>
-            ))}
-          </div>
-        </Container>
-      </section>
+              <div>
+                <h3
+                  className="text-[22px] font-semibold mb-6"
+                  style={{ color: "var(--color-dark)" }}
+                >
+                  {data.eligibility.complianceHeading}
+                </h3>
+                <div className="flex flex-col gap-3">
+                  {(data.eligibility.complianceItems ?? []).map((item, idx) => (
+                    <div key={idx} className="about-card-bullet">
+                      <Image
+                        src="/images/about-arrow.svg"
+                        alt=""
+                        width={24}
+                        height={24}
+                      />
+                      <p>{item}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </Container>
+        </section>
+      )}
+
+      {/* SECTION 6: Evaluation Criteria — dark */}
+      {data?.evaluation && (
+        <section className="distinguishes-section">
+          <Container>
+            <div className="distinguishes-inner">
+              <video
+                className="distinguishes-bg-video"
+                src="/images/bg-line-1.mp4"
+                autoPlay
+                loop
+                muted
+                playsInline
+              />
+              <div className="distinguishes-content">
+                <div className="distinguishes-heading">
+                  <span className="section-eyebrow section-eyebrow--dark">
+                    {data.evaluation.eyebrow}
+                  </span>
+                  <h2 className="distinguishes-title">
+                    {data.evaluation.heading}
+                  </h2>
+                  <p className="distinguishes-subtext">
+                    {data.evaluation.subtext}
+                  </p>
+                </div>
+                <div className="flex flex-wrap justify-center gap-3 max-w-4xl">
+                  {(data.evaluation.criteria ?? []).map((criteria, idx) => (
+                    <span
+                      key={idx}
+                      className="inline-flex items-center px-6 py-3 rounded-full text-sm font-medium"
+                      style={{
+                        background: "rgba(255,176,30,0.12)",
+                        border: "1px solid var(--color-primary)",
+                        color: "var(--color-primary)",
+                      }}
+                    >
+                      {criteria}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </Container>
+        </section>
+      )}
+
+      {/* SECTION 7: Transparency & Reporting */}
+      {data?.transparency && (
+        <section className="section-padding bg-white">
+          <Container>
+            <SectionHeading
+              label={data.transparency.eyebrow}
+              heading={data.transparency.heading ?? ""}
+              subtext={data.transparency.subtext}
+            />
+            <div className="flex flex-wrap justify-center gap-4 max-w-4xl mx-auto">
+              {(data.transparency.features ?? []).map((feature, idx) => (
+                <span
+                  key={idx}
+                  className="inline-flex items-center px-6 py-3 rounded-full text-sm font-medium"
+                  style={{
+                    background: "var(--color-bg-default)",
+                    border: "1px solid var(--color-border-default)",
+                    color: "var(--color-gray-DEFAULT)",
+                  }}
+                >
+                  {feature}
+                </span>
+              ))}
+            </div>
+          </Container>
+        </section>
+      )}
+
+      {/* SECTION 8: FAQ */}
+      {(data?.faqs ?? []).length > 0 && (
+        <section className="section-padding bg-white">
+          <Container>
+            <SectionHeading
+              label={data?.faqSection?.eyebrow}
+              heading={data?.faqSection?.heading ?? ""}
+            />
+            <div className="flex flex-col lg:flex-row gap-12 items-start">
+              <div className="lg:w-5/12">
+                <Image
+                  src="/images/faq-img.png"
+                  alt="Frequently Asked Questions"
+                  width={454}
+                  height={425}
+                />
+              </div>
+              <div className="lg:w-7/12">
+                <FAQ items={data!.faqs!} />
+              </div>
+            </div>
+          </Container>
+        </section>
+      )}
     </>
   );
 }

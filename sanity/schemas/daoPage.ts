@@ -1,8 +1,8 @@
 import { defineType, defineField, defineArrayMember } from "sanity";
 
 export default defineType({
-  name: "governancePage",
-  title: "Governance Page",
+  name: "daoPage",
+  title: "DAO Page",
   type: "document",
   fields: [
     defineField({
@@ -12,7 +12,8 @@ export default defineType({
       fields: [
         defineField({ name: "badge", title: "Badge Text", type: "string" }),
         defineField({ name: "heading", title: "Heading", type: "string" }),
-        defineField({ name: "subtext", title: "Subtext", type: "text", rows: 3 }),
+        defineField({ name: "subtext", title: "Subtext (line 1)", type: "text", rows: 2 }),
+        defineField({ name: "subtext2", title: "Subtext (paragraph 2)", type: "text", rows: 3 }),
         defineField({ name: "buttonText", title: "Primary Button Text", type: "string" }),
         defineField({ name: "buttonHref", title: "Primary Button Link", type: "string" }),
         defineField({ name: "secondButtonText", title: "Secondary Button Text", type: "string" }),
@@ -26,35 +27,38 @@ export default defineType({
         }),
       ],
     }),
+
+    /* ── About ── */
     defineField({
-      name: "about",
-      title: "About Section",
-      type: "object",
-      fields: [
-        defineField({ name: "eyebrow", title: "Eyebrow Label", type: "string" }),
-        defineField({ name: "heading", title: "Heading", type: "string" }),
-        defineField({ name: "text", title: "Body Text", type: "text", rows: 4 }),
-      ],
-    }),
-    defineField({
-      name: "rolesSection",
-      title: "Roles Section — Header",
+      name: "aboutSection",
+      title: "About Section — Header",
       type: "object",
       fields: [
         defineField({ name: "eyebrow", title: "Eyebrow Label", type: "string" }),
         defineField({ name: "heading", title: "Heading", type: "string" }),
       ],
     }),
+    defineField({ name: "aboutText", title: "About Body Text", type: "text", rows: 4 }),
     defineField({
-      name: "roles",
-      title: "Role Cards (Responsibilities section)",
+      name: "aboutButton",
+      title: "About Section CTA Button",
+      type: "object",
+      fields: [
+        defineField({ name: "text", title: "Button Text", type: "string" }),
+        defineField({ name: "href", title: "Button Link", type: "string" }),
+      ],
+    }),
+
+    /* ── About cards (dark section below about) ── */
+    defineField({
+      name: "aboutCards",
+      title: "About Cards (dark section)",
       type: "array",
       of: [
         defineArrayMember({
           type: "object",
           fields: [
-            defineField({ name: "iconKey", title: "Icon Key", type: "string", description: "shield | document | chart | network | emergency | clock" }),
-            defineField({ name: "title", title: "Title", type: "string" }),
+            defineField({ name: "title", title: "Card Title", type: "string" }),
             defineField({ name: "description", title: "Description", type: "text", rows: 3 }),
           ],
           preview: { select: { title: "title" } },
@@ -62,121 +66,44 @@ export default defineType({
       ],
     }),
     defineField({
-      name: "scopeSection",
-      title: "Governance Scope — Section Header",
+      name: "aboutCardsButton",
+      title: "About Cards Section CTA Button",
       type: "object",
       fields: [
-        defineField({ name: "eyebrow", title: "Eyebrow Label", type: "string" }),
-        defineField({ name: "heading", title: "Heading", type: "string" }),
+        defineField({ name: "text", title: "Button Text", type: "string" }),
+        defineField({ name: "href", title: "Button Link", type: "string" }),
       ],
     }),
+
+    /* ── Marquee ── */
     defineField({
-      name: "scopeItems",
-      title: "Governance Scope Items",
+      name: "marqueeItems",
+      title: "Marquee / Ticker Items",
+      description: "Scrolling text strip between sections",
       type: "array",
-      of: [
-        defineArrayMember({
-          type: "object",
-          fields: [
-            defineField({ name: "iconKey", title: "Icon Key", type: "string" }),
-            defineField({ name: "title", title: "Title", type: "string" }),
-            defineField({ name: "description", title: "Description", type: "text", rows: 3 }),
-          ],
-          preview: { select: { title: "title" } },
-        }),
-      ],
+      of: [defineArrayMember({ type: "string" })],
     }),
-    defineField({
-      name: "structureSection",
-      title: "Governance Structure — Section Header",
-      type: "object",
-      fields: [
-        defineField({ name: "eyebrow", title: "Eyebrow Label", type: "string" }),
-        defineField({ name: "heading", title: "Heading", type: "string" }),
-      ],
-    }),
-    defineField({
-      name: "structure",
-      title: "Governance Structure Cards",
-      type: "array",
-      of: [
-        defineArrayMember({
-          type: "object",
-          fields: [
-            defineField({ name: "iconKey", title: "Icon Key", type: "string" }),
-            defineField({ name: "title", title: "Title", type: "string" }),
-            defineField({ name: "description", title: "Description", type: "text", rows: 3 }),
-          ],
-          preview: { select: { title: "title" } },
-        }),
-      ],
-    }),
+
+    /* ── Steps ── */
     defineField({
       name: "stepsSection",
-      title: "Process Steps — Section Header",
+      title: "How Governance Works — Section Header",
       type: "object",
       fields: [
         defineField({ name: "eyebrow", title: "Eyebrow Label", type: "string" }),
         defineField({ name: "heading", title: "Heading", type: "string" }),
+        defineField({ name: "subtext", title: "Subtext", type: "text", rows: 2 }),
       ],
     }),
     defineField({
       name: "steps",
-      title: "Process Steps (How Council Operates)",
+      title: "Governance Steps",
       type: "array",
       of: [
         defineArrayMember({
           type: "object",
           fields: [
-            defineField({ name: "num", title: "Step Number", type: "string" }),
-            defineField({ name: "title", title: "Title", type: "string" }),
-            defineField({ name: "description", title: "Description", type: "text", rows: 3 }),
-          ],
-          preview: { select: { title: "title", subtitle: "num" } },
-        }),
-      ],
-    }),
-    defineField({
-      name: "compliance",
-      title: "Compliance & Risk Section",
-      type: "object",
-      fields: [
-        defineField({ name: "eyebrow", title: "Eyebrow Label", type: "string" }),
-        defineField({ name: "heading", title: "Heading", type: "string" }),
-        defineField({ name: "text", title: "Body Text", type: "text", rows: 3 }),
-        defineField({
-          name: "tags",
-          title: "Tags",
-          type: "array",
-          of: [defineArrayMember({ type: "string" })],
-        }),
-        defineField({
-          name: "image",
-          title: "Compliance Image (optional)",
-          type: "image",
-          options: { hotspot: true },
-          fields: [defineField({ name: "alt", title: "Alt Text", type: "string" })],
-        }),
-      ],
-    }),
-    defineField({
-      name: "getInvolvedSection",
-      title: "Get Involved — Section Header",
-      type: "object",
-      fields: [
-        defineField({ name: "eyebrow", title: "Eyebrow Label", type: "string" }),
-        defineField({ name: "heading", title: "Heading", type: "string" }),
-      ],
-    }),
-    defineField({
-      name: "getInvolved",
-      title: "Get Involved Cards",
-      type: "array",
-      of: [
-        defineArrayMember({
-          type: "object",
-          fields: [
-            defineField({ name: "iconKey", title: "Icon Key", type: "string" }),
+            defineField({ name: "iconPath", title: "Icon Image Path (e.g. /images/dao-step01.png)", type: "string" }),
             defineField({ name: "title", title: "Title", type: "string" }),
             defineField({ name: "description", title: "Description", type: "text", rows: 3 }),
           ],
@@ -184,6 +111,54 @@ export default defineType({
         }),
       ],
     }),
+
+    /* ── Eligibility ── */
+    defineField({
+      name: "eligibilitySection",
+      title: "Voting Eligibility — Section Header",
+      type: "object",
+      fields: [
+        defineField({ name: "eyebrow", title: "Eyebrow Label", type: "string" }),
+        defineField({ name: "heading", title: "Heading", type: "string" }),
+        defineField({ name: "subtext", title: "Subtext", type: "text", rows: 2 }),
+      ],
+    }),
+    defineField({
+      name: "eligibilityItems",
+      title: "Eligibility Requirements",
+      type: "array",
+      of: [defineArrayMember({ type: "string" })],
+    }),
+
+    /* ── Mechanisms ── */
+    defineField({
+      name: "mechanismsSection",
+      title: "Core Governance Mechanisms — Section Header",
+      type: "object",
+      fields: [
+        defineField({ name: "eyebrow", title: "Eyebrow Label", type: "string" }),
+        defineField({ name: "heading", title: "Heading", type: "string" }),
+        defineField({ name: "subtext", title: "Subtext", type: "text", rows: 2 }),
+      ],
+    }),
+    defineField({
+      name: "mechanisms",
+      title: "Core Governance Mechanism Cards",
+      type: "array",
+      of: [
+        defineArrayMember({
+          type: "object",
+          fields: [
+            defineField({ name: "iconPath", title: "Icon Image Path (e.g. /images/core01.png)", type: "string" }),
+            defineField({ name: "title", title: "Title", type: "string" }),
+            defineField({ name: "description", title: "Description", type: "text", rows: 3 }),
+          ],
+          preview: { select: { title: "title" } },
+        }),
+      ],
+    }),
+
+    /* ── FAQ ── */
     defineField({
       name: "faqSection",
       title: "FAQ — Section Header",

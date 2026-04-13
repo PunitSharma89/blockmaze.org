@@ -2,15 +2,19 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { mainNavigation } from "@/lib/navigation";
+import type { SanityNavItem } from "@/components/layout/HeaderClient";
 import NavDropdown from "./NavDropdown";
 
-export default function Navbar() {
+interface NavbarProps {
+  navItems: SanityNavItem[];
+}
+
+export default function Navbar({ navItems }: NavbarProps) {
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
 
   return (
     <nav className="hidden lg:flex items-center gap-5">
-      {mainNavigation.map((item) => (
+      {navItems.map((item) => (
         <div
           key={item.label}
           className="relative"

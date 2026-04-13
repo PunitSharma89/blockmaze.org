@@ -1,8 +1,25 @@
 import Link from "next/link";
 import Image from "next/image";
-import { footerCompanyLinks, footerQuickLinks } from "@/lib/navigation";
+import { sanityFetch } from "@/lib/sanity";
+import { siteSettingsQuery } from "@/lib/queries";
 
-export default function Footer() {
+interface SiteSettings {
+  footerDescription?: string;
+  footerEmail?: string;
+  footerCompanyHeading?: string;
+  footerCompanyLinks?: { label: string; href: string }[];
+  footerQuickLinksHeading?: string;
+  footerQuickLinks?: { label: string; href: string }[];
+  footerCopyrightLeft?: string;
+  footerCopyrightRight?: string;
+}
+
+export default async function Footer() {
+  const settings = await sanityFetch<SiteSettings>(siteSettingsQuery);
+
+  const companyLinks = settings?.footerCompanyLinks ?? [];
+  const quickLinks = settings?.footerQuickLinks ?? [];
+
   return (
     <footer className="footer">
       {/* Decorative bubble */}
@@ -32,27 +49,25 @@ export default function Footer() {
               />
             </Link>
             <p className="footer-desc">
-              Supporting the long-term security, neutrality, and sustainability
-              of the Blockmaze ecosystem through governance, research, and
-              ecosystem programs.
+              {settings?.footerDescription}
             </p>
-            <a href="mailto:hello@blockmaze.com" className="footer-email">
+            <a href={`mailto:${settings?.footerEmail}`} className="footer-email">
               <Image
                 src="/images/footer-mail.svg"
                 alt="Email"
                 width={24}
                 height={24}
               />
-              <span>hello@blockmaze.com</span>
+              <span>{settings?.footerEmail}</span>
             </a>
           </div>
 
           {/* Right — link columns */}
           <div className="footer-links">
             <div className="footer-link-col">
-              <h4 className="footer-link-heading">Company</h4>
+              <h4 className="footer-link-heading">{settings?.footerCompanyHeading}</h4>
               <ul className="footer-link-list">
-                {footerCompanyLinks.map((link) => (
+                {companyLinks.map((link) => (
                   <li key={link.href}>
                     <Link href={link.href} className="footer-link">
                       {link.label}
@@ -62,9 +77,9 @@ export default function Footer() {
               </ul>
             </div>
             <div className="footer-link-col">
-              <h4 className="footer-link-heading">Quick Links</h4>
+              <h4 className="footer-link-heading">{settings?.footerQuickLinksHeading}</h4>
               <ul className="footer-link-list">
-                {footerQuickLinks.map((link) => (
+                {quickLinks.map((link) => (
                   <li key={link.href}>
                     <Link href={link.href} className="footer-link">
                       {link.label}
@@ -78,8 +93,8 @@ export default function Footer() {
 
         {/* Bottom bar */}
         <div className="footer-bottom">
-          <span>&copy; All Rights Reserved</span>
-          <span>Copyright 2026. Blockmaze.com</span>
+          <span>{settings?.footerCopyrightLeft}</span>
+          <span>{settings?.footerCopyrightRight}</span>
         </div>
       </div>
     </footer>
