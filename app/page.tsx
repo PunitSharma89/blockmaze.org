@@ -2,7 +2,6 @@ import Image from "next/image";
 import Link from "next/link";
 import Container from "@/components/layout/Container";
 import Button from "@/components/ui/Button";
-import AnimatedButton from "@/components/ui/AnimatedButton";
 import SectionHeading from "@/components/ui/SectionHeading";
 import Blurb from "@/components/ui/Blurb";
 import BlogCard from "@/components/ui/BlogCard";
@@ -11,6 +10,8 @@ import FAQ from "@/components/ui/FAQ";
 import ProblemSlider from "@/components/ui/ProblemSlider";
 import AccountabilityArc from "@/components/ui/AccountabilityArc";
 import UseCaseTabs from "@/components/ui/UseCaseTabs";
+import UseCaseScroll from "@/components/ui/UseCaseScroll";
+import DistinguishesSection from "@/components/ui/DistinguishesSection";
 import EcosystemTabs from "@/components/ui/EcosystemTabs";
 import { Globe } from "@/components/ui/Globe";
 import AboutAccordion from "@/components/ui/AboutAccordion";
@@ -94,37 +95,37 @@ const problemCards = [
 
 const uspCards = [
   {
-    icon: "/images/Frame-14.png",
+    icon: "/images/a.svg",
     title: "Accountability at Layer-0",
     description:
       "Issuer registries, proof schedules, and standing transitions operate at the protocol level. These rules apply consistently across all connected domains.",
   },
   {
-    icon: "/images/Frame-15.png",
+    icon: "/images/b.svg",
     title: "Verified Issuer Admission",
     description:
       "Corporate issuers must complete identity verification, demonstrate legal authorization, and bond economic commitments before deploying assets.",
   },
   {
-    icon: "/images/Frame-16.png",
+    icon: "/images/c.svg",
     title: "Asset-Specific Token Standards",
     description:
       "Two standardized templates reflect distinct legal realities: BMZ20 for bearer-redeemable assets and BMZ3643 for registry-dependent title assets, supporting structured RWA issuance platform requirements.",
   },
   {
-    icon: "/images/Frame-17.png",
+    icon: "/images/d.svg",
     title: "Enforced Disclosure Cadence",
     description:
       "Proof-of-reserves and proof-of-presence deadlines are monitored by protocol modules. Missed submissions trigger visible standing changes, reinforcing compliant asset tokenization practices.",
   },
   {
-    icon: "/images/Frame-18.png",
+    icon: "/images/e.svg",
     title: "Governance With Defined Boundaries",
     description:
       "Governance manages issuer permissions and protocol parameters within a defined blockchain governance framework. It cannot reverse transactions or interfere with settlement history.",
   },
   {
-    icon: "/images/Frame-19.png",
+    icon: "/images/f.svg",
     title: "Hybrid Layer-0 / Sovereign Model",
     description:
       "Issuers may operate directly on the root chain or deploy jurisdiction-specific Layer-1 domains connected through shared accountability primitives using a sovereign blockchain SDK.",
@@ -439,9 +440,7 @@ export default function Home() {
       <section className="problem-section">
         <div className="problem-section-wrap">
           <div className="problem-section-box">
-            <Container>
-              <ProblemSlider cards={problemCards} />
-            </Container>
+            <ProblemSlider cards={problemCards} />
           </div>
         </div>
       </section>
@@ -452,93 +451,11 @@ export default function Home() {
       </section>
 
       {/* SECTION 5: What Distinguishes Blockmaze */}
-      <section className="distinguishes-section">
-        <Container>
-          <div className="distinguishes-inner">
-            {/* Video background */}
-            <video
-              className="distinguishes-bg-video"
-              src="/images/bg-line-1.mp4"
-              autoPlay
-              loop
-              muted
-              playsInline
-            />
-            <div className="distinguishes-content">
-            <div className="distinguishes-heading">
-              <span className="section-eyebrow section-eyebrow--dark">Primary USPs</span>
-              <h2 className="distinguishes-title">
-                What Distinguishes{" "}
-                <span className="text-primary">Blockmaze</span>
-              </h2>
-              <p className="distinguishes-subtext">
-                Blockmaze embeds issuer accountability at the protocol root
-                rather than relying on application-level controls. Its
-                architecture separates settlement from oversight, defines
-                structured issuer admission, and applies standardized token
-                behavior across connected chains.
-              </p>
-            </div>
-            <div className="distinguishes-cards">
-              <div className="distinguishes-row">
-                {uspCards.slice(0, 3).map((card) => (
-                  <div key={card.title} className="distinguishes-card">
-                    <Image
-                      src={card.icon}
-                      alt={card.title}
-                      width={48}
-                      height={48}
-                      className="distinguishes-card-icon"
-                    />
-                    <div className="distinguishes-card-body">
-                      <h4 className="distinguishes-card-title">
-                        {card.title}
-                      </h4>
-                      <p className="distinguishes-card-text">
-                        {card.description}
-                      </p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-              <div className="distinguishes-row">
-                {uspCards.slice(3, 6).map((card) => (
-                  <div key={card.title} className="distinguishes-card">
-                    <Image
-                      src={card.icon}
-                      alt={card.title}
-                      width={48}
-                      height={48}
-                      className="distinguishes-card-icon"
-                    />
-                    <div className="distinguishes-card-body">
-                      <h4 className="distinguishes-card-title">
-                        {card.title}
-                      </h4>
-                      <p className="distinguishes-card-text">
-                        {card.description}
-                      </p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-            </div>
-          </div>
-        </Container>
-      </section>
+      <DistinguishesSection cards={uspCards} />
 
       {/* SECTION 6: Use Cases */}
-      <section className="section-padding bg-white">
-        <Container>
-          <SectionHeading
-            label="Use Cases"
-            heading="Top Blockmaze Use Cases"
-            subtext="Blockmaze supports asset issuance models where verified authorization, structured disclosure, and protocol-level accountability are required."
-          />
-          <UseCaseTabs />
-        </Container>
-      </section>
+      <UseCaseScroll />
+
 
       {/* SECTION 7: Governance & Ecosystem */}
       <section className="bg-white">
@@ -553,9 +470,7 @@ export default function Home() {
               <h2 className="docs-banner-title">
                 Blockmaze Documentation &amp; Resources
               </h2>
-              <AnimatedButton href="/knowledge-hub" variant="primary">
-                View
-              </AnimatedButton>
+              <Link href="/knowledge-hub" className="hero-figma-btn-primary">View</Link>
             </div>
             <div className="docs-banner-img-wrap">
               <Image
