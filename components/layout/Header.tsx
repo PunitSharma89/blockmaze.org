@@ -10,8 +10,8 @@ export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50" style={{ background: "linear-gradient(to left, var(--color-header-navy), var(--color-header-dark) 49%)" }}>
-      <div className="mx-auto w-[80%] max-w-[1596px] flex items-center justify-between h-[71px]">
+    <header className="fixed top-0 left-0 right-0 z-50 header-white">
+      <div className="mx-auto w-[80%] max-w-[1440px] flex items-center justify-between h-[71px]">
         {/* Logo */}
         <Link href="/" className="flex-shrink-0">
           <Image
@@ -20,7 +20,7 @@ export default function Header() {
             width={160}
             height={62}
             priority
-            className="h-auto"
+            className="h-auto header-logo-dark"
           />
         </Link>
 
@@ -29,7 +29,7 @@ export default function Header() {
 
         {/* Mobile Hamburger */}
         <button
-          className="lg:hidden p-2 text-white hover:text-primary"
+          className="lg:hidden p-2 text-[#0b0b0b] hover:text-[#ffb01e]"
           onClick={() => setMobileMenuOpen(true)}
           aria-label="Open menu"
         >

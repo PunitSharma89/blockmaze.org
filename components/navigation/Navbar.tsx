@@ -21,7 +21,7 @@ export default function Navbar() {
         >
           {item.children ? (
             <button
-              className="flex items-center gap-[6px] px-3 text-[14px] font-medium leading-6 text-white hover:text-[#ffb01e] transition-colors py-2"
+              className="flex items-center gap-[6px] px-3 text-[16px] font-medium leading-6 text-[#0b0b0b] hover:text-[#ffb01e] transition-colors py-2"
               onClick={() =>
                 setOpenDropdown(
                   openDropdown === item.label ? null : item.label
@@ -48,7 +48,7 @@ export default function Navbar() {
           ) : (
             <Link
               href={item.href}
-              className="block px-3 text-[14px] font-medium leading-6 text-white hover:text-[#ffb01e] transition-colors py-2"
+              className="block px-3 text-[16px] font-medium leading-6 text-[#0b0b0b] hover:text-[#ffb01e] transition-colors py-2"
             >
               {item.label}
             </Link>
