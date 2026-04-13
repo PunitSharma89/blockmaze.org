@@ -271,36 +271,25 @@ export default function Home() {
   return (
     <>
       {/* SECTION 1: Hero */}
-      <section
-        className="relative h-[677px] overflow-hidden"
-        style={{ background: "linear-gradient(to left, var(--color-header-navy), var(--color-header-dark) 49%)" }}
-      >
-        {/* Perspective grid — bottom of hero */}
-        <div className="hero-bg-grid">
-          <Image src="/images/hero-bg-grid.svg" alt="" fill className="object-fill" />
-        </div>
+      <section className="hero-section-v2">
 
         {/* Inner layout */}
-        <div className="mx-auto w-[80%] max-w-[1440px] h-full flex items-center gap-[170px] px-0 relative">
+        <div className="mx-auto w-[80%] max-w-[1440px] h-full flex items-center gap-[80px] px-0 relative">
 
           {/* ── LEFT COLUMN ── */}
           <div className="flex-1 flex flex-col gap-[40px] relative z-10 min-w-0">
-            <div className="flex flex-col gap-[16px]">
+            <div className="flex flex-col gap-[20px]">
               {/* Chip */}
-              <div
-                className="inline-flex w-fit items-center justify-center px-[16px] py-[12px] rounded-[999px] border"
-                style={{ borderColor: "var(--color-chip-border)", background: "var(--color-chip-bg)" }}
-              >
-                <span className="text-[14px] font-medium tracking-[-0.28px] whitespace-nowrap" style={{ color: "var(--color-primary)" }}>
-                  Blockmaze Foundation
-                </span>
+              <div className="hero-chip-v2">
+                <span className="hero-chip-dot"></span>
+                <span className="hero-chip-label">Blockmaze Foundation</span>
               </div>
               {/* Heading + description */}
-              <div className="flex flex-col gap-[20px]">
-                <h1 className="font-bold text-[46px] leading-[68px]" style={{ color: "var(--color-white)" }}>
+              <div className="flex flex-col gap-[24px]">
+                <h1 className="hero-heading-v2">
                   The Accountability Framework Behind the Blockmaze Layer-0 Blockchain Ecosystem
                 </h1>
-                <p className="text-[16px] leading-[28px]" style={{ color: "var(--color-hero-body)" }}>
+                <p className="hero-desc-v2">
                   Establishing protocol-level governance and verified issuer accountability across the Blockmaze layer 0 blockchain ecosystem while preserving independent and irreversible settlement.
                 </p>
               </div>
@@ -310,21 +299,61 @@ export default function Home() {
               <AnimatedButton href="/contact-us" variant="primary">
                 Contact Us
               </AnimatedButton>
-              <AnimatedButton href="/whitepaper" variant="white">
+              <AnimatedButton href="/whitepaper" variant="dark">
                 Read Whitepaper
               </AnimatedButton>
             </div>
           </div>
 
-          {/* ── RIGHT COLUMN — hero image ── */}
-          <div className="hidden lg:block flex-shrink-0 w-[582px] h-[558px]">
-            <Image
-              src="/images/hero-img.svg"
-              alt="Blockmaze hero"
-              width={582}
-              height={558}
-              priority
-            />
+          {/* ── RIGHT COLUMN — animated decorative ── */}
+          <div className="hero-right-v2">
+            {/* Orbital rings */}
+            <div className="hero-rings-wrap" aria-hidden="true">
+              <div className="hero-ring-sm"></div>
+              <div className="hero-ring-lg"></div>
+            </div>
+
+            {/* Center image */}
+            <div className="hero-img-wrap">
+              <Image
+                src="/images/hero-img.svg"
+                alt="Blockmaze hero"
+                width={400}
+                height={400}
+                priority
+              />
+            </div>
+
+            {/* Floating card — top right */}
+            <div className="hero-fcard hero-fcard--top" aria-hidden="true">
+              <span className="hero-fcard-icon hero-fcard-icon--primary">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+              </span>
+              <span>
+                <span className="hero-fcard-title">Verified Issuers</span>
+                <span className="hero-fcard-sub">On-chain authorization</span>
+              </span>
+            </div>
+
+            {/* Floating card — bottom left */}
+            <div className="hero-fcard hero-fcard--bottom" aria-hidden="true">
+              <span className="hero-fcard-icon hero-fcard-icon--dark">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                </svg>
+              </span>
+              <span>
+                <span className="hero-fcard-title">Proof Monitoring</span>
+                <span className="hero-fcard-sub">Automated tracking</span>
+              </span>
+            </div>
+
+            {/* Sparkle dots */}
+            <span className="hero-sparkle hero-sparkle--a" aria-hidden="true"></span>
+            <span className="hero-sparkle hero-sparkle--b" aria-hidden="true"></span>
+            <span className="hero-sparkle hero-sparkle--c" aria-hidden="true"></span>
           </div>
 
         </div>
