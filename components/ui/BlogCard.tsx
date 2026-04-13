@@ -69,16 +69,16 @@ export default function BlogCard({
 
       {/* Title */}
       <Link href={`/blogs/${slug}`}>
-        <h3 className="text-[16px] font-bold text-[#0f0f0f] leading-snug mb-2 group-hover:text-primary transition-colors duration-200 line-clamp-2">
+        <h4 className="text-[16px] font-bold text-[#0f0f0f] leading-snug mb-2 group-hover:text-primary transition-colors duration-200 line-clamp-2">
           {title}
-        </h3>
+        </h4>
       </Link>
 
       {/* Excerpt */}
       {excerpt && (
-        <p className="text-[13px] text-[#666] leading-relaxed line-clamp-3">
+        <span className="text-[14px] text-[#666] leading-relaxed line-clamp-3">
           {excerpt}
-        </p>
+        </span>
       )}
     </article>
   );

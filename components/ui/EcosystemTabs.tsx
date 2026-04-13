@@ -2,7 +2,7 @@
 
 import { useRef, useState } from 'react'
 import Image from 'next/image'
-import AnimatedButton from '@/components/ui/AnimatedButton'
+import Link from 'next/link'
 import { useScroll, useMotionValueEvent } from 'framer-motion'
 
 const ECOSYSTEM = [
@@ -165,9 +165,7 @@ export default function EcosystemTabs() {
                   </div>
                 ))}
               </div>
-              <AnimatedButton href={current.href} variant="primary">
-                Learn More
-              </AnimatedButton>
+              <Link href={current.href} className="hero-figma-btn-primary">Learn More</Link>
             </div>
           </div>
         </div>

@@ -2,6 +2,7 @@
 
 import { useRef, useState } from 'react'
 import Image from 'next/image'
+import Container from '@/components/layout/Container'
 
 interface ProblemCard {
   icon: string
@@ -38,7 +39,7 @@ export default function ProblemSlider({ cards }: { cards: ProblemCard[] }) {
   const onMouseLeave = () => setDragging(false)
 
   return (
-    <div>
+    <Container>
       <div className="problem-slider-top">
         <div className="problem-slider-heading-col">
           <h2 className="section-heading">
@@ -55,7 +56,6 @@ export default function ProblemSlider({ cards }: { cards: ProblemCard[] }) {
         </div>
       </div>
 
-      <div className="problem-slider-track-wrap">
       <div
         ref={trackRef}
         className={`problem-slider-track${dragging ? ' dragging' : ''}`}
@@ -76,7 +76,6 @@ export default function ProblemSlider({ cards }: { cards: ProblemCard[] }) {
           </div>
         ))}
       </div>
-      </div>
-    </div>
+    </Container>
   )
 }
