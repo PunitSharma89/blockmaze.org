@@ -313,7 +313,7 @@ export default async function RfpPage() {
 
       {/* SECTION 6: Evaluation Criteria — dark */}
       {data?.evaluation && (
-        <section className="distinguishes-section">
+        <section className="section-padding">
           <Container>
             <div className="distinguishes-inner">
               <video

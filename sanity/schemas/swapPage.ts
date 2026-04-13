@@ -13,8 +13,10 @@ export default defineType({
         defineField({ name: "badge", title: "Badge Text", type: "string" }),
         defineField({ name: "heading", title: "Heading", type: "string" }),
         defineField({ name: "subtext", title: "Body Text", type: "text", rows: 4 }),
-        defineField({ name: "buttonText", title: "Button Text", type: "string" }),
-        defineField({ name: "buttonHref", title: "Button Link", type: "string" }),
+        defineField({ name: "buttonText", title: "Primary Button Text", type: "string" }),
+        defineField({ name: "buttonHref", title: "Primary Button Link", type: "string" }),
+        defineField({ name: "button2Text", title: "Secondary Button Text", type: "string" }),
+        defineField({ name: "button2Href", title: "Secondary Button Link", type: "string" }),
         defineField({
           name: "image",
           title: "Hero Image (optional)",

@@ -93,6 +93,7 @@ export default defineType({
       fields: [
         defineField({ name: "eyebrow", title: "Eyebrow Label", type: "string" }),
         defineField({ name: "heading", title: "Heading", type: "string" }),
+        defineField({ name: "subHeading", title: "Sub Heading", type: "text", rows: 2 }),
       ],
     }),
     defineField({
