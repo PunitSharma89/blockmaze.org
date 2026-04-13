@@ -29,12 +29,12 @@ export default function HeaderClient({ logoAlt, navItems }: HeaderClientProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50" style={{ background: "linear-gradient(to left, var(--color-header-navy), var(--color-header-dark) 49%)" }}>
+    <header className="fixed top-0 left-0 right-0 z-50 header-white">
       <div className="mx-auto w-[80%] max-w-[1596px] flex items-center justify-between h-[71px]">
         {/* Logo */}
         <Link href="/" className="flex-shrink-0">
           <Image
-            src="/images/white-logo.svg"
+            src="/images/Logo.png"
             alt={logoAlt}
             width={160}
             height={62}
