@@ -144,7 +144,7 @@ export default async function DelegatorPage() {
               </AnimatedButton>
             )}
           </div>
-          <div className="hidden lg:flex flex-shrink-0 items-center justify-center w-[460px]">
+          <div className="hidden lg:flex flex-shrink-0 items-center justify-center w-[660px]">
             {data?.hero?.image?.asset?.url ? (
               <Image
                 src={data.hero.image.asset.url}

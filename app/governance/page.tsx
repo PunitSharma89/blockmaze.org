@@ -36,7 +36,7 @@ interface GovernanceData {
   roles?: { iconKey: string; title: string; description: string }[];
   scopeSection?: { eyebrow?: string; heading?: string };
   scopeItems?: { iconKey: string; title: string; description: string }[];
-  structureSection?: { eyebrow?: string; heading?: string };
+  structureSection?: { eyebrow?: string; heading?: string; subHeading?: string };
   structure?: { iconKey: string; title: string; description: string }[];
   stepsSection?: { eyebrow?: string; heading?: string };
   steps?: { num: string; title: string; description: string }[];
@@ -345,18 +345,18 @@ export default async function GovernancePage() {
             </div>
           </div>
 
-          <div className="hidden lg:flex flex-shrink-0 items-center justify-center w-[460px] h-[400px]">
+          <div className="hidden lg:flex flex-shrink-0 items-center justify-center w-[660px] h-[400px] ms-[auto]">
             {data?.hero?.image?.asset?.url ? (
               <Image
                 src={data.hero.image.asset.url}
                 alt={data.hero.image.alt ?? ""}
-                width={460}
+                width={660}
                 height={400}
                 priority
               />
             ) : (
               <svg
-                width="460"
+                width="660"
                 height="400"
                 viewBox="0 0 460 400"
                 fill="none"
@@ -629,6 +629,7 @@ export default async function GovernancePage() {
             <SectionHeading
               label={data?.structureSection?.eyebrow}
               heading={data?.structureSection?.heading ?? ""}
+              subHeading={data?.structureSection?.subHeading ?? ""}
             />
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {structure.map((s) => (

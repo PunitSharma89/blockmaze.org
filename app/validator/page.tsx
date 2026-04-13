@@ -309,7 +309,7 @@ export default async function ValidatorPage() {
               </AnimatedButton>
             )}
           </div>
-          <div className="hidden lg:flex flex-shrink-0 items-center justify-center w-[460px]">
+          <div className="hidden lg:flex flex-shrink-0 items-center justify-center w-[660px]">
             {data?.hero?.image?.asset?.url ? (
               <Image
                 src={data.hero.image.asset.url}
@@ -339,7 +339,7 @@ export default async function ValidatorPage() {
               label={data?.whoSection?.eyebrow}
               heading={data?.whoSection?.heading ?? ""}
             />
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-4">
               {whoCards.map((card) => (
                 <div
                   key={card.title}
@@ -357,7 +357,7 @@ export default async function ValidatorPage() {
                     className="rounded-xl"
                   />
                   <p
-                    className="text-[16px] font-medium leading-[1.5]"
+                    className="text-[18px] font-medium leading-[1.5]"
                     style={{ color: "var(--color-dark)" }}
                   >
                     {card.title}
@@ -371,10 +371,7 @@ export default async function ValidatorPage() {
 
       {/* 3 ── STEPS — alternating timeline */}
       {steps.length > 0 && (
-        <section
-          className="section-padding"
-          style={{ background: "var(--color-surface)" }}
-        >
+        <section className="section-padding">
           <Container>
             <SectionHeading
               label={data?.stepsSection?.eyebrow}
@@ -383,7 +380,7 @@ export default async function ValidatorPage() {
             />
 
             {/* ── DESKTOP: alternating left / right ── */}
-            <div className="relative hidden lg:block mx-auto">
+            <div className="mt-12 relative hidden lg:block mx-auto">
               {/* centre spine */}
               <div
                 className="absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-[2px]"
@@ -515,7 +512,7 @@ export default async function ValidatorPage() {
               heading={data?.validationSection?.heading ?? ""}
               subtext={data?.validationSection?.subtext}
             />
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {validationCards.map((card) => (
                 <div
                   key={card.title}

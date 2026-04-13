@@ -133,7 +133,7 @@ export const governancePageQuery = `*[_type == "governancePage" && !(_id in path
   roles[] { iconKey, title, description },
   scopeSection { eyebrow, heading },
   scopeItems[] { iconKey, title, description },
-  structureSection { eyebrow, heading },
+  structureSection { eyebrow, heading, subHeading },
   structure[] { iconKey, title, description },
   stepsSection { eyebrow, heading },
   steps[] { num, title, description },
@@ -163,6 +163,7 @@ export const daoPageQuery = `*[_type == "daoPage" && !(_id in path("drafts.**"))
   aboutSection { eyebrow, heading },
   aboutText,
   aboutButton { text, href },
+  aboutCardsSection { eyebrow, heading },
   aboutCards[] { title, description },
   aboutCardsButton { text, href },
   marqueeItems,
@@ -177,7 +178,7 @@ export const daoPageQuery = `*[_type == "daoPage" && !(_id in path("drafts.**"))
 }`;
 
 export const swapPageQuery = `*[_type == "swapPage" && !(_id in path("drafts.**"))][0] {
-  hero { badge, heading, subtext, buttonText, buttonHref, image { asset-> { url }, alt } },
+  hero { badge, heading, subtext, buttonText, buttonHref, button2Text, button2Href, image { asset-> { url }, alt } },
   stepsSection { eyebrow, heading },
   steps[] { title, description },
   stepsButton { text, href },

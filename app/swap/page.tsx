@@ -21,6 +21,8 @@ interface SwapData {
     subtext?: string;
     buttonText?: string;
     buttonHref?: string;
+    button2Text?: string;
+    button2Href?: string;
     image?: { asset?: { url: string }; alt?: string };
   };
   stepsSection?: { eyebrow?: string; heading?: string };
@@ -115,7 +117,7 @@ export default async function SwapPage() {
             )}
           </div>
 
-          <div className="hidden lg:flex flex-shrink-0 items-center justify-center w-[460px]">
+          <div className="hidden lg:flex flex-shrink-0 items-center justify-center w-[660px]">
             {data?.hero?.image?.asset?.url ? (
               <Image
                 src={data.hero.image.asset.url}
@@ -137,52 +139,158 @@ export default async function SwapPage() {
         </div>
       </section>
 
-      {/* 2 ── STEPS — white */}
+      {/* 2 ── STEPS — alternating timeline */}
       {steps.length > 0 && (
-        <section className="section-padding bg-white">
+        <section
+          className="section-padding"
+          style={{ background: "var(--color-surface)" }}
+        >
           <Container>
             <SectionHeading
               label={data?.stepsSection?.eyebrow}
               heading={data?.stepsSection?.heading ?? ""}
             />
-            <div className="flex flex-col gap-4 max-w-3xl mx-auto">
-              {steps.map((step, i) => (
-                <div
-                  key={i}
-                  className="flex items-start gap-4 p-6 rounded-[20px] transition-all duration-300 hover:-translate-y-1"
-                  style={{
-                    background: "var(--color-bg-default)",
-                    border: "1px solid var(--color-border-subtle)",
-                  }}
-                >
-                  <div
-                    className="inline-flex items-center justify-center w-9 h-9 rounded-full text-sm font-bold flex-shrink-0"
-                    style={{
-                      background: "var(--color-primary)",
-                      color: "var(--color-dark)",
-                    }}
-                  >
-                    {i + 1}
-                  </div>
-                  <div className="flex flex-col gap-1">
-                    <h4
-                      className="text-[18px] font-medium leading-[1.4]"
-                      style={{ color: "var(--color-dark)" }}
+
+            {/* ── DESKTOP: alternating left / right ── */}
+            <div className="relative hidden lg:block mx-auto">
+              {/* centre spine */}
+              <div
+                className="absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-[2px]"
+                style={{ background: "var(--color-border-subtle)" }}
+              />
+              <div className="flex flex-col gap-0">
+                {steps.map((step, i) => {
+                  const isLeft = i % 2 === 0;
+                  return (
+                    <div
+                      key={i}
+                      className="relative flex items-start min-h-[120px] pb-10 last:pb-0"
                     >
-                      {step.title}
-                    </h4>
-                    <p
-                      className="text-[15px] leading-[28px]"
-                      style={{ color: "var(--color-gray-body)" }}
-                    >
-                      {step.description}
-                    </p>
-                  </div>
-                </div>
-              ))}
+                      {/* left half */}
+                      <div className="w-1/2 pr-10 flex justify-end">
+                        {isLeft && (
+                          <div
+                            className="w-full max-w-[660px] p-6 rounded-[20px] transition-all duration-300 hover:-translate-y-1"
+                            style={{
+                              background: "var(--color-white)",
+                              border: "1px solid var(--color-border-subtle)",
+                            }}
+                          >
+                            <h4
+                              className="text-[18px] font-semibold leading-[1.4] mb-2"
+                              style={{ color: "var(--color-dark)" }}
+                            >
+                              {step.title}
+                            </h4>
+                            <p
+                              className="text-[15px] leading-[28px]"
+                              style={{ color: "var(--color-gray-body)" }}
+                            >
+                              {step.description}
+                            </p>
+                          </div>
+                        )}
+                      </div>
+
+                      {/* centre badge + connector */}
+                      <div className="absolute left-1/2 -translate-x-1/2 top-5 flex items-center justify-center z-10">
+                        <div
+                          className="absolute w-8 h-[2px]"
+                          style={{
+                            background: "var(--color-primary)",
+                            [isLeft ? "right" : "left"]: "100%",
+                          }}
+                        />
+                        <div
+                          className="w-11 h-11 rounded-full flex items-center justify-center text-[15px] font-bold shadow-lg"
+                          style={{
+                            background: "var(--color-primary)",
+                            color: "var(--color-dark)",
+                          }}
+                        >
+                          {i + 1}
+                        </div>
+                      </div>
+
+                      {/* right half */}
+                      <div className="w-1/2 pl-10 flex justify-start">
+                        {!isLeft && (
+                          <div
+                            className="w-full max-w-[660px] p-6 rounded-[20px] transition-all duration-300 hover:-translate-y-1"
+                            style={{
+                              background: "var(--color-white)",
+                              border: "1px solid var(--color-border-subtle)",
+                            }}
+                          >
+                            <h4
+                              className="text-[18px] font-semibold leading-[1.4] mb-2"
+                              style={{ color: "var(--color-dark)" }}
+                            >
+                              {step.title}
+                            </h4>
+                            <p
+                              className="text-[15px] leading-[28px]"
+                              style={{ color: "var(--color-gray-body)" }}
+                            >
+                              {step.description}
+                            </p>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
+
+            {/* ── MOBILE: left-aligned timeline ── */}
+            <div className="relative lg:hidden max-w-xl mx-auto">
+              <div
+                className="absolute left-[21px] top-0 bottom-0 w-[2px]"
+                style={{ background: "var(--color-border-subtle)" }}
+              />
+              <div className="flex flex-col gap-0">
+                {steps.map((step, i) => (
+                  <div
+                    key={i}
+                    className="relative flex items-start gap-5 pb-8 last:pb-0"
+                  >
+                    <div
+                      className="relative z-10 flex-shrink-0 w-11 h-11 rounded-full flex items-center justify-center text-[15px] font-bold shadow-md"
+                      style={{
+                        background: "var(--color-primary)",
+                        color: "var(--color-dark)",
+                      }}
+                    >
+                      {i + 1}
+                    </div>
+                    <div
+                      className="flex-1 p-5 rounded-[20px]"
+                      style={{
+                        background: "var(--color-white)",
+                        border: "1px solid var(--color-border-subtle)",
+                      }}
+                    >
+                      <h4
+                        className="text-[18px] font-semibold leading-[1.4] mb-2"
+                        style={{ color: "var(--color-dark)" }}
+                      >
+                        {step.title}
+                      </h4>
+                      <p
+                        className="text-[15px] leading-[28px]"
+                        style={{ color: "var(--color-gray-body)" }}
+                      >
+                        {step.description}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
             {data?.stepsButton?.text && (
-              <div className="flex justify-center mt-8">
+              <div className="flex justify-center mt-12">
                 <AnimatedButton
                   href={data.stepsButton.href ?? "#"}
                   variant="primary"
@@ -208,7 +316,7 @@ export default async function SwapPage() {
                 muted
                 playsInline
               />
-              <div className="distinguishes-content flex-col lg:flex-row items-center gap-[60px]">
+              <div className="p-[60px] flex flex-row items-center gap-[60px]">
                 <div className="mb-3">
                   {data.governanceSection.eyebrow && (
                     <span className="section-eyebrow section-eyebrow--dark mb-3">

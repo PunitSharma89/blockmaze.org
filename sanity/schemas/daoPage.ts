@@ -51,6 +51,15 @@ export default defineType({
 
     /* ── About cards (dark section below about) ── */
     defineField({
+      name: "aboutCardsSection",
+      title: "About Cards — Section Header",
+      type: "object",
+      fields: [
+        defineField({ name: "eyebrow", title: "Eyebrow Label", type: "string" }),
+        defineField({ name: "heading", title: "Heading", type: "string" }),
+      ],
+    }),
+    defineField({
       name: "aboutCards",
       title: "About Cards (dark section)",
       type: "array",

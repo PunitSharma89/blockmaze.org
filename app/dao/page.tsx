@@ -30,6 +30,7 @@ interface DaoData {
   aboutSection?: { eyebrow?: string; heading?: string };
   aboutText?: string;
   aboutButton?: { text?: string; href?: string };
+  aboutCardsSection?: { eyebrow?: string; heading?: string };
   aboutCards?: { title: string; description: string }[];
   aboutCardsButton?: { text?: string; href?: string };
   marqueeItems?: string[];
@@ -67,7 +68,12 @@ export default async function DAOPage() {
         }}
       >
         <div className="hero-bg-grid">
-          <Image src="/images/hero-bg-grid.svg" alt="" fill className="object-fill" />
+          <Image
+            src="/images/hero-bg-grid.svg"
+            alt=""
+            fill
+            className="object-fill"
+          />
         </div>
 
         <div className="mx-auto w-[80%] max-w-[1440px] py-20 relative z-10 flex flex-col lg:flex-row items-center gap-[60px]">
@@ -116,19 +122,25 @@ export default async function DAOPage() {
             </div>
             <div className="flex flex-wrap gap-[20px]">
               {data?.hero?.buttonText && (
-                <AnimatedButton href={data.hero.buttonHref ?? "#"} variant="primary">
+                <AnimatedButton
+                  href={data.hero.buttonHref ?? "#"}
+                  variant="primary"
+                >
                   {data.hero.buttonText}
                 </AnimatedButton>
               )}
               {data?.hero?.secondButtonText && (
-                <AnimatedButton href={data.hero.secondButtonHref ?? "#"} variant="white">
+                <AnimatedButton
+                  href={data.hero.secondButtonHref ?? "#"}
+                  variant="white"
+                >
                   {data.hero.secondButtonText}
                 </AnimatedButton>
               )}
             </div>
           </div>
 
-          <div className="hidden lg:flex flex-shrink-0 items-center justify-center w-[460px]">
+          <div className="hidden lg:flex flex-shrink-0 items-center justify-center w-[660px]">
             {data?.hero?.image?.asset?.url ? (
               <Image
                 src={data.hero.image.asset.url}
@@ -156,7 +168,9 @@ export default async function DAOPage() {
           <Container>
             <div className="flex flex-col gap-6 items-center text-center w-full">
               {data?.aboutSection?.eyebrow && (
-                <span className="section-eyebrow">{data.aboutSection.eyebrow}</span>
+                <span className="section-eyebrow">
+                  {data.aboutSection.eyebrow}
+                </span>
               )}
               {data?.aboutSection?.heading && (
                 <h2 className="section-heading">{data.aboutSection.heading}</h2>
@@ -165,7 +179,10 @@ export default async function DAOPage() {
                 <p className="section-subtext">{data.aboutText}</p>
               )}
               {data?.aboutButton?.text && (
-                <AnimatedButton href={data.aboutButton.href ?? "#"} variant="primary">
+                <AnimatedButton
+                  href={data.aboutButton.href ?? "#"}
+                  variant="primary"
+                >
                   {data.aboutButton.text}
                 </AnimatedButton>
               )}
@@ -188,13 +205,32 @@ export default async function DAOPage() {
                 playsInline
               />
               <div className="distinguishes-content">
+                {(data?.aboutCardsSection?.eyebrow ||
+                  data?.aboutCardsSection?.heading) && (
+                  <div className="distinguishes-heading">
+                    {data?.aboutCardsSection?.eyebrow && (
+                      <span className="section-eyebrow section-eyebrow--dark">
+                        {data.aboutCardsSection.eyebrow}
+                      </span>
+                    )}
+                    {data?.aboutCardsSection?.heading && (
+                      <h2 className="distinguishes-title">
+                        {data.aboutCardsSection.heading}
+                      </h2>
+                    )}
+                  </div>
+                )}
                 <div className="distinguishes-cards">
                   <div className="distinguishes-row">
                     {aboutCards.map((card) => (
                       <div key={card.title} className="distinguishes-card">
                         <div className="distinguishes-card-body">
-                          <h4 className="distinguishes-card-title">{card.title}</h4>
-                          <p className="distinguishes-card-text">{card.description}</p>
+                          <h4 className="distinguishes-card-title">
+                            {card.title}
+                          </h4>
+                          <p className="distinguishes-card-text">
+                            {card.description}
+                          </p>
                         </div>
                       </div>
                     ))}
@@ -230,15 +266,17 @@ export default async function DAOPage() {
               animation: "marquee 20s linear infinite",
             }}
           >
-            {[...marqueeItems, ...marqueeItems, ...marqueeItems].map((item, i) => (
-              <span
-                key={i}
-                className="text-[15px] font-semibold tracking-wide"
-                style={{ color: "var(--color-dark)" }}
-              >
-                {item} <span className="mx-3 opacity-50">—</span>
-              </span>
-            ))}
+            {[...marqueeItems, ...marqueeItems, ...marqueeItems].map(
+              (item, i) => (
+                <span
+                  key={i}
+                  className="text-[15px] font-semibold tracking-wide"
+                  style={{ color: "var(--color-dark)" }}
+                >
+                  {item} <span className="mx-3 opacity-50">—</span>
+                </span>
+              ),
+            )}
           </div>
           <style>{`@keyframes marquee { from { transform: translateX(0) } to { transform: translateX(-33.333%) } }`}</style>
         </div>
@@ -267,7 +305,12 @@ export default async function DAOPage() {
                     className="w-14 h-14 rounded-xl flex items-center justify-center flex-shrink-0"
                     style={{ background: "rgba(255,176,30,0.1)" }}
                   >
-                    <Image src={step.iconPath} alt={step.title} width={40} height={40} />
+                    <Image
+                      src={step.iconPath}
+                      alt={step.title}
+                      width={40}
+                      height={40}
+                    />
                   </div>
                   <div className="flex flex-col gap-2">
                     <h4
@@ -305,7 +348,12 @@ export default async function DAOPage() {
             <div className="flex flex-col gap-3 max-w-2xl mx-auto">
               {eligibilityItems.map((item, i) => (
                 <div key={i} className="about-card-bullet">
-                  <Image src="/images/about-arrow.svg" alt="" width={24} height={24} />
+                  <Image
+                    src="/images/about-arrow.svg"
+                    alt=""
+                    width={24}
+                    height={24}
+                  />
                   <p
                     className="text-[16px] leading-[31px]"
                     style={{ color: "var(--color-gray-body)" }}
@@ -354,11 +402,20 @@ export default async function DAOPage() {
                           className="flex-shrink-0 w-14 h-14 rounded-xl flex items-center justify-center"
                           style={{ background: "rgba(255,176,30,0.12)" }}
                         >
-                          <Image src={m.iconPath} alt={m.title} width={40} height={40} />
+                          <Image
+                            src={m.iconPath}
+                            alt={m.title}
+                            width={40}
+                            height={40}
+                          />
                         </div>
                         <div className="distinguishes-card-body">
-                          <h4 className="distinguishes-card-title">{m.title}</h4>
-                          <p className="distinguishes-card-text">{m.description}</p>
+                          <h4 className="distinguishes-card-title">
+                            {m.title}
+                          </h4>
+                          <p className="distinguishes-card-text">
+                            {m.description}
+                          </p>
                         </div>
                       </div>
                     ))}

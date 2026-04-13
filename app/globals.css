@@ -398,7 +398,7 @@ img {
   align-items: center;
   gap: 100px;
   padding: 80px 0 0;
-  background: linear-gradient(180deg, #FFF 73.21%, #FFEFD2 104.97%);
+  background: linear-gradient(180deg, #fff 73.21%, #ffefd2 104.97%);
   overflow: hidden;
 }
 
@@ -689,7 +689,7 @@ img {
 /* ── What Distinguishes Blockmaze ─────────────────────────────────────── */
 
 .distinguishes-section {
-  padding-top: 0;
+  padding-top: 80px;
   padding-bottom: 80px;
   background: linear-gradient(0deg, #fff 31.32%, #fff2da 94.86%);
 }
@@ -709,7 +709,6 @@ img {
 .distinguishes-inner {
   border-radius: 24px;
   /* padding: 80px 60px; */
-  padding: 0;
   position: relative;
   overflow: hidden;
   display: flex;
@@ -1449,7 +1448,7 @@ img {
 .problem-section-box {
   border-radius: 32px;
   background-color: #0b0b0b;
-  background-image: url('/images/Section-3.svg');
+  background-image: url("/images/Section-3.svg");
   background-size: cover;
   background-position: center top;
   background-repeat: no-repeat;
@@ -1508,7 +1507,7 @@ img {
 }
 
 .problem-slider-track-wrap::after {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   right: 0;
@@ -1637,8 +1636,22 @@ img {
 }
 
 /* ── Mission Animation ────────────────────────────────────────────────── */
-@keyframes spin-cw  { from { transform: rotate(0deg); }    to { transform: rotate(360deg); } }
-@keyframes spin-ccw { from { transform: rotate(0deg); }    to { transform: rotate(-360deg); } }
+@keyframes spin-cw {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes spin-ccw {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(-360deg);
+  }
+}
 
 .mission-anim {
   position: relative;
@@ -1671,20 +1684,32 @@ img {
 
 .mission-orbit--1 {
   width: 65px;
-  background: linear-gradient(to right, rgba(255, 176, 30, 0.5), rgba(255, 176, 30, 0.1));
+  background: linear-gradient(
+    to right,
+    rgba(255, 176, 30, 0.5),
+    rgba(255, 176, 30, 0.1)
+  );
   animation: spin-cw 5s linear infinite;
 }
 
 .mission-orbit--2 {
   width: 96px;
-  background: linear-gradient(to right, rgba(99, 163, 237, 0.45), rgba(99, 163, 237, 0.08));
+  background: linear-gradient(
+    to right,
+    rgba(99, 163, 237, 0.45),
+    rgba(99, 163, 237, 0.08)
+  );
   animation: spin-ccw 8s linear infinite;
   animation-delay: -2.4s;
 }
 
 .mission-orbit--3 {
   width: 128px;
-  background: linear-gradient(to right, rgba(255, 176, 30, 0.3), rgba(255, 176, 30, 0.04));
+  background: linear-gradient(
+    to right,
+    rgba(255, 176, 30, 0.3),
+    rgba(255, 176, 30, 0.04)
+  );
   animation: spin-cw 13s linear infinite;
   animation-delay: -4.5s;
 }
@@ -1747,9 +1772,15 @@ img {
 }
 
 @keyframes float-coin {
-  0%   { transform: translateY(0px); }
-  50%  { transform: translateY(-14px); }
-  100% { transform: translateY(0px); }
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-14px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
 }
 
 .about-new-img-col > svg {
@@ -1796,8 +1827,12 @@ img {
   cursor: pointer;
 }
 
-.about-acc-card--vision           { background-color: #fff7e9; }
-.about-acc-card--mission          { background-color: var(--color-bg-default); }
+.about-acc-card--vision {
+  background-color: #fff7e9;
+}
+.about-acc-card--mission {
+  background-color: var(--color-bg-default);
+}
 
 .about-acc-title {
   font-size: 32px;
@@ -1807,7 +1842,9 @@ img {
   transition: font-size 0.35s ease;
 }
 
-.about-acc-title--sm { font-size: 24px; }
+.about-acc-title--sm {
+  font-size: 24px;
+}
 
 /* Animated accordion body */
 .about-acc-body {
@@ -1818,7 +1855,10 @@ img {
   overflow: hidden;
   opacity: 0;
   margin-top: 0;
-  transition: max-height 0.55s ease, opacity 0.4s ease 0.05s, margin-top 0.4s ease;
+  transition:
+    max-height 0.55s ease,
+    opacity 0.4s ease 0.05s,
+    margin-top 0.4s ease;
 }
 
 .about-acc-card--active .about-acc-body {
@@ -1855,7 +1895,9 @@ img {
   transition: top 0.55s ease;
 }
 
-.about-acc-divider-bar--bottom { top: 50%; }
+.about-acc-divider-bar--bottom {
+  top: 50%;
+}
 
 /* About section */
 .about-subtext {
@@ -2322,7 +2364,7 @@ img {
 
 .hero-figma-section {
   position: relative;
-  background: linear-gradient(180deg, #FBF4E6 0%, #F5F2F0 100%);
+  background: linear-gradient(180deg, #fbf4e6 0%, #f5f2f0 100%);
   overflow: hidden;
   height: 923px; /* 481px content top + 442px image height */
 }
@@ -2440,7 +2482,10 @@ img {
   white-space: nowrap;
   transition: opacity 0.2s;
 }
-.hero-figma-btn-primary:hover { opacity: 0.9; color: #ffffff; }
+.hero-figma-btn-primary:hover {
+  opacity: 0.9;
+  color: #ffffff;
+}
 
 .hero-figma-btn-white {
   background: #ffffff;
@@ -2458,7 +2503,10 @@ img {
   white-space: nowrap;
   transition: opacity 0.2s;
 }
-.hero-figma-btn-white:hover { opacity: 0.85; color: #ffb01e; }
+.hero-figma-btn-white:hover {
+  opacity: 0.85;
+  color: #ffb01e;
+}
 
 /* Hero 3D image — absolute, Figma exact */
 .hero-figma-img-wrap {
@@ -2471,7 +2519,6 @@ img {
   z-index: 2;
   overflow: visible;
 }
-
 
 /* Globe — half visible behind hero image, big */
 .hero-globe {
@@ -2499,25 +2546,74 @@ img {
   pointer-events: none;
 }
 /* Vector 1: lower-left (68.26%, 21.67%) */
-.hero-deco--1 { width: 43px; height: 57px; top: 630px; left: 312px; }
+.hero-deco--1 {
+  width: 43px;
+  height: 57px;
+  top: 630px;
+  left: 312px;
+}
 /* Vector 2: right-middle (55.9%, 69.84%) */
-.hero-deco--2 { width: 50px; height: 57px; top: 516px; left: 1006px; }
+.hero-deco--2 {
+  width: 50px;
+  height: 57px;
+  top: 516px;
+  left: 1006px;
+}
 /* Vector 3: upper-right (6.18%, 78.33%) */
-.hero-deco--3 { width: 43px; height: 57px; top: 57px;  left: 1128px; }
+.hero-deco--3 {
+  width: 43px;
+  height: 57px;
+  top: 57px;
+  left: 1128px;
+}
 
 /* Responsive */
 @media (max-width: 1200px) {
-  .hero-figma-inner { width: 90vw; }
-  .hero-figma-img-wrap { width: 90vw; }
+  .hero-figma-inner {
+    width: 90vw;
+  }
+  .hero-figma-img-wrap {
+    width: 90vw;
+  }
 }
 @media (max-width: 767px) {
-  .hero-figma-section { height: auto; padding-bottom: 40px; }
-  .hero-figma-inner { position: relative; left: auto; transform: none; top: auto; width: 100%; padding: 60px 20px 0; }
-  .hero-figma-img-wrap { position: relative; left: auto; transform: none; top: auto; width: 100%; height: auto; margin-top: 32px; }
-  .hero-figma-h1 { font-size: 28px; line-height: 40px; }
-  .hero-figma-p { max-width: 100%; }
-  .hero-deco--2, .hero-deco--3 { display: none; }
-  .hero-deco--1 { top: auto; bottom: 10px; left: 20px; }
+  .hero-figma-section {
+    height: auto;
+    padding-bottom: 40px;
+  }
+  .hero-figma-inner {
+    position: relative;
+    left: auto;
+    transform: none;
+    top: auto;
+    width: 100%;
+    padding: 60px 20px 0;
+  }
+  .hero-figma-img-wrap {
+    position: relative;
+    left: auto;
+    transform: none;
+    top: auto;
+    width: 100%;
+    height: auto;
+    margin-top: 32px;
+  }
+  .hero-figma-h1 {
+    font-size: 28px;
+    line-height: 40px;
+  }
+  .hero-figma-p {
+    max-width: 100%;
+  }
+  .hero-deco--2,
+  .hero-deco--3 {
+    display: none;
+  }
+  .hero-deco--1 {
+    top: auto;
+    bottom: 10px;
+    left: 20px;
+  }
 }
 
 /* Blog post page styles */
