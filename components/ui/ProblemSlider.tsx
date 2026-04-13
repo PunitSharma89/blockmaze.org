@@ -41,7 +41,9 @@ export default function ProblemSlider({ cards }: { cards: ProblemCard[] }) {
     <div>
       <div className="problem-slider-top">
         <div className="problem-slider-heading-col">
-          <h2 className="section-heading">The Accountability Gap in Existing <span className="text-primary">Blockchain Networks</span></h2>
+          <h2 className="section-heading">
+            The Accountability Gap in Existing <span className="text-primary">Blockchain Networks</span>
+          </h2>
         </div>
         <div className="problem-slider-arrows">
           <button className="problem-slider-arrow" onClick={() => scroll(-1)} aria-label="Previous">
@@ -53,6 +55,7 @@ export default function ProblemSlider({ cards }: { cards: ProblemCard[] }) {
         </div>
       </div>
 
+      <div className="problem-slider-track-wrap">
       <div
         ref={trackRef}
         className={`problem-slider-track${dragging ? ' dragging' : ''}`}
@@ -72,6 +75,7 @@ export default function ProblemSlider({ cards }: { cards: ProblemCard[] }) {
             </div>
           </div>
         ))}
+      </div>
       </div>
     </div>
   )
