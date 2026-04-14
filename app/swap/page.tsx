@@ -56,7 +56,7 @@ export default async function SwapPage() {
   return (
     <>
       {/* 1 ── HERO */}
-      <section className="about-hero">
+      <section className="about-hero swap-hero">
         <div className="about-hero-grid" />
         <div className="about-hero-inner">
           {data?.hero?.badge && (
@@ -71,24 +71,16 @@ export default async function SwapPage() {
               <p className="hero-figma-p">{data.hero.subtext}</p>
             )}
           </div>
-          <div className="hero-figma-btns">
-            {data?.hero?.buttonText && (
+          {data?.hero?.buttonText && (
+            <div className="hero-figma-btns">
               <Link
                 href={data.hero.buttonHref ?? "#"}
                 className="hero-figma-btn-primary"
               >
                 {data.hero.buttonText}
               </Link>
-            )}
-            {data?.hero?.button2Text && (
-              <Link
-                href={data.hero.button2Href ?? "#"}
-                className="hero-figma-btn-white"
-              >
-                {data.hero.button2Text}
-              </Link>
-            )}
-          </div>
+            </div>
+          )}
           <div className="about-globe-container">
             <Image
               src="/images/about-globe.svg"
@@ -107,21 +99,9 @@ export default async function SwapPage() {
         eyebrow={data?.stepsSection?.eyebrow}
         heading={data?.stepsSection?.heading}
         items={steps}
+        buttonText={data?.stepsButton?.text}
+        buttonHref={data?.stepsButton?.href}
       />
-      {data?.stepsButton?.text && (
-        <section className="section-padding bg-white">
-          <Container>
-            <div className="flex justify-center">
-              <Link
-                href={data.stepsButton.href ?? "#"}
-                className="hero-figma-btn-primary"
-              >
-                {data.stepsButton.text}
-              </Link>
-            </div>
-          </Container>
-        </section>
-      )}
 
       {/* 3 ── GOVERNANCE — vision-layout */}
       {data?.governanceSection && (
