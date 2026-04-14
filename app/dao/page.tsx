@@ -191,63 +191,52 @@ export default async function DAOPage() {
         </section>
       )}
 
-      {/* 3 ── ABOUT CARDS — dark */}
+      {/* 3 ── ABOUT CARDS — surface */}
       {aboutCards.length > 0 && (
-        <section className="distinguishes-section">
+        <section
+          className="section-padding"
+          style={{ background: "var(--color-surface)" }}
+        >
           <Container>
-            <div className="distinguishes-inner">
-              <video
-                className="distinguishes-bg-video"
-                src="/images/bg-line-1.mp4"
-                autoPlay
-                loop
-                muted
-                playsInline
-              />
-              <div className="distinguishes-content">
-                {(data?.aboutCardsSection?.eyebrow ||
-                  data?.aboutCardsSection?.heading) && (
-                  <div className="distinguishes-heading">
-                    {data?.aboutCardsSection?.eyebrow && (
-                      <span className="section-eyebrow section-eyebrow--dark">
-                        {data.aboutCardsSection.eyebrow}
-                      </span>
-                    )}
-                    {data?.aboutCardsSection?.heading && (
-                      <h2 className="distinguishes-title">
-                        {data.aboutCardsSection.heading}
-                      </h2>
-                    )}
-                  </div>
-                )}
-                <div className="distinguishes-cards">
-                  <div className="distinguishes-row">
-                    {aboutCards.map((card) => (
-                      <div key={card.title} className="distinguishes-card">
-                        <div className="distinguishes-card-body">
-                          <h4 className="distinguishes-card-title">
-                            {card.title}
-                          </h4>
-                          <p className="distinguishes-card-text">
-                            {card.description}
-                          </p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
+            <SectionHeading
+              label={data?.aboutCardsSection?.eyebrow}
+              heading={data?.aboutCardsSection?.heading ?? ""}
+            />
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {aboutCards.map((card) => (
+                <div
+                  key={card.title}
+                  className="flex flex-col gap-3 p-6 rounded-[20px] transition-all duration-300 hover:-translate-y-1"
+                  style={{
+                    background: "var(--color-white)",
+                    border: "1px solid var(--color-border-subtle)",
+                  }}
+                >
+                  <h4
+                    className="text-[18px] font-semibold"
+                    style={{ color: "var(--color-dark)" }}
+                  >
+                    {card.title}
+                  </h4>
+                  <p
+                    className="text-[15px] leading-[28px]"
+                    style={{ color: "var(--color-gray-body)" }}
+                  >
+                    {card.description}
+                  </p>
                 </div>
-                {data?.aboutCardsButton?.text && (
-                  <div className="mt-8">
-                    <AnimatedButton
-                      href={data.aboutCardsButton.href ?? "#"}
-                      variant="primary"
-                    >
-                      {data.aboutCardsButton.text}
-                    </AnimatedButton>
-                  </div>
-                )}
-              </div>
+              ))}
             </div>
+            {data?.aboutCardsButton?.text && (
+              <div className="flex justify-center mt-8">
+                <AnimatedButton
+                  href={data.aboutCardsButton.href ?? "#"}
+                  variant="primary"
+                >
+                  {data.aboutCardsButton.text}
+                </AnimatedButton>
+              </div>
+            )}
           </Container>
         </section>
       )}
@@ -367,61 +356,50 @@ export default async function DAOPage() {
         </section>
       )}
 
-      {/* 7 ── CORE GOVERNANCE MECHANISMS — dark */}
+      {/* 7 ── CORE GOVERNANCE MECHANISMS — white */}
       {mechanisms.length > 0 && (
-        <section className="distinguishes-section">
+        <section className="section-padding bg-white">
           <Container>
-            <div className="distinguishes-inner">
-              <video
-                className="distinguishes-bg-video"
-                src="/images/bg-line-1.mp4"
-                autoPlay
-                loop
-                muted
-                playsInline
-              />
-              <div className="distinguishes-content">
-                <div className="distinguishes-heading">
-                  <span className="section-eyebrow section-eyebrow--dark">
-                    {data?.mechanismsSection?.eyebrow}
-                  </span>
-                  <h2 className="distinguishes-title">
-                    {data?.mechanismsSection?.heading}
-                  </h2>
-                  {data?.mechanismsSection?.subtext && (
-                    <p className="distinguishes-subtext">
-                      {data.mechanismsSection.subtext}
-                    </p>
-                  )}
-                </div>
-                <div className="distinguishes-cards">
-                  <div className="distinguishes-row">
-                    {mechanisms.map((m) => (
-                      <div key={m.title} className="distinguishes-card">
-                        <div
-                          className="flex-shrink-0 w-14 h-14 rounded-xl flex items-center justify-center"
-                          style={{ background: "rgba(255,176,30,0.12)" }}
-                        >
-                          <Image
-                            src={m.iconPath}
-                            alt={m.title}
-                            width={40}
-                            height={40}
-                          />
-                        </div>
-                        <div className="distinguishes-card-body">
-                          <h4 className="distinguishes-card-title">
-                            {m.title}
-                          </h4>
-                          <p className="distinguishes-card-text">
-                            {m.description}
-                          </p>
-                        </div>
-                      </div>
-                    ))}
+            <SectionHeading
+              label={data?.mechanismsSection?.eyebrow}
+              heading={data?.mechanismsSection?.heading ?? ""}
+              subtext={data?.mechanismsSection?.subtext}
+            />
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {mechanisms.map((m) => (
+                <div
+                  key={m.title}
+                  className="flex flex-col gap-3 p-6 rounded-[20px] transition-all duration-300 hover:-translate-y-1"
+                  style={{
+                    background: "var(--color-bg-default)",
+                    border: "1px solid var(--color-border-subtle)",
+                  }}
+                >
+                  <div
+                    className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0"
+                    style={{ background: "rgba(255,176,30,0.1)" }}
+                  >
+                    <Image
+                      src={m.iconPath}
+                      alt={m.title}
+                      width={32}
+                      height={32}
+                    />
                   </div>
+                  <h4
+                    className="text-[18px] font-semibold"
+                    style={{ color: "var(--color-dark)" }}
+                  >
+                    {m.title}
+                  </h4>
+                  <p
+                    className="text-[15px] leading-[28px]"
+                    style={{ color: "var(--color-gray-body)" }}
+                  >
+                    {m.description}
+                  </p>
                 </div>
-              </div>
+              ))}
             </div>
           </Container>
         </section>
