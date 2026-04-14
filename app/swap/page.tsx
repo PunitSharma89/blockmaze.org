@@ -303,85 +303,179 @@ export default async function SwapPage() {
         </section>
       )}
 
-      {/* 3 ── GOVERNANCE — dark */}
+      {/* 3 ── GOVERNANCE — white, two-column */}
       {data?.governanceSection && (
-        <section className="distinguishes-section">
+        <section className="section-padding bg-white">
           <Container>
-            <div className="distinguishes-inner">
-              <video
-                className="distinguishes-bg-video"
-                src="/images/bg-line-1.mp4"
-                autoPlay
-                loop
-                muted
-                playsInline
-              />
-              <div className="p-[60px] flex flex-row items-center gap-[60px]">
-                <div className="mb-3">
-                  {data.governanceSection.eyebrow && (
-                    <span className="section-eyebrow section-eyebrow--dark mb-3">
-                      {data.governanceSection.eyebrow}
-                    </span>
-                  )}
-                  <h2 className="distinguishes-title">
-                    {data.governanceSection.heading}
-                  </h2>
-                  {data.governanceSection.text && (
-                    <p className="distinguishes-subtext">
-                      {data.governanceSection.text}
-                    </p>
-                  )}
-                  {data.governanceSection.text2 && (
-                    <p className="distinguishes-subtext">
-                      {data.governanceSection.text2}
-                    </p>
-                  )}
-                </div>
-                <div className="hidden lg:flex flex-shrink-0 justify-center w-[460px]">
-                  {data.governanceSection.image?.asset?.url ? (
-                    <Image
-                      src={data.governanceSection.image.asset.url}
-                      alt={data.governanceSection.image.alt ?? ""}
-                      width={500}
-                      height={380}
-                    />
-                  ) : (
-                    <Image
-                      src="/images/Design.png"
-                      alt="Quadratic Voting"
-                      width={500}
-                      height={380}
-                    />
-                  )}
-                </div>
+            <div className="flex flex-col lg:flex-row items-center gap-[60px]">
+              {/* Left: text */}
+              <div className="">
+                {data.governanceSection.eyebrow && (
+                  <span className="section-eyebrow mb-3">
+                    {data.governanceSection.eyebrow}
+                  </span>
+                )}
+                <h2
+                  className="text-[36px] font-bold leading-[1.3] mb-3"
+                  style={{ color: "var(--color-dark)" }}
+                >
+                  {data.governanceSection.heading}
+                </h2>
+                {data.governanceSection.text && (
+                  <p
+                    className="text-[16px] leading-[30px]"
+                    style={{ color: "var(--color-gray-body)" }}
+                  >
+                    {data.governanceSection.text}
+                  </p>
+                )}
+                {data.governanceSection.text2 && (
+                  <p
+                    className="text-[16px] leading-[30px]"
+                    style={{ color: "var(--color-gray-body)" }}
+                  >
+                    {data.governanceSection.text2}
+                  </p>
+                )}
+              </div>
+              {/* Right: image */}
+              <div className="hidden lg:flex flex-shrink-0 items-center justify-center w-[660px]">
+                {data.governanceSection.image?.asset?.url ? (
+                  <Image
+                    src={data.governanceSection.image.asset.url}
+                    alt={data.governanceSection.image.alt ?? ""}
+                    width={500}
+                    height={380}
+                    className="rounded-2xl"
+                  />
+                ) : (
+                  <Image
+                    src="/images/Design.png"
+                    alt="Quadratic Voting"
+                    width={500}
+                    height={380}
+                    className="rounded-2xl"
+                  />
+                )}
               </div>
             </div>
           </Container>
         </section>
       )}
 
-      {/* 4 ── LOCK-IN — surface */}
+      {/* 4 ── LOCK-IN — white, two-column */}
       {data?.lockInSection?.text && (
+        <section className="section-padding bg-white">
+          <Container>
+            <div className="flex flex-col lg:flex-row items-center gap-[60px]">
+              {/* Left: icon visual */}
+              <div
+                className="hidden lg:flex flex-shrink-0 items-center justify-center w-[660px] h-[300px] rounded-[32px]"
+                style={{
+                  background: "rgba(255,176,30,0.08)",
+                  border: "1px solid rgba(255,176,30,0.2)",
+                }}
+              >
+                <svg width="100" height="100" viewBox="0 0 100 100" fill="none">
+                  <rect
+                    x="15"
+                    y="44"
+                    width="70"
+                    height="48"
+                    rx="10"
+                    fill="rgba(255,176,30,0.15)"
+                    stroke="rgba(255,176,30,0.6)"
+                    strokeWidth="2.5"
+                  />
+                  <path
+                    d="M32 44V32a18 18 0 0 1 36 0v12"
+                    stroke="rgba(255,176,30,0.6)"
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
+                  />
+                  <circle cx="50" cy="66" r="7" fill="var(--color-primary)" />
+                  <rect
+                    x="47"
+                    y="66"
+                    width="6"
+                    height="10"
+                    rx="3"
+                    fill="var(--color-primary)"
+                  />
+                </svg>
+              </div>
+              {/* Right: text */}
+              <div className="">
+                {data.lockInSection.eyebrow && (
+                  <span className="section-eyebrow mb-3">
+                    {data.lockInSection.eyebrow}
+                  </span>
+                )}
+                <h2
+                  className="text-[32px] font-bold leading-[1.3] mb-3"
+                  style={{ color: "var(--color-dark)" }}
+                >
+                  {data.lockInSection.heading}
+                </h2>
+                <p
+                  className="text-[16px] leading-[30px]"
+                  style={{ color: "var(--color-gray-body)" }}
+                >
+                  {data.lockInSection.text}
+                </p>
+              </div>
+            </div>
+          </Container>
+        </section>
+      )}
+
+      {/* 5 ── CTA — amber accent horizontal banner */}
+      {data?.ctaSection && (
         <section
           className="section-padding"
           style={{ background: "var(--color-surface)" }}
         >
           <Container>
-            <SectionHeading
-              label={data.lockInSection.eyebrow}
-              heading={data.lockInSection.heading ?? ""}
-            />
-            <p
-              className="text-[16px] leading-[31px] text-center max-w-3xl mx-auto"
-              style={{ color: "var(--color-gray-body)" }}
+            <div
+              className="flex flex-col lg:flex-row items-center justify-between gap-8 py-12 px-10 rounded-[24px]"
+              style={{
+                background: "var(--color-white)",
+                borderLeft: "6px solid var(--color-primary)",
+                boxShadow: "0 4px 32px rgba(255,176,30,0.08)",
+              }}
             >
-              {data.lockInSection.text}
-            </p>
+              <div className="flex flex-col gap-3 max-w-xl">
+                {data.ctaSection.heading && (
+                  <h2
+                    className="text-[28px] font-bold leading-[1.3]"
+                    style={{ color: "var(--color-dark)" }}
+                  >
+                    {data.ctaSection.heading}
+                  </h2>
+                )}
+                {data.ctaSection.subtext && (
+                  <p
+                    className="text-[15px] leading-[28px]"
+                    style={{ color: "var(--color-gray-body)" }}
+                  >
+                    {data.ctaSection.subtext}
+                  </p>
+                )}
+              </div>
+              {data.ctaSection.buttonText && (
+                <div className="flex-shrink-0">
+                  <AnimatedButton
+                    href={data.ctaSection.buttonHref ?? "#"}
+                    variant="primary"
+                  >
+                    {data.ctaSection.buttonText}
+                  </AnimatedButton>
+                </div>
+              )}
+            </div>
           </Container>
         </section>
       )}
-
-      {/* 5 ── CTA — dark */}
     </>
   );
 }

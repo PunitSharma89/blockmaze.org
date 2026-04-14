@@ -149,62 +149,95 @@ export default async function TokenomicsPage() {
         </section>
       )}
 
-      {/* 3 ── TOKEN ALLOCATION — dark */}
+      {/* 3 ── TOKEN ALLOCATION — light */}
       {tokenAllocation.length > 0 && (
-        <section className="distinguishes-section">
+        <section className="section-padding bg-white">
           <Container>
-            <div className="distinguishes-inner">
-              <video className="distinguishes-bg-video" src="/images/bg-line-1.mp4" autoPlay loop muted playsInline />
-              <div className="distinguishes-content">
-                <div className="distinguishes-heading">
-                  <span className="section-eyebrow section-eyebrow--dark">{data?.allocationSection?.eyebrow}</span>
-                  <h2 className="distinguishes-title">{data?.allocationSection?.heading}</h2>
-                  {data?.allocationSection?.subtext && (
-                    <p className="distinguishes-subtext">{data.allocationSection.subtext}</p>
-                  )}
-                </div>
-                <div className="w-full overflow-x-auto rounded-[16px]" style={{ border: "1px solid rgba(255,255,255,0.1)" }}>
-                  <table className="w-full text-sm">
-                    <thead>
-                      <tr style={{ background: "rgba(255,255,255,0.06)", borderBottom: "1px solid rgba(255,255,255,0.12)" }}>
-                        {[
-                          data?.tableHeaders?.category,
-                          data?.tableHeaders?.pct,
-                          data?.tableHeaders?.tokens,
-                          data?.tableHeaders?.locking,
-                          data?.tableHeaders?.vesting,
-                        ].map((h, i) => (
-                          <th key={i} className="text-left py-3 px-4 text-[13px] font-semibold whitespace-nowrap" style={{ color: "rgba(255,255,255,0.6)" }}>
-                            {h}
-                          </th>
-                        ))}
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {tokenAllocation.map((row, i) => (
-                        <tr
-                          key={i}
-                          style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}
-                          className="transition-colors hover:bg-white/5"
-                        >
-                          <td className="py-3 px-4 text-[13px] leading-[22px]" style={{ color: "rgba(255,255,255,0.75)" }}>{row.category}</td>
-                          <td className="py-3 px-4 text-[13px] font-semibold whitespace-nowrap" style={{ color: "var(--color-primary)" }}>{row.pct}</td>
-                          <td className="py-3 px-4 text-[13px] whitespace-nowrap" style={{ color: "rgba(255,255,255,0.65)" }}>{row.tokens}</td>
-                          <td className="py-3 px-4 text-[13px] whitespace-nowrap" style={{ color: "rgba(255,255,255,0.65)" }}>{row.locking}</td>
-                          <td className="py-3 px-4 text-[13px] whitespace-nowrap" style={{ color: "rgba(255,255,255,0.65)" }}>{row.vesting}</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-                <div className="flex justify-center mt-6 w-full">
-                  {data?.allocationChartImage?.asset?.url ? (
-                    <Image src={data.allocationChartImage.asset.url} alt={data.allocationChartImage.alt ?? ""} width={800} height={500} className="rounded-xl" />
-                  ) : (
-                    <Image src="/images/token-allocation.png" alt="Token Allocation Chart" width={800} height={500} className="rounded-xl" />
-                  )}
-                </div>
-              </div>
+            <SectionHeading
+              label={data?.allocationSection?.eyebrow}
+              heading={data?.allocationSection?.heading ?? ""}
+              subtext={data?.allocationSection?.subtext}
+            />
+            <div
+              className="w-full overflow-x-auto rounded-[20px]"
+              style={{ border: "1px solid var(--color-border-subtle)" }}
+            >
+              <table className="w-full text-sm">
+                <thead>
+                  <tr
+                    style={{
+                      background: "rgba(255,176,30,0.06)",
+                      borderBottom: "1px solid var(--color-border-subtle)",
+                    }}
+                  >
+                    {[
+                      data?.tableHeaders?.category,
+                      data?.tableHeaders?.pct,
+                      data?.tableHeaders?.tokens,
+                      data?.tableHeaders?.locking,
+                      data?.tableHeaders?.vesting,
+                    ].map((h, i) => (
+                      <th
+                        key={i}
+                        className="text-left py-4 px-5 text-[13px] font-semibold whitespace-nowrap"
+                        style={{ color: "var(--color-dark)" }}
+                      >
+                        {h}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {tokenAllocation.map((row, i) => (
+                    <tr
+                      key={i}
+                      className="transition-colors"
+                      style={{
+                        borderBottom:
+                          i < tokenAllocation.length - 1
+                            ? "1px solid var(--color-border-subtle)"
+                            : "none",
+                        background: i % 2 === 1 ? "var(--color-surface)" : "var(--color-white)",
+                      }}
+                    >
+                      <td className="py-3 px-5 text-[13px] leading-[22px] font-medium" style={{ color: "var(--color-dark)" }}>
+                        {row.category}
+                      </td>
+                      <td className="py-3 px-5 text-[13px] font-bold whitespace-nowrap" style={{ color: "var(--color-primary)" }}>
+                        {row.pct}
+                      </td>
+                      <td className="py-3 px-5 text-[13px] whitespace-nowrap" style={{ color: "var(--color-gray-body)" }}>
+                        {row.tokens}
+                      </td>
+                      <td className="py-3 px-5 text-[13px] whitespace-nowrap" style={{ color: "var(--color-gray-body)" }}>
+                        {row.locking}
+                      </td>
+                      <td className="py-3 px-5 text-[13px] whitespace-nowrap" style={{ color: "var(--color-gray-body)" }}>
+                        {row.vesting}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <div className="flex justify-center mt-10">
+              {data?.allocationChartImage?.asset?.url ? (
+                <Image
+                  src={data.allocationChartImage.asset.url}
+                  alt={data.allocationChartImage.alt ?? ""}
+                  width={800}
+                  height={500}
+                  className="rounded-2xl"
+                />
+              ) : (
+                <Image
+                  src="/images/token-allocation.png"
+                  alt="Token Allocation Chart"
+                  width={800}
+                  height={500}
+                  className="rounded-2xl"
+                />
+              )}
             </div>
           </Container>
         </section>
