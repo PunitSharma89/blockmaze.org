@@ -1,9 +1,10 @@
 import { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import Container from "@/components/layout/Container";
-import AnimatedButton from "@/components/ui/AnimatedButton";
 import SectionHeading from "@/components/ui/SectionHeading";
 import FAQ from "@/components/ui/FAQ";
+import GovernanceStructureScroll from "@/components/ui/GovernanceStructureScroll";
 import { sanityFetch } from "@/lib/sanity";
 import { governancePageQuery } from "@/lib/queries";
 
@@ -36,7 +37,11 @@ interface GovernanceData {
   roles?: { iconKey: string; title: string; description: string }[];
   scopeSection?: { eyebrow?: string; heading?: string };
   scopeItems?: { iconKey: string; title: string; description: string }[];
-  structureSection?: { eyebrow?: string; heading?: string; subHeading?: string };
+  structureSection?: {
+    eyebrow?: string;
+    heading?: string;
+    subHeading?: string;
+  };
   structure?: { iconKey: string; title: string; description: string }[];
   stepsSection?: { eyebrow?: string; heading?: string };
   steps?: { num: string; title: string; description: string }[];
@@ -275,292 +280,76 @@ export default async function GovernancePage() {
 
   return (
     <>
-      {/* 1 ── HERO */}
-      <section
-        className="relative overflow-hidden flex items-center"
-        style={{
-          minHeight: "500px",
-          background:
-            "linear-gradient(to left, var(--color-header-navy), var(--color-header-dark) 49%)",
-        }}
-      >
-        <div className="hero-bg-grid">
-          <Image
-            src="/images/hero-bg-grid.svg"
-            alt=""
-            fill
-            className="object-fill"
-          />
-        </div>
-
-        <div className="mx-auto w-[80%] max-w-[1440px] py-20 relative z-10 flex flex-col lg:flex-row items-center gap-[60px]">
-          <div className="flex-1 flex flex-col gap-[40px]">
-            <div className="flex flex-col gap-[16px]">
-              <div
-                className="inline-flex w-fit items-center justify-center px-[16px] py-[12px] rounded-[999px] border"
-                style={{
-                  borderColor: "var(--color-chip-border)",
-                  background: "var(--color-chip-bg)",
-                }}
-              >
-                <span
-                  className="text-[14px] font-medium tracking-[-0.28px] whitespace-nowrap"
-                  style={{ color: "var(--color-primary)" }}
-                >
-                  {data?.hero?.badge}
-                </span>
-              </div>
-              <div className="flex flex-col gap-[20px]">
-                <h1
-                  className="font-bold text-[46px] leading-[62px]"
-                  style={{ color: "var(--color-white)" }}
-                >
-                  {data?.hero?.heading}
-                </h1>
-                <p
-                  className="text-[16px] leading-[28px]"
-                  style={{ color: "var(--color-hero-body)" }}
-                >
-                  {data?.hero?.subtext}
-                </p>
-              </div>
-            </div>
-            <div className="flex gap-[20px]">
-              {data?.hero?.buttonText && (
-                <AnimatedButton
-                  href={data.hero.buttonHref ?? "#"}
-                  variant="primary"
-                >
-                  {data.hero.buttonText}
-                </AnimatedButton>
-              )}
-              {data?.hero?.secondButtonText && (
-                <AnimatedButton
-                  href={data.hero.secondButtonHref ?? "#"}
-                  variant="white"
-                >
-                  {data.hero.secondButtonText}
-                </AnimatedButton>
-              )}
-            </div>
+      {/* 1 ── HERO — same pattern as About / RFP */}
+      <section className="about-hero">
+        <div className="about-hero-grid" />
+        <div className="about-hero-inner">
+          <div className="hero-chip-v2">
+            <span className="hero-chip-dot" />
+            <span className="hero-chip-label">{data?.hero?.badge}</span>
           </div>
-
-          <div className="hidden lg:flex flex-shrink-0 items-center justify-center w-[660px] h-[400px] ms-[auto]">
-            {data?.hero?.image?.asset?.url ? (
-              <Image
-                src={data.hero.image.asset.url}
-                alt={data.hero.image.alt ?? ""}
-                width={660}
-                height={400}
-                priority
-              />
-            ) : (
-              <svg
-                width="660"
-                height="400"
-                viewBox="0 0 460 400"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
+          <div className="hero-figma-textblock">
+            <h1 className="hero-figma-h1">{data?.hero?.heading}</h1>
+            <p className="hero-figma-p">{data?.hero?.subtext}</p>
+          </div>
+          <div className="hero-figma-btns">
+            {data?.hero?.buttonText && (
+              <Link
+                href={data.hero.buttonHref ?? "#"}
+                className="hero-figma-btn-primary"
               >
-                <ellipse
-                  cx="230"
-                  cy="360"
-                  rx="200"
-                  ry="32"
-                  stroke="#1e3a5f"
-                  strokeWidth="1"
-                  strokeDasharray="6 4"
-                  fill="none"
-                  opacity="0.5"
-                />
-                <rect
-                  x="130"
-                  y="100"
-                  width="200"
-                  height="200"
-                  rx="12"
-                  fill="#0e213d"
-                  stroke="#1e3a5f"
-                  strokeWidth="1.5"
-                />
-                <path
-                  d="M110 104 L230 40 L350 104"
-                  fill="#0b1b30"
-                  stroke="#1e3a5f"
-                  strokeWidth="1.5"
-                  strokeLinejoin="round"
-                />
-                <rect
-                  x="155"
-                  y="150"
-                  width="50"
-                  height="40"
-                  rx="4"
-                  fill="#1a3050"
-                  stroke="#1e3a5f"
-                  strokeWidth="1"
-                />
-                <rect
-                  x="215"
-                  y="150"
-                  width="50"
-                  height="40"
-                  rx="4"
-                  fill="#1a3050"
-                  stroke="#1e3a5f"
-                  strokeWidth="1"
-                />
-                <rect
-                  x="275"
-                  y="150"
-                  width="40"
-                  height="40"
-                  rx="4"
-                  fill="#1a3050"
-                  stroke="#1e3a5f"
-                  strokeWidth="1"
-                />
-                <rect
-                  x="155"
-                  y="205"
-                  width="50"
-                  height="40"
-                  rx="4"
-                  fill="#1a3050"
-                  stroke="#1e3a5f"
-                  strokeWidth="1"
-                />
-                <rect
-                  x="215"
-                  y="205"
-                  width="50"
-                  height="40"
-                  rx="4"
-                  fill="#1a3050"
-                  stroke="#1e3a5f"
-                  strokeWidth="1"
-                />
-                <rect
-                  x="195"
-                  y="260"
-                  width="70"
-                  height="40"
-                  rx="4"
-                  fill="#172840"
-                  stroke="#1e3a5f"
-                  strokeWidth="1"
-                />
-                <circle
-                  cx="345"
-                  cy="92"
-                  r="38"
-                  fill="rgba(255,176,30,0.08)"
-                  stroke="rgba(255,176,30,0.3)"
-                  strokeWidth="1.5"
-                />
-                <path
-                  d="M345 72l16 8v10c0 10-6 16-16 19-10-3-16-9-16-19V80l16-8z"
-                  fill="rgba(255,176,30,0.15)"
-                  stroke="#ffb01e"
-                  strokeWidth="1.5"
-                />
-                <path
-                  d="M338 91l5 5 10-11"
-                  stroke="#ffb01e"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <circle
-                  cx="100"
-                  cy="310"
-                  r="20"
-                  fill="rgba(255,176,30,0.1)"
-                  stroke="#ffb01e"
-                  strokeWidth="1.2"
-                />
-                <circle
-                  cx="100"
-                  cy="310"
-                  r="12"
-                  fill="rgba(255,176,30,0.15)"
-                  stroke="#ffb01e"
-                  strokeWidth="1"
-                />
-                <circle
-                  cx="370"
-                  cy="320"
-                  r="16"
-                  fill="rgba(255,176,30,0.1)"
-                  stroke="#ffb01e"
-                  strokeWidth="1.2"
-                />
-                <circle
-                  cx="370"
-                  cy="320"
-                  r="9"
-                  fill="rgba(255,176,30,0.15)"
-                  stroke="#ffb01e"
-                  strokeWidth="1"
-                />
-              </svg>
+                {data.hero.buttonText}
+              </Link>
             )}
+          </div>
+          <div className="about-globe-container">
+            <Image
+              src="/images/about-globe.svg"
+              alt="Blockmaze governance"
+              width={950}
+              height={400}
+              className="about-globe-img"
+              priority
+            />
           </div>
         </div>
       </section>
 
-      {/* 2 ── ABOUT */}
+      {/* 2 ── ABOUT — centered heading + subtext (same as RFP About section) */}
       {data?.about && (
-        <section className="section-padding section-padding--lg bg-white">
+        <section className="section-padding bg-white">
           <Container>
-            <div className="flex flex-col gap-4 items-center text-center w-full">
-              <span className="section-eyebrow">{data.about.eyebrow}</span>
-              <h2 className="section-heading">{data.about.heading}</h2>
-              <p className="section-subtext">{data.about.text}</p>
-            </div>
+            <SectionHeading
+              heading={
+                <>
+                  {data.about.heading?.split(" ").slice(0, -1).join(" ")}{" "}
+                  <span className="text-primary">
+                    {data.about.heading?.split(" ").slice(-1)[0]}
+                  </span>
+                </>
+              }
+              subtext={data.about.text}
+            />
           </Container>
         </section>
       )}
 
-      {/* 3 ── ROLE CARDS — surface */}
+      {/* 3 ── ROLES — eco-cards-grid with icons (white) */}
       {roles.length > 0 && (
-        <section
-          className="section-padding"
-          style={{ background: "var(--color-surface)" }}
-        >
+        <section className="section-padding bg-white">
           <Container>
             <SectionHeading
               label={data?.rolesSection?.eyebrow}
               heading={data?.rolesSection?.heading ?? ""}
             />
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div className="eco-cards-grid section-content-gap">
               {roles.map((r) => (
-                <div
-                  key={r.title}
-                  className="flex flex-col gap-3 p-6 rounded-[20px] transition-all duration-300 hover:-translate-y-1"
-                  style={{
-                    background: "var(--color-white)",
-                    border: "1px solid var(--color-border-subtle)",
-                  }}
-                >
-                  <div
-                    className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0"
-                    style={{ background: "rgba(255,176,30,0.1)" }}
-                  >
-                    <RoleIcon iconKey={r.iconKey} size={24} />
+                <div key={r.title} className="eco-card">
+                  <div className="eco-card-icon">
+                    <RoleIcon iconKey={r.iconKey} size={44} />
                   </div>
-                  <h4
-                    className="text-[18px] font-semibold"
-                    style={{ color: "var(--color-dark)" }}
-                  >
-                    {r.title}
-                  </h4>
-                  <p
-                    className="text-[15px] leading-[28px]"
-                    style={{ color: "var(--color-gray-body)" }}
-                  >
-                    {r.description}
-                  </p>
+                  <h4 className="eco-card-title">{r.title}</h4>
+                  <p className="eco-card-desc">{r.description}</p>
                 </div>
               ))}
             </div>
@@ -568,147 +357,84 @@ export default async function GovernancePage() {
         </section>
       )}
 
-      {/* 4 ── GOVERNANCE SCOPE */}
+      {/* 4 ── GOVERNANCE SCOPE — ds-section dark box (What Distinguishes pattern) */}
       {scopeItems.length > 0 && (
-        <section
-          className="section-padding"
-          style={{ background: "var(--color-surface)" }}
-        >
+        <section className="ds-section">
           <Container>
-            <SectionHeading
-              label={data?.scopeSection?.eyebrow}
-              heading={data?.scopeSection?.heading ?? ""}
-            />
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {scopeItems.map((s) => (
-                <div
-                  key={s.title}
-                  className="flex flex-col gap-3 p-6 rounded-[20px] transition-all duration-300 hover:-translate-y-1"
-                  style={{
-                    background: "var(--color-white)",
-                    border: "1px solid var(--color-border-subtle)",
-                  }}
-                >
-                  <div
-                    className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
-                    style={{ background: "rgba(255,176,30,0.1)" }}
-                  >
-                    <RoleIcon iconKey={s.iconKey} size={22} />
+            <div className="ds-box">
+              <div className="ds-bg-glow" aria-hidden="true" />
+              <div className="ds-layout responsive-block">
+
+                {/* Left */}
+                <div className="ds-left">
+                  <div className="ds-left-text">
+                    <span className="ds-pill">
+                      {data?.scopeSection?.eyebrow ?? "Governance Scope"}
+                    </span>
+                    <h2 className="ds-heading">
+                      {data?.scopeSection?.heading ?? ""}
+                    </h2>
                   </div>
-                  <h4
-                    className="text-[18px] font-medium leading-[1.4]"
-                    style={{ color: "var(--color-dark)" }}
-                  >
-                    {s.title}
-                  </h4>
-                  <p
-                    className="text-[16px] leading-[31px]"
-                    style={{ color: "var(--color-gray-body)" }}
-                  >
-                    {s.description}
-                  </p>
+                  <div className="ds-coin-wrap">
+                    <Image
+                      src="/images/coin-12.png"
+                      alt="Blockmaze governance"
+                      width={248}
+                      height={252}
+                      className="ds-coin-img"
+                    />
+                  </div>
                 </div>
-              ))}
+
+                {/* Right — 3×2 feature grid */}
+                <div className="ds-right">
+                  {[[scopeItems[0], scopeItems[1]], [scopeItems[2], scopeItems[3]], [scopeItems[4], scopeItems[5]]].map((row, ri) => (
+                    <div key={ri} className="ds-row">
+                      {row.map((item) =>
+                        item && (
+                          <div key={item.title} className="ds-feature">
+                            <div className="ds-feature-top">
+                              <div className="ds-icon-wrap">
+                                <RoleIcon iconKey={item.iconKey} size={44} />
+                              </div>
+                              <h4 className="ds-feature-title">{item.title}</h4>
+                            </div>
+                            <p className="ds-feature-desc">{item.description}</p>
+                          </div>
+                        )
+                      )}
+                    </div>
+                  ))}
+                </div>
+
+              </div>
             </div>
           </Container>
         </section>
       )}
 
-      {/* 5 ── GOVERNANCE STRUCTURE */}
-      {structure.length > 0 && (
-        <section className="section-padding bg-white">
-          <Container>
-            <SectionHeading
-              label={data?.structureSection?.eyebrow}
-              heading={data?.structureSection?.heading ?? ""}
-              subHeading={data?.structureSection?.subHeading ?? ""}
-            />
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              {structure.map((s) => (
-                <div
-                  key={s.title}
-                  className="flex flex-col items-center text-center gap-4 p-7 rounded-[20px] transition-all duration-300 hover:-translate-y-1"
-                  style={{
-                    background: "var(--color-bg-default)",
-                    border: "1px solid var(--color-border-subtle)",
-                  }}
-                >
-                  <div
-                    className="w-14 h-14 rounded-2xl flex items-center justify-center"
-                    style={{ background: "rgba(255,176,30,0.1)" }}
-                  >
-                    <RoleIcon iconKey={s.iconKey} size={30} />
-                  </div>
-                  <h4
-                    className="text-[18px] font-medium"
-                    style={{ color: "var(--color-dark)" }}
-                  >
-                    {s.title}
-                  </h4>
-                  <p
-                    className="text-[15px] leading-[28px]"
-                    style={{ color: "var(--color-gray-body)" }}
-                  >
-                    {s.description}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </Container>
-        </section>
-      )}
+      {/* 5 ── GOVERNANCE STRUCTURE — sticky scroll (same as AccountabilityScroll) */}
+      <GovernanceStructureScroll
+        eyebrow={data?.structureSection?.eyebrow}
+        heading={data?.structureSection?.heading}
+        subHeading={data?.structureSection?.subHeading}
+        items={structure}
+      />
 
-      {/* 6 ── HOW IT OPERATES */}
+      {/* 6 ── HOW IT OPERATES — rfp-howit ghost-number cards using step.num (white) */}
       {steps.length > 0 && (
-        <section
-          className="section-padding"
-          style={{ background: "var(--color-surface)" }}
-        >
+        <section className="section-padding bg-white">
           <Container>
             <SectionHeading
               label={data?.stepsSection?.eyebrow}
               heading={data?.stepsSection?.heading ?? ""}
             />
-            <div className="flex flex-col gap-4">
-              {stepRows.map((row, rowIdx) => (
-                <div
-                  key={rowIdx}
-                  className="grid grid-cols-1 md:grid-cols-3 gap-4"
-                >
-                  {row.map((step, idx) => (
-                    <div
-                      key={idx}
-                      className="flex flex-col gap-3 p-6 rounded-[20px] transition-all duration-300 hover:-translate-y-1"
-                      style={{
-                        background: "var(--color-white)",
-                        border: "1px solid var(--color-border-subtle)",
-                      }}
-                    >
-                      <div
-                        className="inline-flex items-center justify-center w-9 h-9 rounded-full text-sm font-bold flex-shrink-0"
-                        style={{
-                          background: "var(--color-primary)",
-                          color: "var(--color-dark)",
-                        }}
-                      >
-                        {step.num}
-                      </div>
-                      <div className="flex flex-col gap-2">
-                        <h4
-                          className="text-[18px] font-medium leading-[1.4]"
-                          style={{ color: "var(--color-dark)" }}
-                        >
-                          {step.title}
-                        </h4>
-                        <p
-                          className="text-[16px] leading-[31px]"
-                          style={{ color: "var(--color-gray-body)" }}
-                        >
-                          {step.description}
-                        </p>
-                      </div>
-                    </div>
-                  ))}
+            <div className="rfp-howit-grid section-content-gap">
+              {steps.map((step, idx) => (
+                <div key={idx} className="rfp-howit-card">
+                  <span className="rfp-howit-num">{step.num}</span>
+                  <h4 className="rfp-howit-title">{step.title}</h4>
+                  <p className="rfp-howit-desc">{step.description}</p>
                 </div>
               ))}
             </div>
@@ -716,106 +442,44 @@ export default async function GovernancePage() {
         </section>
       )}
 
-      {/* 7 ── COMPLIANCE & RISK */}
+      {/* 7 ── COMPLIANCE & RISK — SectionHeading + neutral pills (same as RFP Transparency) */}
       {data?.compliance && (
         <section className="section-padding bg-white">
           <Container>
-            <div className="docs-banner">
-              <div className="mb-4">
-                <span className="section-eyebrow mb-6 inline-flex">
-                  {data.compliance.eyebrow}
-                </span>
-                <h2
-                  className="text-[36px] font-bold leading-[48px] mb-4"
-                  style={{ color: "var(--color-white)" }}
-                >
-                  {data.compliance.heading}
-                </h2>
-                <p
-                  className="text-[16px] leading-[28px] mb-8 max-w-[500px]"
-                  style={{ color: "var(--color-hero-body)" }}
-                >
-                  {data.compliance.text}
-                </p>
-                <div className="flex flex-wrap gap-3">
-                  {(data.compliance.tags ?? []).map((tag) => (
-                    <span
-                      key={tag}
-                      className="inline-flex items-center px-5 py-2.5 rounded-full text-sm font-medium"
-                      style={{
-                        background: "rgba(255,176,30,0.15)",
-                        border: "1px solid var(--color-primary)",
-                        color: "var(--color-primary)",
-                      }}
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
+            <SectionHeading
+              label={data.compliance.eyebrow}
+              heading={data.compliance.heading ?? ""}
+              subtext={data.compliance.text}
+            />
+            {(data.compliance.tags ?? []).length > 0 && (
+              <div className="feature-pills-wrap section-content-gap">
+                {(data.compliance.tags ?? []).map((tag) => (
+                  <span key={tag} className="feature-pill">
+                    {tag}
+                  </span>
+                ))}
               </div>
-              <div className="docs-banner-img-wrap">
-                {data.compliance.image?.asset?.url ? (
-                  <Image
-                    src={data.compliance.image.asset.url}
-                    alt={data.compliance.image.alt ?? ""}
-                    width={340}
-                    height={260}
-                    className="docs-banner-img"
-                  />
-                ) : (
-                  <Image
-                    src="/images/reso.png"
-                    alt=""
-                    width={340}
-                    height={260}
-                    className="docs-banner-img"
-                  />
-                )}
-              </div>
-            </div>
+            )}
           </Container>
         </section>
       )}
 
-      {/* 8 ── GET INVOLVED — surface */}
+      {/* 8 ── GET INVOLVED — eco-cards-grid with icons (white) */}
       {getInvolved.length > 0 && (
-        <section
-          className="section-padding"
-          style={{ background: "var(--color-surface)" }}
-        >
+        <section className="section-padding bg-white">
           <Container>
             <SectionHeading
               label={data?.getInvolvedSection?.eyebrow}
               heading={data?.getInvolvedSection?.heading ?? ""}
             />
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div className="eco-cards-grid section-content-gap">
               {getInvolved.map((g) => (
-                <div
-                  key={g.title}
-                  className="flex flex-col gap-3 p-6 rounded-[20px] transition-all duration-300 hover:-translate-y-1"
-                  style={{
-                    background: "var(--color-white)",
-                    border: "1px solid var(--color-border-subtle)",
-                  }}
-                >
-                  <div
-                    className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0"
-                    style={{ background: "rgba(255,176,30,0.1)" }}
-                  >
-                    <RoleIcon iconKey={g.iconKey} size={24} />
+                <div key={g.title} className="eco-card">
+                  <div className="eco-card-icon">
+                    <RoleIcon iconKey={g.iconKey} size={44} />
                   </div>
-                  <h4
-                    className="text-[18px] font-semibold"
-                    style={{ color: "var(--color-dark)" }}
-                  >
-                    {g.title}
-                  </h4>
-                  <p
-                    className="text-[15px] leading-[28px]"
-                    style={{ color: "var(--color-gray-body)" }}
-                  >
-                    {g.description}
-                  </p>
+                  <h4 className="eco-card-title">{g.title}</h4>
+                  <p className="eco-card-desc">{g.description}</p>
                 </div>
               ))}
             </div>
@@ -823,7 +487,7 @@ export default async function GovernancePage() {
         </section>
       )}
 
-      {/* 9 ── FAQ */}
+      {/* 9 ── FAQ — image + accordion with faq-grid-gap */}
       {faqs.length > 0 && (
         <section className="section-padding bg-white">
           <Container>
@@ -831,7 +495,7 @@ export default async function GovernancePage() {
               label={data?.faqSection?.eyebrow}
               heading={data?.faqSection?.heading ?? ""}
             />
-            <div className="flex flex-col lg:flex-row gap-12 items-start">
+            <div className="flex flex-col lg:flex-row gap-12 items-start faq-grid-gap">
               <div className="lg:w-5/12">
                 <Image
                   src="/images/faq-img.png"
