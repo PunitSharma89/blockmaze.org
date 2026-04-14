@@ -166,60 +166,47 @@ export default async function DelegatorPage() {
         </div>
       </section>
 
-      {/* 2 ── WHY DELEGATE — dark */}
+      {/* 2 ── WHY DELEGATE — surface */}
       {benefits.length > 0 && (
-        <section className="section-padding">
+        <section
+          className="section-padding"
+          style={{ background: "var(--color-surface)" }}
+        >
           <Container>
-            <div className="distinguishes-inner">
-              <video
-                className="distinguishes-bg-video"
-                src="/images/bg-line-1.mp4"
-                autoPlay
-                loop
-                muted
-                playsInline
-              />
-              <div className="distinguishes-content">
-                <div className="distinguishes-heading">
-                  <span className="section-eyebrow section-eyebrow--dark">
-                    {data?.benefitsSection?.eyebrow}
-                  </span>
-                  <h2 className="distinguishes-title">
-                    {data?.benefitsSection?.heading}
-                  </h2>
+            <SectionHeading
+              label={data?.benefitsSection?.eyebrow}
+              heading={data?.benefitsSection?.heading ?? ""}
+            />
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {benefits.map((b) => (
+                <div
+                  key={b.title}
+                  className="flex flex-col gap-3 p-6 rounded-[20px] transition-all duration-300 hover:-translate-y-1"
+                  style={{
+                    background: "var(--color-white)",
+                    border: "1px solid var(--color-border-subtle)",
+                  }}
+                >
+                  <div
+                    className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0"
+                    style={{ background: "rgba(255,176,30,0.1)" }}
+                  >
+                    <Image src={b.iconPath} alt={b.title} width={30} height={30} />
+                  </div>
+                  <h4
+                    className="text-[18px] font-semibold"
+                    style={{ color: "var(--color-dark)" }}
+                  >
+                    {b.title}
+                  </h4>
+                  <p
+                    className="text-[15px] leading-[28px]"
+                    style={{ color: "var(--color-gray-body)" }}
+                  >
+                    {b.description}
+                  </p>
                 </div>
-                <div className="distinguishes-cards">
-                  {[benefits.slice(0, 3), benefits.slice(3)]
-                    .filter((r) => r.length > 0)
-                    .map((row, ri) => (
-                      <div key={ri} className="distinguishes-row">
-                        {row.map((b) => (
-                          <div key={b.title} className="distinguishes-card">
-                            <div
-                              className="flex-shrink-0 w-12 h-12 rounded-xl flex items-center justify-center"
-                              style={{ background: "rgba(255,176,30,0.12)" }}
-                            >
-                              <Image
-                                src={b.iconPath}
-                                alt={b.title}
-                                width={32}
-                                height={32}
-                              />
-                            </div>
-                            <div className="distinguishes-card-body">
-                              <h4 className="distinguishes-card-title">
-                                {b.title}
-                              </h4>
-                              <p className="distinguishes-card-text">
-                                {b.description}
-                              </p>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    ))}
-                </div>
-              </div>
+              ))}
             </div>
           </Container>
         </section>
@@ -532,211 +519,195 @@ export default async function DelegatorPage() {
         </section>
       )}
 
-      {/* 6 ── REWARDS, UNBONDING & RISKS — dark */}
+      {/* 6 ── REWARDS, UNBONDING & RISKS — surface */}
       {(data?.earningCard || data?.unbondingCard || data?.risksCard) && (
-        <section className="distinguishes-section pt-[60px]">
+        <section
+          className="section-padding"
+          style={{ background: "var(--color-surface)" }}
+        >
           <Container>
-            <div className="distinguishes-inner">
-              <video
-                className="distinguishes-bg-video"
-                src="/images/bg-line-1.mp4"
-                autoPlay
-                loop
-                muted
-                playsInline
-              />
-              <div className="distinguishes-content bg-transparent">
-                {(data?.rewardsSection?.eyebrow ||
-                  data?.rewardsSection?.heading) && (
-                  <div className="distinguishes-heading">
-                    <span className="section-eyebrow section-eyebrow--dark">
-                      {data.rewardsSection?.eyebrow}
-                    </span>
-                    <h2 className="distinguishes-title">
-                      {data.rewardsSection?.heading}
-                    </h2>
-                  </div>
-                )}
+            <SectionHeading
+              label={data?.rewardsSection?.eyebrow}
+              heading={data?.rewardsSection?.heading ?? ""}
+            />
 
-                {/* earning + unbonding row */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
-                  {/* Earning */}
-                  {data?.earningCard && (
+            {/* Earning + Unbonding — 2 col */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+              {/* Earning */}
+              {data?.earningCard && (
+                <div
+                  className="flex flex-col gap-3 p-6 rounded-[20px]"
+                  style={{
+                    background: "var(--color-white)",
+                    border: "1px solid var(--color-border-subtle)",
+                  }}
+                >
+                  {data.earningCard.iconPath && (
                     <div
-                      className="p-6 rounded-[20px]"
-                      style={{
-                        background: "rgba(255,255,255,0.06)",
-                        border: "1px solid rgba(255,255,255,0.12)",
-                      }}
+                      className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0"
+                      style={{ background: "rgba(255,176,30,0.1)" }}
                     >
-                      {data.earningCard.iconPath && (
-                        <Image
-                          src={data.earningCard.iconPath}
-                          alt=""
-                          width={44}
-                          height={44}
-                          className="mb-4"
-                        />
-                      )}
-                      <h4
-                        className="text-[17px] font-semibold mb-3"
-                        style={{ color: "var(--color-white)" }}
-                      >
-                        {data.earningCard.heading}
-                      </h4>
-                      <p
-                        className="text-[14px] leading-[26px] mb-4"
-                        style={{ color: "rgba(255,255,255,0.7)" }}
-                      >
-                        {data.earningCard.text}
-                      </p>
-                      {(data.earningCard.rewardItems ?? []).length > 0 && (
-                        <ul className="flex flex-col gap-1.5 mb-3">
-                          {(data.earningCard.rewardItems ?? []).map(
-                            (item, i) => (
-                              <li key={i} className="flex items-start gap-2">
-                                <span
-                                  className="flex-shrink-0 w-1.5 h-1.5 rounded-full mt-[9px]"
-                                  style={{ background: "var(--color-primary)" }}
-                                />
-                                <span
-                                  className="text-[13px] leading-[24px]"
-                                  style={{ color: "rgba(255,255,255,0.65)" }}
-                                >
-                                  {item}
-                                </span>
-                              </li>
-                            ),
-                          )}
-                        </ul>
-                      )}
-                      {data.earningCard.note && (
-                        <p
-                          className="text-[13px] leading-[22px] italic"
-                          style={{ color: "rgba(255,255,255,0.5)" }}
-                        >
-                          {data.earningCard.note}
-                        </p>
-                      )}
+                      <Image src={data.earningCard.iconPath} alt="" width={30} height={30} />
                     </div>
                   )}
-
-                  {/* Unbonding */}
-                  {data?.unbondingCard && (
-                    <div
-                      className="p-6 rounded-[20px]"
-                      style={{
-                        background: "rgba(255,255,255,0.06)",
-                        border: "1px solid rgba(255,255,255,0.12)",
-                      }}
+                  <h4
+                    className="text-[17px] font-semibold"
+                    style={{ color: "var(--color-dark)" }}
+                  >
+                    {data.earningCard.heading}
+                  </h4>
+                  <p
+                    className="text-[14px] leading-[26px]"
+                    style={{ color: "var(--color-gray-body)" }}
+                  >
+                    {data.earningCard.text}
+                  </p>
+                  {(data.earningCard.rewardItems ?? []).length > 0 && (
+                    <ul className="flex flex-col gap-1.5">
+                      {(data.earningCard.rewardItems ?? []).map((item, i) => (
+                        <li key={i} className="flex items-start gap-2">
+                          <span
+                            className="flex-shrink-0 w-1.5 h-1.5 rounded-full mt-[9px]"
+                            style={{ background: "var(--color-primary)" }}
+                          />
+                          <span
+                            className="text-[13px] leading-[24px]"
+                            style={{ color: "var(--color-gray-body)" }}
+                          >
+                            {item}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                  {data.earningCard.note && (
+                    <p
+                      className="text-[13px] leading-[22px] italic"
+                      style={{ color: "var(--color-gray-body)", opacity: 0.75 }}
                     >
-                      {data.unbondingCard.iconPath && (
-                        <Image
-                          src={data.unbondingCard.iconPath}
-                          alt=""
-                          width={44}
-                          height={44}
-                          className="mb-4"
-                        />
-                      )}
-                      <h4
-                        className="text-[17px] font-semibold mb-3"
-                        style={{ color: "var(--color-white)" }}
-                      >
-                        {data.unbondingCard.heading}
-                      </h4>
-                      <p
-                        className="text-[14px] leading-[26px] mb-4"
-                        style={{ color: "rgba(255,255,255,0.7)" }}
-                      >
-                        {data.unbondingCard.text}
-                      </p>
-                      {(data.unbondingCard.timeline ?? []).length > 0 && (
-                        <ul className="flex flex-col gap-1.5 mb-4">
-                          {(data.unbondingCard.timeline ?? []).map(
-                            (item, i) => (
-                              <li key={i} className="flex items-start gap-2">
-                                <span
-                                  className="flex-shrink-0 w-1.5 h-1.5 rounded-full mt-[9px]"
-                                  style={{ background: "var(--color-primary)" }}
-                                />
-                                <span
-                                  className="text-[13px] leading-[24px]"
-                                  style={{ color: "rgba(255,255,255,0.65)" }}
-                                >
-                                  {item}
-                                </span>
-                              </li>
-                            ),
-                          )}
-                        </ul>
-                      )}
-                      {data.unbondingCard.text2 && (
-                        <p
-                          className="text-[13px] leading-[22px] italic"
-                          style={{ color: "rgba(255,255,255,0.5)" }}
-                        >
-                          {data.unbondingCard.text2}
-                        </p>
-                      )}
-                    </div>
+                      {data.earningCard.note}
+                    </p>
                   )}
                 </div>
+              )}
 
-                {/* Risks */}
-                {data?.risksCard && (
-                  <div
-                    className="w-full p-6 rounded-[20px]"
-                    style={{
-                      background: "rgba(255,255,255,0.06)",
-                      border: "1px solid rgba(255,255,255,0.12)",
-                    }}
-                  >
-                    {data.risksCard.iconPath && (
-                      <Image
-                        src={data.risksCard.iconPath}
-                        alt=""
-                        width={44}
-                        height={44}
-                        className="mb-4"
-                      />
-                    )}
-                    <h4
-                      className="text-[17px] font-semibold mb-2"
-                      style={{ color: "var(--color-white)" }}
+              {/* Unbonding */}
+              {data?.unbondingCard && (
+                <div
+                  className="flex flex-col gap-3 p-6 rounded-[20px]"
+                  style={{
+                    background: "var(--color-white)",
+                    border: "1px solid var(--color-border-subtle)",
+                  }}
+                >
+                  {data.unbondingCard.iconPath && (
+                    <div
+                      className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0"
+                      style={{ background: "rgba(255,176,30,0.1)" }}
                     >
-                      {data.risksCard.heading}
-                    </h4>
-                    {data.risksCard.intro && (
-                      <p
-                        className="text-[14px] leading-[26px] mb-6"
-                        style={{ color: "rgba(255,255,255,0.7)" }}
-                      >
-                        {data.risksCard.intro}
-                      </p>
-                    )}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      {(data.risksCard.risks ?? []).map((risk) => (
-                        <div key={risk.title}>
-                          <h5
-                            className="text-[15px] font-semibold mb-2"
-                            style={{ color: "var(--color-primary)" }}
-                          >
-                            {risk.title}
-                          </h5>
-                          <p
-                            className="text-[14px] leading-[26px]"
-                            style={{ color: "rgba(255,255,255,0.65)" }}
-                          >
-                            {risk.description}
-                          </p>
-                        </div>
-                      ))}
+                      <Image src={data.unbondingCard.iconPath} alt="" width={30} height={30} />
                     </div>
+                  )}
+                  <h4
+                    className="text-[17px] font-semibold"
+                    style={{ color: "var(--color-dark)" }}
+                  >
+                    {data.unbondingCard.heading}
+                  </h4>
+                  <p
+                    className="text-[14px] leading-[26px]"
+                    style={{ color: "var(--color-gray-body)" }}
+                  >
+                    {data.unbondingCard.text}
+                  </p>
+                  {(data.unbondingCard.timeline ?? []).length > 0 && (
+                    <ul className="flex flex-col gap-1.5">
+                      {(data.unbondingCard.timeline ?? []).map((item, i) => (
+                        <li key={i} className="flex items-start gap-2">
+                          <span
+                            className="flex-shrink-0 w-1.5 h-1.5 rounded-full mt-[9px]"
+                            style={{ background: "var(--color-primary)" }}
+                          />
+                          <span
+                            className="text-[13px] leading-[24px]"
+                            style={{ color: "var(--color-gray-body)" }}
+                          >
+                            {item}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                  {data.unbondingCard.text2 && (
+                    <p
+                      className="text-[13px] leading-[22px] italic"
+                      style={{ color: "var(--color-gray-body)", opacity: 0.75 }}
+                    >
+                      {data.unbondingCard.text2}
+                    </p>
+                  )}
+                </div>
+              )}
+            </div>
+
+            {/* Risks — full width */}
+            {data?.risksCard && (
+              <div
+                className="p-6 rounded-[20px]"
+                style={{
+                  background: "var(--color-white)",
+                  border: "1px solid var(--color-border-subtle)",
+                }}
+              >
+                {data.risksCard.iconPath && (
+                  <div
+                    className="w-12 h-12 rounded-xl flex items-center justify-center mb-4"
+                    style={{ background: "rgba(255,176,30,0.1)" }}
+                  >
+                    <Image src={data.risksCard.iconPath} alt="" width={30} height={30} />
                   </div>
                 )}
+                <h4
+                  className="text-[17px] font-semibold mb-2"
+                  style={{ color: "var(--color-dark)" }}
+                >
+                  {data.risksCard.heading}
+                </h4>
+                {data.risksCard.intro && (
+                  <p
+                    className="text-[14px] leading-[26px] mb-6"
+                    style={{ color: "var(--color-gray-body)" }}
+                  >
+                    {data.risksCard.intro}
+                  </p>
+                )}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {(data.risksCard.risks ?? []).map((risk) => (
+                    <div
+                      key={risk.title}
+                      className="p-4 rounded-[16px]"
+                      style={{
+                        background: "var(--color-surface)",
+                        border: "1px solid var(--color-border-subtle)",
+                      }}
+                    >
+                      <h5
+                        className="text-[15px] font-semibold mb-2"
+                        style={{ color: "var(--color-primary)" }}
+                      >
+                        {risk.title}
+                      </h5>
+                      <p
+                        className="text-[14px] leading-[26px]"
+                        style={{ color: "var(--color-gray-body)" }}
+                      >
+                        {risk.description}
+                      </p>
+                    </div>
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
           </Container>
         </section>
       )}
