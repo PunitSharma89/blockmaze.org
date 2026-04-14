@@ -177,32 +177,6 @@ export default async function SwapPage() {
           </Container>
         </section>
       )}
-
-      {/* 5 ── CTA */}
-      {data?.ctaSection && (
-        <section className="section-padding bg-white">
-          <Container>
-            <div className="docs-banner">
-              <div className="docs-banner-content">
-                {data.ctaSection.heading && (
-                  <h2 className="docs-banner-title">{data.ctaSection.heading}</h2>
-                )}
-                {data.ctaSection.subtext && (
-                  <p className="section-subtext">{data.ctaSection.subtext}</p>
-                )}
-                {data.ctaSection.buttonText && (
-                  <Link
-                    href={data.ctaSection.buttonHref ?? "#"}
-                    className="hero-figma-btn-primary"
-                  >
-                    {data.ctaSection.buttonText}
-                  </Link>
-                )}
-              </div>
-            </div>
-          </Container>
-        </section>
-      )}
     </>
   );
 }
