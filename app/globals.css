@@ -395,6 +395,8 @@ img {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  width: fit-content;
+  margin: 0 auto;
   padding: 12px 36px;
   border-radius: 999px;
   border: 1px solid var(--color-primary);
@@ -948,6 +950,9 @@ img {
   flex-direction: column;
   align-items: flex-start;
   gap: 20px;
+}
+.ucs-left .section-eyebrow {
+  margin: 0;
 }
 
 .ucs-subtext {
@@ -2233,8 +2238,9 @@ img {
 .about-new-img-col > img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   display: block;
+  animation: float-coin 4s ease-in-out infinite;
 }
 
 /* Right: cards column */
@@ -3058,6 +3064,9 @@ img {
   flex-direction: column;
   gap: 20px;
 }
+.vision-text-block .section-eyebrow {
+  margin: 0;
+}
 
 .vision-title {
   font-size: 36px;
@@ -3242,6 +3251,441 @@ img {
 /* FAQ section */
 .faq-grid-gap {
   margin-top: 60px;
+}
+
+.section-content-gap {
+  margin-top: 48px;
+}
+
+/* ── DAO page ───────────────────────────────────────────────────── */
+.dao-capabilities-header {
+  text-align: center;
+  gap: 10px;
+  padding: 36px 0px;
+}
+.dao-capabilities-title {
+  font-size: 36px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--color-dark);
+}
+@keyframes dao-marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-33.333%); }
+}
+.dao-marquee-bar {
+  background: transparent;
+  padding: 32px 0px 0px 0px;
+  overflow: hidden;
+}
+.dao-marquee-track {
+  display: flex;
+  gap: 40px;
+  white-space: nowrap;
+  animation: dao-marquee 20s linear infinite;
+}
+.dao-marquee-item {
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--color-dark);
+}
+.dao-marquee-sep {
+  margin: 0 12px;
+  opacity: 0.5;
+}
+.dao-mechanisms-grid .eco-card {
+  border-bottom: none;
+}
+.dao-elig-wrap {
+  max-width: 700px;
+  margin: 0 auto;
+}
+.dao-elig-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px 40px;
+  max-width: 860px;
+  margin: 0 auto;
+}
+.dao-elig-grid .rfp-elig-item {
+  background: var(--color-bg-default);
+  border: 1px solid var(--color-border-default);
+  border-radius: 999px;
+  padding: 12px 24px;
+}
+.dao-elig-grid .rfp-elig-item:nth-child(3n) {
+  grid-column: 1 / -1;
+  justify-self: center;
+  max-width: 50%;
+}
+
+/* ── Governance page ────────────────────────────────────────────── */
+.gov-surface {
+  background: var(--color-surface);
+}
+
+/* 2-column row for the Governance Structure dark grid */
+.gov-structure-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.gov-structure-row:last-child .rfp-process-cell {
+  border-bottom: none;
+}
+
+/* Subheading inside the dark rfp-process-box */
+.rfp-process-subheading {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.75;
+  color: rgba(255, 255, 255, 0.65);
+  text-align: center;
+  max-width: 700px;
+}
+
+/* Compliance tag pills */
+.gov-compliance-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.gov-compliance-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 20px;
+  border-radius: 999px;
+  border: 1px solid var(--color-primary);
+  background: rgba(255, 176, 30, 0.08);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-primary);
+}
+
+.feature-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 12px 24px;
+  border-radius: 999px;
+  border: 1px solid var(--color-border-default);
+  background: var(--color-bg-default);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-gray-DEFAULT);
+}
+
+.feature-pills-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+@media (max-width: 900px) {
+  .gov-structure-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── RFP Eligibility & Compliance — Figma 371:9879 ─────────────── */
+.rfp-elig-section {
+  background: var(--color-white);
+}
+
+.rfp-elig-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: stretch;
+}
+
+.rfp-elig-card {
+  border-radius: 40px;
+  border: 1px solid #eef4fd;
+  padding: 48px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.rfp-elig-card--blue {
+  background: #f4f8fe;
+}
+
+.rfp-elig-card--warm {
+  background: #f7f5f3;
+}
+
+.rfp-elig-card-heading {
+  font-size: 36px;
+  font-weight: 600;
+  line-height: 32px;
+  color: #0b0b0b;
+}
+
+.rfp-elig-items {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.rfp-elig-item {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+
+.rfp-elig-item-icon {
+  flex-shrink: 0;
+}
+
+.rfp-elig-item-text {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  color: #010304;
+}
+
+@media (max-width: 900px) {
+  .rfp-elig-cards {
+    grid-template-columns: 1fr;
+  }
+  .rfp-elig-card-heading {
+    font-size: 28px;
+  }
+}
+
+/* ── RFP How the Process Works — Figma 358:8894 ───────────────── */
+.rfp-process-section {
+  background: var(--color-white);
+  padding: 0px 24px;
+}
+
+.rfp-process-box {
+  position: relative;
+  overflow: hidden;
+  border-radius: 40px;
+  background: #010101;
+  padding: 80px 210px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 60px;
+}
+
+.rfp-process-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  text-align: center;
+}
+
+.rfp-process-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
+  border-radius: 999px;
+  border: 1px solid var(--color-primary);
+  background: rgba(255, 176, 30, 0.08);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-primary);
+  letter-spacing: -0.28px;
+  white-space: nowrap;
+}
+
+.rfp-process-heading {
+  font-size: 46px;
+  font-weight: 600;
+  line-height: 62px;
+  color: #ffffff;
+  text-align: center;
+}
+
+.rfp-process-grid {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.rfp-process-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.rfp-process-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 24px 24px 40px;
+  border-right: 1px solid #262626;
+  border-bottom: 1px solid #262626;
+  background: transparent;
+  transition:
+    background 0.3s ease,
+    border-color 0.3s ease,
+    transform 0.3s ease;
+  cursor: default;
+}
+
+.rfp-process-row:last-child .rfp-process-cell {
+  border-bottom: none;
+}
+
+.rfp-process-cell:first-child {
+  border-left: 1px solid #262626;
+}
+
+.rfp-process-cell:hover {
+  background: rgba(255, 176, 30, 0.05);
+  border-color: rgba(255, 176, 30, 0.2);
+  transform: translateY(-4px);
+}
+
+.rfp-process-cell-top {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+  text-align: center;
+}
+
+.rfp-process-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+  background: rgba(255, 176, 30, 0.10);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.rfp-process-step-num {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--color-primary);
+  letter-spacing: 0.5px;
+}
+
+.rfp-process-cell-title {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.4;
+  color: #ffffff;
+  text-align: center;
+  letter-spacing: 0.11px;
+  text-transform: capitalize;
+}
+
+.rfp-process-cell-desc {
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 28px;
+  color: rgba(255, 255, 255, 0.75);
+  text-align: center;
+}
+
+@media (max-width: 900px) {
+  .rfp-process-section {
+    padding: 60px 16px;
+  }
+  .rfp-process-box {
+    padding: 60px 32px;
+    border-radius: 24px;
+  }
+  .rfp-process-row {
+    grid-template-columns: 1fr;
+  }
+  .rfp-process-heading {
+    font-size: 32px;
+    line-height: 44px;
+  }
+  .rfp-process-cell:first-child {
+    border-left: none;
+  }
+}
+
+/* ── RFP Program Structure — How it Works style ───────────────── */
+.rfp-howit-section {
+  background: var(--color-white);
+  padding-top: 0px;
+}
+
+.rfp-howit-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+}
+
+.rfp-howit-card {
+  text-align: center;
+  cursor: default;
+  border: 1px solid #E2E8F0;
+  border-radius: 24px;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 28px 36px;
+  transition:
+    transform 0.3s ease-out,
+    box-shadow 0.3s ease-out,
+    background 0.3s ease-out,
+    border-color 0.3s ease-out;
+  display: flex;
+  background: #F7FAFE;
+}
+
+.rfp-howit-card:hover {
+  transform: scale(1.03);
+  background: rgba(255, 176, 30, 0.04);
+  box-shadow: 0 4px 16px rgba(255, 176, 30, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04);
+  border-color: rgba(255, 176, 30, 0.2);
+}
+
+.rfp-howit-num {
+  font-size: 88px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -4px;
+  color: rgba(0, 0, 0, 0.06);
+  margin-bottom: 20px;
+  user-select: none;
+  transition: color 0.3s ease-out;
+}
+
+.rfp-howit-card:hover .rfp-howit-num {
+  color: rgba(255, 176, 30, 0.18);
+}
+
+.rfp-howit-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #0b0b0b;
+  line-height: 1.4;
+  margin-bottom: 14px;
+}
+
+.rfp-howit-desc {
+  color: #555;
+  max-width: 100%;
+  font-size: 15px;
+  line-height: 27px;
+}
+
+@media (max-width: 900px) {
+  .rfp-howit-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .rfp-howit-num {
+    font-size: 64px;
+  }
 }
 
 .about-faq-grid {
