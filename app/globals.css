@@ -1279,6 +1279,195 @@ img {
   }
 }
 
+/* ── Role Tabs (About page — Figma 304:6260) ──────────────────────────── */
+
+.role-tabs-section {
+  padding: 0px 24px;
+}
+
+/* Dark card with rounded corners */
+.role-tabs-card {
+  position: relative;
+  background: #010101;
+  border-radius: 40px;
+  padding: 80px 210px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 60px;
+}
+
+/* Subtle white grid lines */
+.role-tabs-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Radial amber glow from top center */
+.role-tabs-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 70% 50% at 50% 0%, rgba(255,176,30,0.18) 0%, transparent 65%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.role-tabs-heading-wrap {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+}
+
+.role-tabs-heading {
+  font-size: 46px;
+  font-weight: 600;
+  line-height: 62px;
+  color: var(--color-white);
+  text-align: center;
+}
+
+/* 3-col grid: left buttons | center card | right buttons */
+.role-tabs-layout {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 29fr 34fr 29fr;
+  gap: 40px;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Left / right button columns */
+.role-tabs-col {
+  display: flex;
+  flex-direction: column;
+  gap: 34px;
+}
+
+/* Each button */
+.role-tab-btn {
+  width: 100%;
+  min-height: 100px;
+  padding: 28px 32px;
+  border-radius: 28px;
+  border: none;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.3;
+  text-align: center;
+  cursor: pointer;
+  background: var(--color-white);
+  color: #131315;
+  transition: background 0.2s ease, color 0.2s ease, transform 0.15s ease;
+}
+
+.role-tab-btn:hover:not(.role-tab-btn--active) {
+  background: #f5f5f5;
+  transform: translateY(-2px);
+}
+
+.role-tab-btn--active {
+  background: var(--color-primary);
+  color: var(--color-white);
+}
+
+/* Center detail card */
+.role-tabs-center {
+  border: 0px solid #000000;
+  border-radius: 36px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-self: stretch;
+  min-height: 360px;
+  background: #332b1d;
+}
+
+.role-tabs-center-body {
+  padding: 24px 24px 68px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.role-tabs-center-title {
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 32px;
+  color: var(--color-white);
+}
+
+.role-tabs-center-desc {
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 24px;
+  color: rgba(255,255,255,0.75);
+}
+
+/* Image fills the bottom portion of the center card */
+.role-tabs-center-img-wrap {
+  width: 100%;
+  overflow: hidden;
+}
+
+.role-tabs-center-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+}
+
+/* ── Responsive ──────────────────────────────────────────────────── */
+@media (max-width: 1080px) {
+  .role-tabs-section {
+    padding: 60px 16px;
+  }
+  .role-tabs-card {
+    padding: 60px 32px;
+    gap: 40px;
+  }
+  .role-tabs-heading {
+    font-size: 36px;
+    line-height: 48px;
+  }
+  .role-tabs-layout {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  .role-tabs-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+  }
+  .role-tab-btn {
+    min-height: 64px;
+    padding: 16px 20px;
+    font-size: 15px;
+    border-radius: 20px;
+  }
+  .role-tabs-center {
+    min-height: 280px;
+  }
+}
+
+@media (max-width: 640px) {
+  .role-tabs-col {
+    grid-template-columns: 1fr 1fr;
+  }
+  .role-tabs-heading {
+    font-size: 28px;
+    line-height: 38px;
+  }
+}
+
 /* ── Governance & Ecosystem — Scroll-driven Figma layout ──────────────── */
 
 /* Outer section wrapper */
@@ -2219,6 +2408,21 @@ img {
   background: #f7f5f3;
   padding-top: 70px;
   overflow: hidden;
+  position: relative;
+}
+
+/* Fading grid overlay */
+.about-hero-grid {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-image:
+    linear-gradient(to right, #f3eee8 1px, transparent 1px),
+    linear-gradient(to bottom, #f3eee8 1px, transparent 1px);
+  background-size: 20px 30px;
+  -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 0%, #000 60%, transparent 100%);
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 0%, #000 60%, transparent 100%);
+  pointer-events: none;
 }
 
 .about-hero-inner {
@@ -2230,13 +2434,15 @@ img {
   align-items: center;
   gap: 16px;
   text-align: center;
+  position: relative;
+  z-index: 1;
 }
 
 .about-globe-container {
   position: relative;
   width: 950px;
   max-width: 100%;
-  margin-top: 6px;
+  margin-top: 36px;
 }
 
 .about-globe-img {
@@ -2245,6 +2451,230 @@ img {
   display: block;
 }
 
+
+/* ── Foundation Scroller ─────────────────────────────────────────────── */
+
+/* Section: white card, rounded top corners (Figma: rounded-tl/tr 60px) */
+.foundation-scroller {
+  background: var(--color-white);
+  border-radius: 60px 60px 0 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 80px;
+  padding: 120px 0;
+  overflow: hidden;
+}
+
+/* Header: centered, max-width matches Figma paragraph width (1002px) */
+.foundation-header-wrap {
+  display: flex;
+  justify-content: center;
+  padding: 0 24px;
+}
+
+.foundation-header {
+  max-width: 1002px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  text-align: center;
+}
+
+.foundation-desc {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 31px;
+  color: #313131;
+  text-align: center;
+}
+
+/* Timeline outer: full viewport width, clips overflowing steps */
+.foundation-timeline-outer {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  padding: 20px 0 48px;
+}
+
+/* Inner block — GSAP translates this left so steps scroll through the viewport.
+   width: max-content makes it exactly as wide as its content so offsetWidth
+   returns the real pixel size for the maxTranslate calculation. */
+.foundation-timeline-inner {
+  position: relative;
+  width: max-content;
+  will-change: transform;
+}
+
+/* Grey track
+   Positioned inside the inner block (moves with it).
+   left = 10vw padding + 150px (half of 300px step) → sits on step-0 center.
+   width = 5 × 360px = 1800px → spans step-0 center to step-5 center.       */
+.foundation-track {
+  position: absolute;
+  top: 14px;          /* (32px node height − 4px track height) / 2 */
+  left: calc(10vw + 150px);
+  width: 1800px;
+  right: auto;
+  height: 4px;
+  background: #edeff5;
+  border-radius: 200px;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.foundation-track-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 0%;
+  background: var(--color-primary);
+  border-radius: 200px;
+  will-change: width;
+}
+
+/* Steps: 6 fixed-width columns (300px each, 60px gap) → overflows viewport
+   Total row = 10vw + 6×300px + 5×60px = 10vw + 2100px
+   Overflow clipped by .foundation-timeline-outer so right steps are off-screen initially */
+.foundation-steps {
+  display: grid;
+  grid-template-columns: repeat(6, 300px);
+  gap: 60px;
+  padding-left: 10vw;
+  position: relative;
+  z-index: 1;
+}
+
+.foundation-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 34px;
+  width: 300px;
+  max-width: 300px;
+}
+
+/* Circle indicator */
+.foundation-step-node {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1.6px solid #bcbcbc;
+  background: var(--color-white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 2;
+  will-change: transform, background-color, border-color, box-shadow;
+}
+
+/* Inactive inner dot (visible by default on steps 1-5) */
+.foundation-step-dot {
+  display: block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #c4c4c4;
+  will-change: opacity;
+}
+
+/* Active checkmark SVG (hidden by default, shown via GSAP) */
+.foundation-step-check {
+  position: absolute;
+  opacity: 0;
+  will-change: opacity;
+}
+
+/* Step 0 — active by default via CSS (no GSAP flash on load) */
+.foundation-step:first-child .foundation-step-node {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+}
+.foundation-step:first-child .foundation-step-dot  { opacity: 0; }
+.foundation-step:first-child .foundation-step-check { opacity: 1; }
+.foundation-step:first-child .foundation-step-label { opacity: 1; }
+
+/* Step labels */
+.foundation-step-label {
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 28px;
+  color: #1a1a1a;
+  text-align: center;
+  opacity: 0.3;
+  width: 300px;
+  padding: 0 10px;
+  will-change: opacity;
+}
+
+/* ── Mobile / Tablet: vertical stepper, all steps shown active ────────── */
+
+@media (max-width: 1023px) {
+  .foundation-scroller {
+    min-height: auto;
+    border-radius: 40px 40px 0 0;
+    padding: 80px 0;
+    gap: 56px;
+  }
+
+  .foundation-timeline-outer {
+    overflow: visible;
+    padding: 0 24px 0 40px;
+  }
+
+  .foundation-timeline-inner {
+    width: 100%;
+    transform: none !important;
+  }
+
+  .foundation-track {
+    display: none;
+  }
+
+  .foundation-steps {
+    grid-template-columns: 1fr;
+    padding-left: 0;
+    border-left: 3px solid #edeff5;
+    gap: 0;
+  }
+
+  .foundation-step {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 20px;
+    padding-bottom: 36px;
+    text-align: left;
+    margin-left: -17px;
+  }
+
+  .foundation-step:last-child { padding-bottom: 0; }
+
+  /* All steps shown active on mobile */
+  .foundation-step-node {
+    flex-shrink: 0;
+    background: var(--color-primary) !important;
+    border-color: var(--color-primary) !important;
+    box-shadow: none !important;
+    transform: none !important;
+  }
+
+  .foundation-step-dot  { opacity: 0 !important; }
+  .foundation-step-check { opacity: 1 !important; }
+
+  .foundation-step-label {
+    opacity: 1 !important;
+    width: auto;
+    padding: 0;
+    text-align: left;
+    font-size: 16px;
+    line-height: 26px;
+    margin-top: 4px;
+  }
+}
 
 /* Shared typography */
 .about-section-title {
@@ -2381,24 +2811,106 @@ img {
   color: var(--color-gray-body);
 }
 
-/* Ecosystem section */
-.about-ecosystem-grid {
-  display: flex;
-  gap: 48px;
-  align-items: flex-start;
+/* Ecosystem section — 3×2 border-grid */
+.eco-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  margin-top: 48px;
 }
 
-.about-ecosystem-img {
-  flex: 1;
-  min-width: 0;
-}
-
-.about-ecosystem-list {
-  flex: 1;
-  min-width: 0;
+/* Base card — no background, no radius, just padding */
+.eco-card {
+  background: none;
+  padding: 40px 32px;
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 20px;
+  transition: background 0.25s;
+  cursor: default;
+}
+
+.eco-card:hover {
+  background: rgba(255, 176, 30, 0.04);
+}
+
+/* Row 1 col 1 & 2 — right + bottom border */
+.eco-card:first-child,
+.eco-card:nth-child(2) {
+  border-right: 1px solid #fdeccd;
+  border-bottom: 1px solid #fdeccd;
+}
+
+/* Row 1 col 3 — bottom border only */
+.eco-card:nth-child(3) {
+  border-bottom: 1px solid #fdeccd;
+}
+
+/* Row 2 col 1 & 2 — right border only */
+.eco-card:nth-child(4),
+.eco-card:nth-child(5) {
+  border-right: 1px solid #fdeccd;
+}
+
+/* Row 2 col 3 — no border */
+.eco-card:nth-child(6) {
+  border: none;
+}
+
+.eco-card-icon {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.eco-card-title {
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 26px;
+  color: var(--color-dark);
+}
+
+.eco-card-desc {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 26px;
+  color: #555;
+}
+
+@media (max-width: 980px) {
+  .eco-cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Reset all borders then re-apply for 2-col layout */
+  .eco-card:nth-child(n) {
+    border: none;
+  }
+  /* Col 1 of each row */
+  .eco-card:nth-child(odd) {
+    border-right: 1px solid #fdeccd;
+  }
+  /* All except last 2 */
+  .eco-card:not(:nth-last-child(-n+2)) {
+    border-bottom: 1px solid #fdeccd;
+  }
+  /* Last item if odd total — no right border */
+  .eco-card:last-child:nth-child(odd) {
+    border-right: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .eco-cards-grid {
+    grid-template-columns: 1fr;
+  }
+  .eco-card:nth-child(n) {
+    border: none;
+    border-bottom: 1px solid #e2e2e2;
+  }
+  .eco-card:last-child {
+    border-bottom: none;
+  }
 }
 
 .about-ecosystem-item {
@@ -2431,72 +2943,252 @@ img {
   min-width: 0;
 }
 
-/* Vision section */
-.about-vision-desc {
-  font-size: 16px;
-  line-height: 31px;
-  color: var(--color-gray-body);
-  text-align: center;
-  max-width: 800px;
-  margin: 0 auto 32px;
+/* ── Long-Term Vision — Figma 283:526 ───────────────────────────────── */
+
+.vision-layout {
+  display: flex;
+  align-items: center;
+  gap: 80px;
+  padding: 0px 60px;
 }
 
-.about-vision-list {
-  max-width: 600px;
-  margin: 0 auto;
+/* Left: dark rounded card wrapping the SVG illustration */
+.vision-img-card {
+  flex-shrink: 0;
+  width: 560px;
+  height: 520px;
+  background: #010101;
+  border-radius: 24px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: box-shadow 0.3s ease;
+}
+
+.vision-img-card:hover {
+  box-shadow: 0 0 0 2px rgba(255,176,30,0.35), 0 24px 48px rgba(0,0,0,0.18);
+}
+
+.vision-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+/* Right: text content */
+.vision-content {
+  flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 32px;
+}
+
+.vision-text-block {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.vision-title {
+  font-size: 36px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: #0b0b0b;
+}
+
+.vision-desc {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 31px;
+  color: #313131;
+}
+
+/* List items with amber circle-checkmark icon */
+.vision-list {
+  flex-direction: column;
+  gap: 10px;
   list-style: none;
+  display: flex;
+}
+
+.vision-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  color: #010304;
+  padding: 8px 12px;
+  border-radius: 8px;
+  transition: background 0.2s ease, transform 0.2s ease;
+  cursor: default;
+}
+
+.vision-item:hover {
+  background: rgba(255,176,30,0.06);
+  transform: translateX(4px);
+}
+
+.vision-item-icon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Responsive */
+@media (max-width: 1080px) {
+  .vision-layout {
+    flex-direction: column;
+    gap: 48px;
+  }
+  .vision-img-card {
+    width: 100%;
+    height: 360px;
+  }
+}
+
+@media (max-width: 600px) {
+  .vision-title {
+    font-size: 28px;
+  }
+  .vision-img-card {
+    height: 280px;
+  }
+}
+
+/* About section description */
+.about-vision-desc {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 31px;
+  color: #313131;
+  text-align: center;
+  max-width: 800px;
+  margin: 20px auto 0;
 }
 
 /* Team section */
 .about-team-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 32px;
-  margin-top: 48px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  justify-content: center;
+  margin-top: 60px;
 }
 
 .about-team-card {
   background: var(--color-white);
-  border-radius: 16px;
-  padding: 32px;
-  text-align: center;
-  border: 1px solid var(--color-border-subtle);
+  border-radius: 24px;
+  border: 1px solid #eef4fd;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 34px;
+  width: 460px;
+  flex-shrink: 0;
   transition:
     transform 0.3s ease,
-    box-shadow 0.3s ease;
+    box-shadow 0.3s ease,
+    border-color 0.3s ease;
 }
 
 .about-team-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+  transform: translateY(-6px);
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.10);
+  border-color: rgba(255, 176, 30, 0.4);
+}
+
+.about-team-photo-wrap {
+  width: 100%;
+  height: 312px;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #f5f5f5;
+  flex-shrink: 0;
 }
 
 .about-team-photo {
-  border-radius: 50%;
-  margin: 0 auto 16px;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
   display: block;
+  transition: transform 0.4s ease;
+}
+
+.about-team-card:hover .about-team-photo {
+  transform: scale(1.03);
+}
+
+.about-team-info {
+  display: flex;
+  flex-direction: column;
+  gap: 23px;
+}
+
+.about-team-header {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.about-team-header-text {
+  flex-direction: column;
+  flex: 1;
+  gap: 8px;
+  min-width: 0;
+  display: flex;
 }
 
 .about-team-name {
-  font-size: 20px;
+  font-size: 24px;
   font-weight: 600;
-  color: var(--color-dark);
+  color: #1a1a1a;
+  line-height: 32px;
 }
 
 .about-team-role {
+  color: var(--color-gray-dark);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 32px;
+}
+
+.about-team-social {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  transition: opacity 0.2s;
+}
+
+.about-team-card:hover .about-team-social {
+  opacity: 0.75;
+}
+
+.about-team-bio {
   font-size: 14px;
-  color: var(--color-primary);
-  margin-bottom: 16px;
+  line-height: 25px;
+  color: #373737;
+  font-weight: 400;
 }
 
 /* FAQ section */
+.faq-grid-gap {
+  margin-top: 60px;
+}
+
 .about-faq-grid {
   display: flex;
   gap: 48px;
   align-items: flex-start;
+  margin-top: 60px;
 }
 
 .about-faq-img {
@@ -3239,4 +3931,4 @@ img {
     gap: 32px;
   }
 }
-
+
