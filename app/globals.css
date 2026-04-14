@@ -3884,6 +3884,12 @@ img {
   color: #ffffff;
 }
 
+/* Swap page — button width follows text content */
+.swap-hero .hero-figma-btn-primary {
+  width: auto;
+  padding: 0 32px;
+}
+
 .hero-figma-btn-white {
   background: #ffffff;
   color: #ffb01e;

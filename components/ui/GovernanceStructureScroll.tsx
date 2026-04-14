@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import Link from 'next/link'
 import Container from '@/components/layout/Container'
 
 interface StructureItem {
@@ -13,6 +14,8 @@ interface GovernanceStructureScrollProps {
   heading?: string
   subHeading?: string
   items?: StructureItem[]
+  buttonText?: string
+  buttonHref?: string
 }
 
 export default function GovernanceStructureScroll({
@@ -20,6 +23,8 @@ export default function GovernanceStructureScroll({
   heading,
   subHeading,
   items = [],
+  buttonText,
+  buttonHref,
 }: GovernanceStructureScrollProps) {
   const sectionRef  = useRef<HTMLElement>(null)
   const itemRefs    = useRef<(HTMLDivElement | null)[]>([])
@@ -86,6 +91,11 @@ export default function GovernanceStructureScroll({
             {eyebrow && <span className="section-eyebrow">{eyebrow}</span>}
             <h2 className="section-heading">{heading}</h2>
             {subHeading && <p className="ucs-subtext">{subHeading}</p>}
+            {buttonText && (
+              <Link href={buttonHref ?? '#'} className="hero-figma-btn-primary">
+                {buttonText}
+              </Link>
+            )}
             <div className="ucs-counter">
               <span className="ucs-counter-current">
                 {String(activeIndex + 1).padStart(2, '0')}
