@@ -3301,6 +3301,158 @@ img {
 .dao-mechanisms-grid .eco-card {
   border-bottom: none;
 }
+
+/* Validator page — scoped overrides */
+.validator-process-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: rgba(255, 176, 30, 0.12);
+  flex-shrink: 0;
+}
+.validator-page .hero-figma-btn-primary {
+  width: auto;
+  padding: 0 32px;
+}
+/* Knowledge Hub scroll extras */
+.kh-bullet-list {
+  flex-direction: column;
+  gap: 8px;
+  margin: 12px 0 22px;
+  padding: 0;
+  list-style: none;
+  display: flex;
+}
+.kh-bullet-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+.kh-bullet-dot {
+  flex-shrink: 0;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  margin-top: 9px;
+}
+.kh-bullet-text {
+  font-size: 15px;
+  line-height: 27px;
+  color: var(--color-gray-body);
+}
+.kh-item-btn {
+  width: auto;
+  padding: 0 32px;
+}
+.blog-head {
+  margin-bottom: 60px;
+}
+.kh-empty-text {
+  text-align: center;
+  color: var(--color-gray-body);
+  padding: 48px 0;
+}
+
+.validator-note {
+  font-size: 14px;
+  line-height: 24px;
+  text-align: center;
+  margin-top: 24px;
+  max-width: 640px;
+  margin-left: auto;
+  margin-right: auto;
+  font-style: italic;
+  color: var(--color-gray-body);
+}
+
+/* ── Delegator page ───────────────────────────────────────── */
+.delegator-page .hero-figma-btn-primary {
+  width: auto;
+  padding: 0 32px;
+}
+.delegator-note {
+  font-size: 14px;
+  line-height: 24px;
+  font-style: italic;
+  margin-top: 16px;
+  color: var(--color-gray-body);
+}
+.delegator-evaluate-note {
+  text-align: center;
+  padding: 40px 0px;
+}
+.delegator-card {
+  background: var(--color-white);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: 20px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.delegator-card-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: rgba(255, 176, 30, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.delegator-card-title {
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--color-dark);
+}
+.delegator-card-text {
+  font-size: 14px;
+  line-height: 26px;
+  color: var(--color-gray-body);
+}
+.delegator-card-bullets {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.delegator-card-bullet {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+.delegator-bullet-dot {
+  flex-shrink: 0;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  margin-top: 9px;
+}
+.delegator-card-bullet-text {
+  font-size: 13px;
+  line-height: 24px;
+  color: var(--color-gray-body);
+}
+.delegator-risk-item {
+  background: var(--color-bg-default);
+  border: 1px solid var(--color-border-default);
+  border-radius: 16px;
+  padding: 16px;
+}
+.delegator-risk-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-primary);
+  margin-bottom: 6px;
+}
 .dao-elig-wrap {
   max-width: 700px;
   margin: 0 auto;

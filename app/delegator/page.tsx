@@ -1,9 +1,9 @@
 import { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import Container from "@/components/layout/Container";
-import AnimatedButton from "@/components/ui/AnimatedButton";
 import SectionHeading from "@/components/ui/SectionHeading";
-import FAQ from "@/components/ui/FAQ";
+import GovernanceStructureScroll from "@/components/ui/GovernanceStructureScroll";
 import { sanityFetch } from "@/lib/sanity";
 import { delegatorPageQuery } from "@/lib/queries";
 
@@ -81,135 +81,68 @@ export default async function DelegatorPage() {
   const dashboardItems = data?.dashboardItems ?? [];
 
   return (
-    <>
-      {/* 1 ── HERO */}
-      <section
-        className="relative overflow-hidden flex items-center"
-        style={{
-          minHeight: "500px",
-          background:
-            "linear-gradient(to left, var(--color-header-navy), var(--color-header-dark) 49%)",
-        }}
-      >
-        <div className="hero-bg-grid">
-          <Image
-            src="/images/hero-bg-grid.svg"
-            alt=""
-            fill
-            className="object-fill"
-          />
-        </div>
-        <div className="mx-auto w-[100%] lg:w-[80%] max-w-[1440px] py-20 relative z-10 flex flex-col lg:flex-row items-center gap-[60px]">
-          <div className="flex-1 flex flex-col gap-[40px]">
-            <div className="flex flex-col gap-[16px]">
-              {data?.hero?.badge && (
-                <div
-                  className="inline-flex w-fit items-center justify-center px-[16px] py-[12px] rounded-[999px] border"
-                  style={{
-                    borderColor: "var(--color-chip-border)",
-                    background: "var(--color-chip-bg)",
-                  }}
-                >
-                  <span
-                    className="text-[14px] font-medium tracking-[-0.28px] whitespace-nowrap"
-                    style={{ color: "var(--color-primary)" }}
-                  >
-                    {data.hero.badge}
-                  </span>
-                </div>
-              )}
-              <div className="flex flex-col gap-[20px]">
-                <h1
-                  className="font-bold text-[46px] leading-[62px]"
-                  style={{ color: "var(--color-white)" }}
-                >
-                  {data?.hero?.heading}
-                </h1>
-                {data?.hero?.subtext && (
-                  <p
-                    className="text-[16px] leading-[28px]"
-                    style={{ color: "var(--color-hero-body)" }}
-                  >
-                    {data.hero.subtext}
-                  </p>
-                )}
-              </div>
+    <div className="delegator-page">
+
+      {/* 1 ── HERO — same as validator */}
+      <section className="about-hero">
+        <div className="about-hero-grid" />
+        <div className="about-hero-inner">
+          {data?.hero?.badge && (
+            <div className="hero-chip-v2">
+              <span className="hero-chip-dot" />
+              <span className="hero-chip-label">{data.hero.badge}</span>
             </div>
-            {data?.hero?.buttonText && (
-              <AnimatedButton
-                href={data.hero.buttonHref ?? "#"}
-                variant="primary"
-              >
-                {data.hero.buttonText}
-              </AnimatedButton>
+          )}
+          <div className="hero-figma-textblock">
+            <h1 className="hero-figma-h1">{data?.hero?.heading}</h1>
+            {data?.hero?.subtext && (
+              <p className="hero-figma-p">{data.hero.subtext}</p>
             )}
           </div>
-          <div className="hidden lg:flex flex-shrink-0 items-center justify-center w-[660px]">
-            {data?.hero?.image?.asset?.url ? (
-              <Image
-                src={data.hero.image.asset.url}
-                alt={data.hero.image.alt ?? ""}
-                width={600}
-                height={400}
-                priority
-              />
-            ) : (
-              <Image
-                src="/images/People_counter_system.png"
-                alt="Delegator Platform"
-                width={600}
-                height={400}
-                priority
-              />
-            )}
+          {data?.hero?.buttonText && (
+            <div className="hero-figma-btns">
+              <Link
+                href={data.hero.buttonHref ?? "#"}
+                className="hero-figma-btn-primary"
+              >
+                {data.hero.buttonText}
+              </Link>
+            </div>
+          )}
+          <div className="about-globe-container">
+            <Image
+              src="/images/about-globe.svg"
+              alt="Blockmaze Delegator Platform"
+              width={950}
+              height={400}
+              className="about-globe-img"
+              priority
+            />
           </div>
         </div>
       </section>
 
-      {/* 2 ── WHY DELEGATE — surface */}
+      {/* 2 ── WHY DELEGATE — eco-cards-grid (like About The Blockmaze Foundation) */}
       {benefits.length > 0 && (
-        <section
-          className="section-padding"
-          style={{ background: "var(--color-surface)" }}
-        >
+        <section className="section-padding bg-white">
           <Container>
             <SectionHeading
               label={data?.benefitsSection?.eyebrow}
               heading={data?.benefitsSection?.heading ?? ""}
             />
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div className="eco-cards-grid section-content-gap">
               {benefits.map((b) => (
-                <div
-                  key={b.title}
-                  className="flex flex-col gap-3 p-6 rounded-[20px] transition-all duration-300 hover:-translate-y-1"
-                  style={{
-                    background: "var(--color-white)",
-                    border: "1px solid var(--color-border-subtle)",
-                  }}
-                >
-                  <div
-                    className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0"
-                    style={{ background: "rgba(255,176,30,0.1)" }}
-                  >
+                <div key={b.title} className="eco-card">
+                  <div className="eco-card-icon">
                     <Image
                       src={b.iconPath}
                       alt={b.title}
-                      width={30}
-                      height={30}
+                      width={44}
+                      height={44}
                     />
                   </div>
-                  <h4
-                    className="text-[18px] font-semibold"
-                    style={{ color: "var(--color-dark)" }}
-                  >
-                    {b.title}
-                  </h4>
-                  <p
-                    className="text-[15px] leading-[28px]"
-                    style={{ color: "var(--color-gray-body)" }}
-                  >
-                    {b.description}
-                  </p>
+                  <h4 className="eco-card-title">{b.title}</h4>
+                  <p className="eco-card-desc">{b.description}</p>
                 </div>
               ))}
             </div>
@@ -217,319 +150,111 @@ export default async function DelegatorPage() {
         </section>
       )}
 
-      {/* 3 ── WHAT TO EVALUATE — white, two-column */}
+      {/* 3 ── WHAT TO EVALUATE — vision-layout (like About Long-Term Vision) */}
       {data?.evaluateSection && (
         <section className="section-padding bg-white">
           <Container>
-            <div className="flex flex-col lg:flex-row items-center gap-[60px]">
-              <div className="gap-5">
-                {data.evaluateSection.eyebrow && (
-                  <span className="section-eyebrow mb-3">
-                    {data.evaluateSection.eyebrow}
-                  </span>
-                )}
-                <h2 className="section-heading text-left mb-3">
-                  {data.evaluateSection.heading}
-                </h2>
-                {data.evaluateSection.text && (
-                  <p
-                    className="text-[16px] leading-[31px] mb-3"
-                    style={{ color: "var(--color-gray-body)" }}
-                  >
-                    {data.evaluateSection.text}
-                  </p>
-                )}
-                {data.evaluateSection.subtext && (
-                  <p
-                    className="text-[15px] leading-[28px] font-medium mb-3"
-                    style={{ color: "var(--color-dark)" }}
-                  >
-                    {data.evaluateSection.subtext}
-                  </p>
-                )}
-                {(data.evaluateSection.items ?? []).length > 0 && (
-                  <ul className="flex flex-col gap-2 mb-3">
-                    {(data.evaluateSection.items ?? []).map((item, i) => (
-                      <li key={i} className="flex items-start gap-3">
-                        <span
-                          className="flex-shrink-0 w-1.5 h-1.5 rounded-full mt-[10px]"
-                          style={{ background: "var(--color-primary)" }}
-                        />
-                        <span
-                          className="text-[15px] leading-[28px]"
-                          style={{ color: "var(--color-gray-body)" }}
-                        >
-                          {item}
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-                {data.evaluateSection.note && (
-                  <p
-                    className="text-[14px] leading-[24px] italic"
-                    style={{ color: "var(--color-gray-body)", opacity: 0.8 }}
-                  >
-                    {data.evaluateSection.note}
-                  </p>
-                )}
-              </div>
-              <div className="hidden lg:flex flex-shrink-0 w-[50%] justify-center">
+            <div className="vision-layout">
+
+              {/* Left — image */}
+              <div className="vision-img-card">
                 {data.evaluateSection.image?.asset?.url ? (
                   <Image
                     src={data.evaluateSection.image.asset.url}
                     alt={data.evaluateSection.image.alt ?? ""}
-                    width={500}
-                    height={400}
-                    className="rounded-2xl"
+                    width={556}
+                    height={531}
+                    className="vision-img"
                   />
                 ) : (
                   <Image
-                    src="/images/image-40.png"
-                    alt="What To Evaluate"
-                    width={500}
-                    height={400}
-                    className="rounded-2xl"
+                    src="/images/long.svg"
+                    alt=""
+                    width={556}
+                    height={531}
+                    className="vision-img"
                   />
                 )}
               </div>
-            </div>
-          </Container>
-        </section>
-      )}
 
-      {/* 4 ── HOW TO DELEGATE — surface, timeline */}
-      {steps.length > 0 && (
-        <section
-          className="section-padding"
-          style={{ background: "var(--color-surface)" }}
-        >
-          <Container>
-            <SectionHeading
-              label={data?.stepsSection?.eyebrow}
-              heading={data?.stepsSection?.heading ?? ""}
-              subtext={data?.stepsSection?.subtext}
-            />
-            {/* desktop alternating timeline */}
-            <div className="relative hidden lg:block mx-auto">
-              <div
-                className="absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-[2px]"
-                style={{ background: "var(--color-border-subtle)" }}
-              />
-              <div className="flex flex-col gap-0">
-                {steps.map((step, i) => {
-                  const isLeft = i % 2 === 0;
-                  return (
-                    <div
-                      key={i}
-                      className="relative flex items-start min-h-[100px] pb-10 last:pb-0"
-                    >
-                      <div className="pr-10 flex justify-end">
-                        {isLeft && (
-                          <div
-                            className="w-full max-w-[660px] p-6 rounded-[20px] transition-all duration-300 hover:-translate-y-1"
-                            style={{
-                              background: "var(--color-white)",
-                              border: "1px solid var(--color-border-subtle)",
-                            }}
-                          >
-                            <h4
-                              className="text-[17px] font-semibold mb-2"
-                              style={{ color: "var(--color-dark)" }}
-                            >
-                              {step.title}
-                            </h4>
-                            <p
-                              className="text-[14px] leading-[26px]"
-                              style={{ color: "var(--color-gray-body)" }}
-                            >
-                              {step.description}
-                            </p>
-                          </div>
-                        )}
-                      </div>
-                      <div className="absolute left-1/2 -translate-x-1/2 top-5 z-10 flex items-center justify-center">
-                        <div
-                          className="absolute w-8 h-[2px]"
-                          style={{
-                            background: "var(--color-primary)",
-                            [isLeft ? "right" : "left"]: "100%",
-                          }}
-                        />
-                        <div
-                          className="w-11 h-11 rounded-full flex items-center justify-center text-[15px] font-bold shadow-lg"
-                          style={{
-                            background: "var(--color-primary)",
-                            color: "var(--color-dark)",
-                          }}
-                        >
-                          {i + 1}
-                        </div>
-                      </div>
-                      <div className="pl-10 flex justify-end ms-[auto]">
-                        {!isLeft && (
-                          <div
-                            className="w-full max-w-[660px] p-6 rounded-[20px] transition-all duration-300 hover:-translate-y-1"
-                            style={{
-                              background: "var(--color-white)",
-                              border: "1px solid var(--color-border-subtle)",
-                            }}
-                          >
-                            <h4
-                              className="text-[17px] font-semibold mb-2"
-                              style={{ color: "var(--color-dark)" }}
-                            >
-                              {step.title}
-                            </h4>
-                            <p
-                              className="text-[14px] leading-[26px]"
-                              style={{ color: "var(--color-gray-body)" }}
-                            >
-                              {step.description}
-                            </p>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  );
-                })}
+              {/* Right — text + list */}
+              <div className="vision-content">
+                <div className="vision-text-block">
+                  {data.evaluateSection.eyebrow && (
+                    <span className="section-eyebrow">
+                      {data.evaluateSection.eyebrow}
+                    </span>
+                  )}
+                  <h2 className="vision-title">
+                    {data.evaluateSection.heading?.split(" ").slice(0, -1).join(" ")}{" "}
+                    <span className="text-primary">
+                      {data.evaluateSection.heading?.split(" ").slice(-1)[0]}
+                    </span>
+                  </h2>
+                  {data.evaluateSection.text && (
+                    <p className="vision-desc">{data.evaluateSection.text}</p>
+                  )}
+                  {data.evaluateSection.subtext && (
+                    <p className="vision-desc">{data.evaluateSection.subtext}</p>
+                  )}
+                </div>
+                {(data.evaluateSection.items ?? []).length > 0 && (
+                  <ul className="vision-list">
+                    {(data.evaluateSection.items ?? []).map((item, i) => (
+                      <li key={i} className="vision-item">
+                        <span className="vision-item-icon">
+                          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="10" cy="10" r="9" stroke="#ffb01e" strokeWidth="1.5"/>
+                            <path d="M6.5 10L9 12.5L13.5 7.5" stroke="#ffb01e" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                          </svg>
+                        </span>
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </div>
+
             </div>
-            {/* mobile left-aligned timeline */}
-            <div className="relative lg:hidden max-w-xl mx-auto">
-              <div
-                className="absolute left-[21px] top-0 bottom-0 w-[2px]"
-                style={{ background: "var(--color-border-subtle)" }}
-              />
-              <div className="flex flex-col gap-0">
-                {steps.map((step, i) => (
-                  <div
-                    key={i}
-                    className="relative flex items-start gap-5 pb-7 last:pb-0"
-                  >
-                    <div
-                      className="relative z-10 flex-shrink-0 w-11 h-11 rounded-full flex items-center justify-center text-[15px] font-bold"
-                      style={{
-                        background: "var(--color-primary)",
-                        color: "var(--color-dark)",
-                      }}
-                    >
-                      {i + 1}
-                    </div>
-                    <div
-                      className="flex-1 p-5 rounded-[20px]"
-                      style={{
-                        background: "var(--color-white)",
-                        border: "1px solid var(--color-border-subtle)",
-                      }}
-                    >
-                      <h4
-                        className="text-[17px] font-semibold mb-1"
-                        style={{ color: "var(--color-dark)" }}
-                      >
-                        {step.title}
-                      </h4>
-                      <p
-                        className="text-[14px] leading-[26px]"
-                        style={{ color: "var(--color-gray-body)" }}
-                      >
-                        {step.description}
-                      </p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-            {data?.stepsButton?.text && (
-              <div className="flex justify-center mt-12">
-                <AnimatedButton
-                  href={data.stepsButton.href ?? "#"}
-                  variant="primary"
-                >
-                  {data.stepsButton.text}
-                </AnimatedButton>
-              </div>
+            {data.evaluateSection.note && (
+              <p className="delegator-evaluate-note">{data.evaluateSection.note}</p>
             )}
           </Container>
         </section>
       )}
 
-      {/* 5 ── DASHBOARD — white, two-column */}
+      {/* 4 ── HOW TO DELEGATE — GovernanceStructureScroll (like validator How to Participate) */}
+      <GovernanceStructureScroll
+        eyebrow={data?.stepsSection?.eyebrow}
+        heading={data?.stepsSection?.heading}
+        subHeading={data?.stepsSection?.subtext}
+        items={steps}
+        buttonText={data?.stepsButton?.text}
+        buttonHref={data?.stepsButton?.href}
+      />
+
+      {/* 5 ── DASHBOARD — feature-pills (like RFP Transparency & Reporting) */}
       {dashboardItems.length > 0 && (
         <section className="section-padding bg-white">
           <Container>
-            <div className="flex flex-col lg:flex-row items-center gap-[60px]">
-              <div className="hidden lg:flex flex-shrink-0 w-[50%] justify-center">
-                {data?.dashboardImage?.asset?.url ? (
-                  <Image
-                    src={data.dashboardImage.asset.url}
-                    alt={data.dashboardImage.alt ?? ""}
-                    width={500}
-                    height={400}
-                    className="rounded-2xl"
-                  />
-                ) : (
-                  <Image
-                    src="/images/image-41.png"
-                    alt="Delegator Dashboard"
-                    width={500}
-                    height={400}
-                    className="rounded-2xl"
-                  />
-                )}
-              </div>
-              <div className="gap-6">
-                {data?.dashboardSection?.eyebrow && (
-                  <span className="section-eyebrow mb-3">
-                    {data.dashboardSection.eyebrow}
-                  </span>
-                )}
-                <h2 className="section-heading text-left mb-3">
-                  {data?.dashboardSection?.heading}
-                </h2>
-                <div className="flex flex-col gap-3">
-                  {dashboardItems.map((item, i) => (
-                    <div key={i} className="flex items-center gap-3">
-                      <div
-                        className="flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center"
-                        style={{ background: "rgba(255,176,30,0.15)" }}
-                      >
-                        <svg
-                          width="14"
-                          height="14"
-                          viewBox="0 0 14 14"
-                          fill="none"
-                        >
-                          <path
-                            d="M2.5 7l3 3 6-6"
-                            stroke="var(--color-primary)"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                        </svg>
-                      </div>
-                      <span
-                        className="text-[16px] leading-[28px]"
-                        style={{ color: "var(--color-gray-body)" }}
-                      >
-                        {item}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </div>
+            <SectionHeading
+              label={data?.dashboardSection?.eyebrow}
+              heading={data?.dashboardSection?.heading ?? ""}
+            />
+            <div className="feature-pills-wrap section-content-gap">
+              {dashboardItems.map((item, idx) => (
+                <span key={idx} className="feature-pill">
+                  {item}
+                </span>
+              ))}
             </div>
           </Container>
         </section>
       )}
 
-      {/* 6 ── REWARDS, UNBONDING & RISKS — surface */}
+      {/* 6 ── REWARDS, UNBONDING & RISKS — consistent card UI */}
       {(data?.earningCard || data?.unbondingCard || data?.risksCard) && (
-        <section
-          className="section-padding"
-          style={{ background: "var(--color-surface)" }}
-        >
+        <section className="section-padding bg-white">
           <Container>
             <SectionHeading
               label={data?.rewardsSection?.eyebrow}
@@ -537,21 +262,13 @@ export default async function DelegatorPage() {
             />
 
             {/* Earning + Unbonding — 2 col */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4 section-content-gap">
+
               {/* Earning */}
               {data?.earningCard && (
-                <div
-                  className="flex flex-col gap-3 p-6 rounded-[20px]"
-                  style={{
-                    background: "var(--color-white)",
-                    border: "1px solid var(--color-border-subtle)",
-                  }}
-                >
+                <div className="delegator-card">
                   {data.earningCard.iconPath && (
-                    <div
-                      className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0"
-                      style={{ background: "rgba(255,176,30,0.1)" }}
-                    >
+                    <div className="delegator-card-icon">
                       <Image
                         src={data.earningCard.iconPath}
                         alt=""
@@ -560,61 +277,31 @@ export default async function DelegatorPage() {
                       />
                     </div>
                   )}
-                  <h4
-                    className="text-[17px] font-semibold"
-                    style={{ color: "var(--color-dark)" }}
-                  >
-                    {data.earningCard.heading}
-                  </h4>
-                  <p
-                    className="text-[14px] leading-[26px]"
-                    style={{ color: "var(--color-gray-body)" }}
-                  >
-                    {data.earningCard.text}
-                  </p>
+                  <h4 className="delegator-card-title">{data.earningCard.heading}</h4>
+                  {data.earningCard.text && (
+                    <p className="delegator-card-text">{data.earningCard.text}</p>
+                  )}
                   {(data.earningCard.rewardItems ?? []).length > 0 && (
-                    <ul className="flex flex-col gap-1.5">
+                    <ul className="delegator-card-bullets">
                       {(data.earningCard.rewardItems ?? []).map((item, i) => (
-                        <li key={i} className="flex items-start gap-2">
-                          <span
-                            className="flex-shrink-0 w-1.5 h-1.5 rounded-full mt-[9px]"
-                            style={{ background: "var(--color-primary)" }}
-                          />
-                          <span
-                            className="text-[13px] leading-[24px]"
-                            style={{ color: "var(--color-gray-body)" }}
-                          >
-                            {item}
-                          </span>
+                        <li key={i} className="delegator-card-bullet">
+                          <span className="delegator-bullet-dot" />
+                          <span className="delegator-card-bullet-text">{item}</span>
                         </li>
                       ))}
                     </ul>
                   )}
                   {data.earningCard.note && (
-                    <p
-                      className="text-[13px] leading-[22px] italic"
-                      style={{ color: "var(--color-gray-body)", opacity: 0.75 }}
-                    >
-                      {data.earningCard.note}
-                    </p>
+                    <p className="delegator-note">{data.earningCard.note}</p>
                   )}
                 </div>
               )}
 
               {/* Unbonding */}
               {data?.unbondingCard && (
-                <div
-                  className="flex flex-col gap-3 p-6 rounded-[20px]"
-                  style={{
-                    background: "var(--color-white)",
-                    border: "1px solid var(--color-border-subtle)",
-                  }}
-                >
+                <div className="delegator-card">
                   {data.unbondingCard.iconPath && (
-                    <div
-                      className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0"
-                      style={{ background: "rgba(255,176,30,0.1)" }}
-                    >
+                    <div className="delegator-card-icon">
                       <Image
                         src={data.unbondingCard.iconPath}
                         alt=""
@@ -623,43 +310,22 @@ export default async function DelegatorPage() {
                       />
                     </div>
                   )}
-                  <h4
-                    className="text-[17px] font-semibold"
-                    style={{ color: "var(--color-dark)" }}
-                  >
-                    {data.unbondingCard.heading}
-                  </h4>
-                  <p
-                    className="text-[14px] leading-[26px]"
-                    style={{ color: "var(--color-gray-body)" }}
-                  >
-                    {data.unbondingCard.text}
-                  </p>
+                  <h4 className="delegator-card-title">{data.unbondingCard.heading}</h4>
+                  {data.unbondingCard.text && (
+                    <p className="delegator-card-text">{data.unbondingCard.text}</p>
+                  )}
                   {(data.unbondingCard.timeline ?? []).length > 0 && (
-                    <ul className="flex flex-col gap-1.5">
+                    <ul className="delegator-card-bullets">
                       {(data.unbondingCard.timeline ?? []).map((item, i) => (
-                        <li key={i} className="flex items-start gap-2">
-                          <span
-                            className="flex-shrink-0 w-1.5 h-1.5 rounded-full mt-[9px]"
-                            style={{ background: "var(--color-primary)" }}
-                          />
-                          <span
-                            className="text-[13px] leading-[24px]"
-                            style={{ color: "var(--color-gray-body)" }}
-                          >
-                            {item}
-                          </span>
+                        <li key={i} className="delegator-card-bullet">
+                          <span className="delegator-bullet-dot" />
+                          <span className="delegator-card-bullet-text">{item}</span>
                         </li>
                       ))}
                     </ul>
                   )}
                   {data.unbondingCard.text2 && (
-                    <p
-                      className="text-[13px] leading-[22px] italic"
-                      style={{ color: "var(--color-gray-body)", opacity: 0.75 }}
-                    >
-                      {data.unbondingCard.text2}
-                    </p>
+                    <p className="delegator-note">{data.unbondingCard.text2}</p>
                   )}
                 </div>
               )}
@@ -667,18 +333,9 @@ export default async function DelegatorPage() {
 
             {/* Risks — full width */}
             {data?.risksCard && (
-              <div
-                className="p-6 rounded-[20px]"
-                style={{
-                  background: "var(--color-white)",
-                  border: "1px solid var(--color-border-subtle)",
-                }}
-              >
+              <div className="delegator-card">
                 {data.risksCard.iconPath && (
-                  <div
-                    className="w-12 h-12 rounded-xl flex items-center justify-center mb-4"
-                    style={{ background: "rgba(255,176,30,0.1)" }}
-                  >
+                  <div className="delegator-card-icon">
                     <Image
                       src={data.risksCard.iconPath}
                       alt=""
@@ -687,42 +344,15 @@ export default async function DelegatorPage() {
                     />
                   </div>
                 )}
-                <h4
-                  className="text-[17px] font-semibold mb-2"
-                  style={{ color: "var(--color-dark)" }}
-                >
-                  {data.risksCard.heading}
-                </h4>
+                <h4 className="delegator-card-title">{data.risksCard.heading}</h4>
                 {data.risksCard.intro && (
-                  <p
-                    className="text-[14px] leading-[26px] mb-6"
-                    style={{ color: "var(--color-gray-body)" }}
-                  >
-                    {data.risksCard.intro}
-                  </p>
+                  <p className="delegator-card-text">{data.risksCard.intro}</p>
                 )}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
                   {(data.risksCard.risks ?? []).map((risk) => (
-                    <div
-                      key={risk.title}
-                      className="p-4 rounded-[16px]"
-                      style={{
-                        background: "var(--color-surface)",
-                        border: "1px solid var(--color-border-subtle)",
-                      }}
-                    >
-                      <h5
-                        className="text-[15px] font-semibold mb-2"
-                        style={{ color: "var(--color-primary)" }}
-                      >
-                        {risk.title}
-                      </h5>
-                      <p
-                        className="text-[14px] leading-[26px]"
-                        style={{ color: "var(--color-gray-body)" }}
-                      >
-                        {risk.description}
-                      </p>
+                    <div key={risk.title} className="delegator-risk-item">
+                      <h5 className="delegator-risk-title">{risk.title}</h5>
+                      <p className="delegator-card-text">{risk.description}</p>
                     </div>
                   ))}
                 </div>
@@ -732,21 +362,6 @@ export default async function DelegatorPage() {
         </section>
       )}
 
-      {/* 7 ── CTA */}
-      {/* {data?.ctaSection?.buttonText && (
-        <section className="section-padding bg-white">
-          <Container>
-            <div className="flex justify-center">
-              <AnimatedButton
-                href={data.ctaSection.buttonHref ?? "#"}
-                variant="primary"
-              >
-                {data.ctaSection.buttonText}
-              </AnimatedButton>
-            </div>
-          </Container>
-        </section>
-      )} */}
-    </>
+    </div>
   );
 }
