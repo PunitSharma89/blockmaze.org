@@ -72,53 +72,20 @@ export default async function RfpPage() {
   return (
     <>
       {/* SECTION 1: Hero */}
-      <section
-        className="relative overflow-hidden flex items-center"
-        style={{
-          minHeight: "500px",
-          background:
-            "linear-gradient(to left, var(--color-header-navy), var(--color-header-dark) 49%)",
-        }}
-      >
-        <div className="hero-bg-grid">
-          <Image
-            src="/images/hero-bg-grid.svg"
-            alt=""
-            fill
-            className="object-fill"
-          />
-        </div>
-
-        <div className="mx-auto w-[80%] max-w-[1440px] py-20 relative z-10 flex flex-col items-center text-center gap-[40px]">
-          <div className="flex flex-col gap-[16px] items-center max-w-[780px]">
-            <div
-              className="inline-flex w-fit items-center justify-center px-[16px] py-[12px] rounded-[999px] border"
-              style={{
-                borderColor: "var(--color-chip-border)",
-                background: "var(--color-chip-bg)",
-              }}
-            >
-              <span
-                className="text-[14px] font-medium tracking-[-0.28px] whitespace-nowrap"
-                style={{ color: "var(--color-primary)" }}
-              >
-                {data?.hero?.badge}
-              </span>
-            </div>
-            <div className="flex flex-col gap-[20px]">
-              <h1
-                className="font-bold text-[46px] leading-[62px]"
-                style={{ color: "var(--color-white)" }}
-              >
-                {data?.hero?.heading}
-              </h1>
-              <p
-                className="text-[16px] leading-[28px]"
-                style={{ color: "var(--color-hero-body)" }}
-              >
-                {data?.hero?.subtext}
-              </p>
-            </div>
+      <section className="about-hero">
+        <div className="about-hero-grid" />
+        <div className="about-hero-inner">
+          <div className="hero-chip-v2">
+            <span className="hero-chip-dot" />
+            <span className="hero-chip-label">{data?.hero?.badge}</span>
+          </div>
+          <div className="hero-figma-textblock">
+            <h1 className="hero-figma-h1">
+              {data?.hero?.heading}
+            </h1>
+            <p className="hero-figma-p">
+              {data?.hero?.subtext}
+            </p>
           </div>
           <AnimatedButton
             href={data?.hero?.buttonHref ?? "#"}
@@ -126,6 +93,16 @@ export default async function RfpPage() {
           >
             {data?.hero?.buttonText}
           </AnimatedButton>
+          <div className="about-globe-container">
+            <Image
+              src="/images/about-globe.svg"
+              alt="Blockmaze ecosystem globe"
+              width={950}
+              height={400}
+              className="about-globe-img"
+              priority
+            />
+          </div>
         </div>
       </section>
 
