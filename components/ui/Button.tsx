@@ -24,7 +24,7 @@ export default function Button({
   onClick,
   type = "button",
 }: ButtonProps) {
-  const base = "inline-flex items-center justify-center px-6 py-3 rounded-lg font-semibold text-sm transition-all duration-200";
+  const base = "inline-flex items-center justify-center px-6 py-3 rounded-lg font-semibold text-sm transition-all duration-200 cursor-pointer";
 
   const variants: Record<string, string> = {
     primary: "bg-primary text-white hover:opacity-90",
