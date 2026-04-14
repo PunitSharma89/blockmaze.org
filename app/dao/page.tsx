@@ -76,7 +76,7 @@ export default async function DAOPage() {
           />
         </div>
 
-        <div className="mx-auto w-[80%] max-w-[1440px] py-20 relative z-10 flex flex-col lg:flex-row items-center gap-[60px]">
+        <div className="mx-auto w-[100%] lg:w-[80%] max-w-[1440px] py-20 relative z-10 flex flex-col lg:flex-row items-center gap-[60px]">
           <div className="flex-1 flex flex-col gap-[40px]">
             <div className="flex flex-col gap-[16px]">
               {data?.hero?.badge && (

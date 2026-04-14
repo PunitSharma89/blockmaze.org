@@ -99,7 +99,7 @@ export default async function DelegatorPage() {
             className="object-fill"
           />
         </div>
-        <div className="mx-auto w-[80%] max-w-[1440px] py-20 relative z-10 flex flex-col lg:flex-row items-center gap-[60px]">
+        <div className="mx-auto w-[100%] lg:w-[80%] max-w-[1440px] py-20 relative z-10 flex flex-col lg:flex-row items-center gap-[60px]">
           <div className="flex-1 flex flex-col gap-[40px]">
             <div className="flex flex-col gap-[16px]">
               {data?.hero?.badge && (
@@ -191,7 +191,12 @@ export default async function DelegatorPage() {
                     className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0"
                     style={{ background: "rgba(255,176,30,0.1)" }}
                   >
-                    <Image src={b.iconPath} alt={b.title} width={30} height={30} />
+                    <Image
+                      src={b.iconPath}
+                      alt={b.title}
+                      width={30}
+                      height={30}
+                    />
                   </div>
                   <h4
                     className="text-[18px] font-semibold"
@@ -547,7 +552,12 @@ export default async function DelegatorPage() {
                       className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0"
                       style={{ background: "rgba(255,176,30,0.1)" }}
                     >
-                      <Image src={data.earningCard.iconPath} alt="" width={30} height={30} />
+                      <Image
+                        src={data.earningCard.iconPath}
+                        alt=""
+                        width={30}
+                        height={30}
+                      />
                     </div>
                   )}
                   <h4
@@ -605,7 +615,12 @@ export default async function DelegatorPage() {
                       className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0"
                       style={{ background: "rgba(255,176,30,0.1)" }}
                     >
-                      <Image src={data.unbondingCard.iconPath} alt="" width={30} height={30} />
+                      <Image
+                        src={data.unbondingCard.iconPath}
+                        alt=""
+                        width={30}
+                        height={30}
+                      />
                     </div>
                   )}
                   <h4
@@ -664,7 +679,12 @@ export default async function DelegatorPage() {
                     className="w-12 h-12 rounded-xl flex items-center justify-center mb-4"
                     style={{ background: "rgba(255,176,30,0.1)" }}
                   >
-                    <Image src={data.risksCard.iconPath} alt="" width={30} height={30} />
+                    <Image
+                      src={data.risksCard.iconPath}
+                      alt=""
+                      width={30}
+                      height={30}
+                    />
                   </div>
                 )}
                 <h4
