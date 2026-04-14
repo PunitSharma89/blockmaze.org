@@ -1,7 +1,7 @@
 import Image from "next/image";
+import Link from "next/link";
 import { Metadata } from "next";
 import Container from "@/components/layout/Container";
-import AnimatedButton from "@/components/ui/AnimatedButton";
 import SectionHeading from "@/components/ui/SectionHeading";
 import FAQ from "@/components/ui/FAQ";
 import { sanityFetch } from "@/lib/sanity";
@@ -87,12 +87,14 @@ export default async function RfpPage() {
               {data?.hero?.subtext}
             </p>
           </div>
-          <AnimatedButton
-            href={data?.hero?.buttonHref ?? "#"}
-            variant="primary"
-          >
-            {data?.hero?.buttonText}
-          </AnimatedButton>
+          <div className="hero-figma-btns">
+            <Link
+              href={data?.hero?.buttonHref ?? "#"}
+              className="hero-figma-btn-primary"
+            >
+              {data?.hero?.buttonText}
+            </Link>
+          </div>
           <div className="about-globe-container">
             <Image
               src="/images/about-globe.svg"
@@ -108,117 +110,39 @@ export default async function RfpPage() {
 
       {/* SECTION 2: About */}
       {data?.about && (
-        <section className="section-padding section-padding--lg bg-white">
-          <Container>
-            <div className="flex flex-col gap-4 items-center text-center w-full">
-              <span className="section-eyebrow">{data.about.eyebrow}</span>
-              <h2 className="section-heading">
-                {data.about.heading?.split(" ").slice(0, -1).join(" ")}{" "}
-                <span className="text-primary">
-                  {data.about.heading?.split(" ").slice(-1)[0]}
-                </span>
-              </h2>
-              <p className="section-subtext">{data.about.text}</p>
-            </div>
-          </Container>
-        </section>
-      )}
-
-      {/* SECTION 3: RFP Program Structure — dark */}
-      {(data?.programCards ?? []).length > 0 && (
-        <section className="distinguishes-section">
-          <Container>
-            <div className="distinguishes-inner">
-              <video
-                className="distinguishes-bg-video"
-                src="/images/bg-line-1.mp4"
-                autoPlay
-                loop
-                muted
-                playsInline
-              />
-              <div className="distinguishes-content">
-                <div className="distinguishes-heading">
-                  <span className="section-eyebrow section-eyebrow--dark">
-                    {data?.programSection?.eyebrow}
-                  </span>
-                  <h2 className="distinguishes-title">
-                    {data?.programSection?.heading}
-                  </h2>
-                </div>
-                <div className="distinguishes-cards">
-                  <div className="distinguishes-row">
-                    {data!.programCards!.map((card, idx) => (
-                      <div key={idx} className="distinguishes-card">
-                        <div className="distinguishes-card-body">
-                          <h4 className="distinguishes-card-title">
-                            {card.title}
-                          </h4>
-                          <p className="distinguishes-card-text">
-                            {card.description}
-                          </p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </Container>
-        </section>
-      )}
-
-      {/* SECTION 4: How the RFP Process Works */}
-      {processSteps.length > 0 && (
         <section className="section-padding bg-white">
           <Container>
             <SectionHeading
-              label={data?.processSection?.eyebrow}
-              heading={data?.processSection?.heading ?? ""}
+              heading={
+                <>
+                  {data.about.heading?.split(" ").slice(0, -1).join(" ")}{" "}
+                  <span className="text-primary">
+                    {data.about.heading?.split(" ").slice(-1)[0]}
+                  </span>
+                </>
+              }
+              subtext={data.about.text}
             />
-            <div className="flex flex-col gap-4">
-              {stepRows.map((row, rowIdx) => (
-                <div
-                  key={rowIdx}
-                  className="grid grid-cols-1 md:grid-cols-3 gap-4"
-                >
-                  {row.map((step, idx) => {
-                    const stepNum = rowIdx * 3 + idx + 1;
-                    return (
-                      <div
-                        key={idx}
-                        className="flex flex-col gap-3 p-6 rounded-[20px] transition-all duration-300 hover:-translate-y-1"
-                        style={{
-                          background: "var(--color-bg-default)",
-                          border: "1px solid var(--color-border-subtle)",
-                        }}
-                      >
-                        <div
-                          className="inline-flex items-center justify-center w-9 h-9 rounded-full text-sm font-bold flex-shrink-0"
-                          style={{
-                            background: "var(--color-primary)",
-                            color: "var(--color-dark)",
-                          }}
-                        >
-                          {stepNum}
-                        </div>
-                        <div className="flex flex-col gap-2">
-                          <h4
-                            className="text-[18px] font-medium leading-[1.4]"
-                            style={{ color: "var(--color-dark)" }}
-                          >
-                            {step.title}
-                          </h4>
-                          <p
-                            className="text-[16px] leading-[31px]"
-                            style={{ color: "var(--color-gray-body)" }}
-                          >
-                            {step.description}
-                          </p>
-                        </div>
-                      </div>
-                    );
-                  })}
+          </Container>
+        </section>
+      )}
+
+      {/* SECTION 3: RFP Program Structure */}
+      {(data?.programCards ?? []).length > 0 && (
+        <section className="section-padding rfp-howit-section">
+          <Container>
+            <SectionHeading
+              label={data?.programSection?.eyebrow}
+              heading={data?.programSection?.heading ?? ""}
+            />
+            <div className="rfp-howit-grid section-content-gap">
+              {data!.programCards!.map((card, idx) => (
+                <div key={idx} className="rfp-howit-card">
+                  <span className="rfp-howit-num">
+                    {String(idx + 1).padStart(2, "0")}
+                  </span>
+                  <h4 className="rfp-howit-title">{card.title}</h4>
+                  <p className="rfp-howit-desc">{card.description}</p>
                 </div>
               ))}
             </div>
@@ -226,109 +150,156 @@ export default async function RfpPage() {
         </section>
       )}
 
+      {/* SECTION 4: How the RFP Process Works */}
+      {processSteps.length > 0 && (
+        <section className="rfp-process-section">
+            <div className="rfp-process-box">
+              <div className="role-tabs-glow" aria-hidden="true" />
+              <div className="rfp-process-header">
+                {data?.processSection?.eyebrow && (
+                  <span className="rfp-process-chip">{data.processSection.eyebrow}</span>
+                )}
+                <h2 className="rfp-process-heading">{data?.processSection?.heading}</h2>
+              </div>
+              <div className="rfp-process-grid">
+                {stepRows.map((row, rowIdx) => (
+                  <div key={rowIdx} className="rfp-process-row">
+                    {row.map((step, idx) => {
+                      const stepNum = rowIdx * 3 + idx + 1;
+                      return (
+                        <div key={idx} className="rfp-process-cell">
+                          <div className="rfp-process-cell-top">
+                            <div className="rfp-process-icon">
+                              <span className="rfp-process-step-num">
+                                {String(stepNum).padStart(2, "0")}
+                              </span>
+                            </div>
+                            <h4 className="rfp-process-cell-title">{step.title}</h4>
+                          </div>
+                          <p className="rfp-process-cell-desc">{step.description}</p>
+                        </div>
+                      );
+                    })}
+                  </div>
+                ))}
+              </div>
+            </div>
+        </section>
+      )}
+
       {/* SECTION 5: Eligibility & Compliance */}
       {data?.eligibility && (
-        <section
-          className="section-padding"
-          style={{ background: "var(--color-surface)" }}
-        >
+        <section className="section-padding rfp-elig-section">
           <Container>
             <SectionHeading
               label={data.eligibility.eyebrow}
-              heading={data.eligibility.heading ?? ""}
+              heading={
+                <>
+                  {data.eligibility.heading?.split(" ").slice(0, -1).join(" ")}{" "}
+                  <span className="text-primary">
+                    {data.eligibility.heading?.split(" ").slice(-1)[0]}
+                  </span>
+                </>
+              }
               subtext={data.eligibility.subtext}
             />
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-4xl mx-auto items-start">
-              <div>
-                <h3
-                  className="text-[22px] font-semibold mb-6"
-                  style={{ color: "var(--color-dark)" }}
-                >
+            <div className="rfp-elig-cards section-content-gap">
+
+              {/* Eligibility card */}
+              <div className="rfp-elig-card rfp-elig-card--blue">
+                <h3 className="rfp-elig-card-heading">
                   {data.eligibility.eligibilityHeading}
                 </h3>
-                <div className="flex flex-col gap-3">
-                  {(data.eligibility.eligibilityItems ?? []).map(
-                    (item, idx) => (
-                      <div key={idx} className="flex items-start gap-3">
-                        <Image
-                          src="/images/about-arrow.svg"
-                          alt=""
-                          width={24}
-                          height={24}
-                        />
-                        <p className="break-words leading-relaxed">{item}</p>
-                      </div>
-                    ),
-                  )}
-                </div>
-              </div>
-              <div>
-                <h3
-                  className="text-[22px] font-semibold mb-6"
-                  style={{ color: "var(--color-dark)" }}
-                >
-                  {data.eligibility.complianceHeading}
-                </h3>
-                <div className="flex flex-col gap-3">
-                  {(data.eligibility.complianceItems ?? []).map((item, idx) => (
-                    <div key={idx} className="about-card-bullet">
+                <div className="rfp-elig-items">
+                  {(data.eligibility.eligibilityItems ?? []).map((item, idx) => (
+                    <div key={idx} className="rfp-elig-item">
                       <Image
                         src="/images/about-arrow.svg"
                         alt=""
                         width={24}
                         height={24}
+                        className="rfp-elig-item-icon"
                       />
-                      <p>{item}</p>
+                      <p className="rfp-elig-item-text">{item}</p>
                     </div>
                   ))}
                 </div>
               </div>
+
+              {/* Compliance card */}
+              <div className="rfp-elig-card rfp-elig-card--warm">
+                <h3 className="rfp-elig-card-heading">
+                  {data.eligibility.complianceHeading}
+                </h3>
+                <div className="rfp-elig-items">
+                  {(data.eligibility.complianceItems ?? []).map((item, idx) => (
+                    <div key={idx} className="rfp-elig-item">
+                      <Image
+                        src="/images/about-arrow.svg"
+                        alt=""
+                        width={24}
+                        height={24}
+                        className="rfp-elig-item-icon"
+                      />
+                      <p className="rfp-elig-item-text">{item}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
             </div>
           </Container>
         </section>
       )}
 
-      {/* SECTION 6: Evaluation Criteria — dark */}
+      {/* SECTION 6: Evaluation Criteria */}
       {data?.evaluation && (
-        <section className="section-padding">
+        <section className="section-padding bg-white">
           <Container>
-            <div className="distinguishes-inner">
-              <video
-                className="distinguishes-bg-video"
-                src="/images/bg-line-1.mp4"
-                autoPlay
-                loop
-                muted
-                playsInline
-              />
-              <div className="distinguishes-content">
-                <div className="distinguishes-heading">
-                  <span className="section-eyebrow section-eyebrow--dark">
-                    {data.evaluation.eyebrow}
-                  </span>
-                  <h2 className="distinguishes-title">
-                    {data.evaluation.heading}
-                  </h2>
-                  <p className="distinguishes-subtext">
-                    {data.evaluation.subtext}
-                  </p>
-                </div>
-                <div className="flex flex-wrap justify-center gap-3 max-w-4xl">
-                  {(data.evaluation.criteria ?? []).map((criteria, idx) => (
-                    <span
-                      key={idx}
-                      className="inline-flex items-center px-6 py-3 rounded-full text-sm font-medium"
-                      style={{
-                        background: "rgba(255,176,30,0.12)",
-                        border: "1px solid var(--color-primary)",
-                        color: "var(--color-primary)",
-                      }}
-                    >
-                      {criteria}
-                    </span>
-                  ))}
-                </div>
+            <div className="vision-layout">
+
+              {/* Left — dark image card */}
+              <div className="vision-img-card">
+                <Image
+                  src="/images/long.svg"
+                  alt="Evaluation Criteria"
+                  width={556}
+                  height={531}
+                  className="vision-img"
+                />
               </div>
+
+              {/* Right — text + criteria list */}
+              <div className="vision-content">
+                <div className="vision-text-block">
+                  {data.evaluation.eyebrow && (
+                    <span className="section-eyebrow">{data.evaluation.eyebrow}</span>
+                  )}
+                  <h2 className="vision-title">
+                    {data.evaluation.heading?.split(" ").slice(0, -1).join(" ")}{" "}
+                    <span className="text-primary">
+                      {data.evaluation.heading?.split(" ").slice(-1)[0]}
+                    </span>
+                  </h2>
+                  {data.evaluation.subtext && (
+                    <p className="vision-desc">{data.evaluation.subtext}</p>
+                  )}
+                </div>
+                <ul className="vision-list">
+                  {(data.evaluation.criteria ?? []).map((criterion, idx) => (
+                    <li key={idx} className="vision-item">
+                      <span className="vision-item-icon">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <circle cx="10" cy="10" r="9" stroke="#ffb01e" strokeWidth="1.5"/>
+                          <path d="M6.5 10L9 12.5L13.5 7.5" stroke="#ffb01e" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                      </span>
+                      <span>{criterion}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
             </div>
           </Container>
         </section>
@@ -343,17 +314,9 @@ export default async function RfpPage() {
               heading={data.transparency.heading ?? ""}
               subtext={data.transparency.subtext}
             />
-            <div className="flex flex-wrap justify-center gap-4 max-w-4xl mx-auto">
+            <div className="feature-pills-wrap section-content-gap">
               {(data.transparency.features ?? []).map((feature, idx) => (
-                <span
-                  key={idx}
-                  className="inline-flex items-center px-6 py-3 rounded-full text-sm font-medium"
-                  style={{
-                    background: "var(--color-bg-default)",
-                    border: "1px solid var(--color-border-default)",
-                    color: "var(--color-gray-DEFAULT)",
-                  }}
-                >
+                <span key={idx} className="feature-pill">
                   {feature}
                 </span>
               ))}
@@ -370,7 +333,7 @@ export default async function RfpPage() {
               label={data?.faqSection?.eyebrow}
               heading={data?.faqSection?.heading ?? ""}
             />
-            <div className="flex flex-col lg:flex-row gap-12 items-start">
+            <div className="flex flex-col lg:flex-row gap-12 items-start faq-grid-gap">
               <div className="lg:w-5/12">
                 <Image
                   src="/images/faq-img.png"
