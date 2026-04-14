@@ -307,11 +307,7 @@ export default async function Home() {
             label={data?.faqSection?.eyebrow ?? "FAQ"}
             heading={data?.faqSection?.heading ?? "Frequently Asked Questions"}
           />
-<<<<<<< HEAD
-          <div className="flex flex-col lg:flex-row gap-12 items-center">
-=======
           <div className="flex flex-col lg:flex-row gap-12 items-center mt-12 ">
->>>>>>> ac39c3918b87199c12e5de3631f21f34d8e08967
             <div className="lg:w-5/12">
               <Image
                 src="/images/faq-img.png"
