@@ -366,7 +366,7 @@ export default async function Home() {
       {/* SECTION 8: Documentation & Resources */}
       <section className="section-padding bg-white">
         <Container>
-          <div className="docs-banner">
+          <div className="docs-banner columnReverse">
             <div className="docs-banner-content">
               <h2 className="docs-banner-title">
                 {data?.docsBanner?.title ??
@@ -432,7 +432,7 @@ export default async function Home() {
             label={data?.faqSection?.eyebrow ?? "FAQ"}
             heading={data?.faqSection?.heading ?? "Frequently Asked Questions"}
           />
-          <div className="flex flex-col lg:flex-row gap-12 items-center">
+          <div className="flex flex-col lg:flex-row gap-12 items-center mt-12 ">
             <div className="lg:w-5/12">
               <Image
                 src="/images/faq-img.png"

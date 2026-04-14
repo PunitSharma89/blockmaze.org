@@ -97,12 +97,14 @@ export default function FoundationScroller() {
 
   const N       = STEPS.length;
   const managed = N - 1;
-  // The wrapper height controls how much scroll distance the sticky section occupies
+  // The wrapper height controls how much scroll distance the sticky section occupies.
+  // On mobile (< 768px) GSAP is skipped, so wrapper height must be "auto" — no tall spacer.
   const wrapperHeight = `${(managed + 1.2) * 100}vh`;
 
   return (
-    // Tall wrapper — consumes scroll space so the sticky section pins naturally
-    <div ref={wrapperRef} style={{ height: wrapperHeight }}>
+    // Tall wrapper — consumes scroll space so the sticky section pins naturally.
+    // On mobile the CSS class "foundation-scroller-wrap--mobile" overrides to height:auto.
+    <div ref={wrapperRef} className="foundation-scroller-wrap" style={{ height: wrapperHeight }}>
       {/* CSS sticky — stays at top:0 while wrapper is in viewport */}
       <section
         ref={sectionRef}

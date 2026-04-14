@@ -91,7 +91,6 @@ export default function ContactForm() {
     }
   };
 
-  // ✅ Input styles (with error border)
   const inputClass = (field: string) =>
     `w-full px-4 py-3 border rounded-lg outline-none focus:ring-0 ${
       errors[field] ? "border-red-500" : "border-gray-200"
@@ -99,14 +98,11 @@ export default function ContactForm() {
 
   return (
     <form onSubmit={handleSubmit} noValidate className="space-y-6">
-      {/* ✅ Success */}
       {status === "success" && (
         <div className="p-3 border border-green-500 text-green-600 rounded">
           Thank you! Your message has been sent.
         </div>
       )}
-
-      {/* ❌ Error */}
       {status === "error" && (
         <div className="p-3 border border-red-500 text-red-600 rounded">
           Something went wrong. Please try again.

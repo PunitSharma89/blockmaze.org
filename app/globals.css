@@ -173,7 +173,9 @@ nav button.nav-link {
   cursor: pointer;
   white-space: nowrap;
   text-decoration: none;
-  transition: color 0.2s ease, border-color 0.2s ease;
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease;
 }
 
 nav a.nav-link:hover,
@@ -1341,8 +1343,8 @@ img {
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+    linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
   background-size: 60px 60px;
   pointer-events: none;
   z-index: 0;
@@ -1352,7 +1354,11 @@ img {
 .role-tabs-glow {
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse 70% 50% at 50% 0%, rgba(255,176,30,0.18) 0%, transparent 65%);
+  background: radial-gradient(
+    ellipse 70% 50% at 50% 0%,
+    rgba(255, 176, 30, 0.18) 0%,
+    transparent 65%
+  );
   pointer-events: none;
   z-index: 0;
 }
@@ -1404,7 +1410,10 @@ img {
   cursor: pointer;
   background: var(--color-white);
   color: #131315;
-  transition: background 0.2s ease, color 0.2s ease, transform 0.15s ease;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    transform 0.15s ease;
 }
 
 .role-tab-btn:hover:not(.role-tab-btn--active) {
@@ -1447,7 +1456,7 @@ img {
   font-size: 15px;
   font-weight: 400;
   line-height: 24px;
-  color: rgba(255,255,255,0.75);
+  color: rgba(255, 255, 255, 0.75);
 }
 
 /* Image fills the bottom portion of the center card */
@@ -2458,8 +2467,16 @@ img {
     linear-gradient(to right, #f3eee8 1px, transparent 1px),
     linear-gradient(to bottom, #f3eee8 1px, transparent 1px);
   background-size: 20px 30px;
-  -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 0%, #000 60%, transparent 100%);
-  mask-image: radial-gradient(ellipse 70% 60% at 50% 0%, #000 60%, transparent 100%);
+  -webkit-mask-image: radial-gradient(
+    ellipse 70% 60% at 50% 0%,
+    #000 60%,
+    transparent 100%
+  );
+  mask-image: radial-gradient(
+    ellipse 70% 60% at 50% 0%,
+    #000 60%,
+    transparent 100%
+  );
   pointer-events: none;
 }
 
@@ -2488,7 +2505,6 @@ img {
   height: auto;
   display: block;
 }
-
 
 /* ── Foundation Scroller ─────────────────────────────────────────────── */
 
@@ -2551,7 +2567,7 @@ img {
    width = 5 × 360px = 1800px → spans step-0 center to step-5 center.       */
 .foundation-track {
   position: absolute;
-  top: 14px;          /* (32px node height − 4px track height) / 2 */
+  top: 14px; /* (32px node height − 4px track height) / 2 */
   left: calc(10vw + 150px);
   width: 1800px;
   right: auto;
@@ -2632,9 +2648,15 @@ img {
   background: var(--color-primary);
   border-color: var(--color-primary);
 }
-.foundation-step:first-child .foundation-step-dot  { opacity: 0; }
-.foundation-step:first-child .foundation-step-check { opacity: 1; }
-.foundation-step:first-child .foundation-step-label { opacity: 1; }
+.foundation-step:first-child .foundation-step-dot {
+  opacity: 0;
+}
+.foundation-step:first-child .foundation-step-check {
+  opacity: 1;
+}
+.foundation-step:first-child .foundation-step-label {
+  opacity: 1;
+}
 
 /* Step labels */
 .foundation-step-label {
@@ -2689,7 +2711,9 @@ img {
     margin-left: -17px;
   }
 
-  .foundation-step:last-child { padding-bottom: 0; }
+  .foundation-step:last-child {
+    padding-bottom: 0;
+  }
 
   /* All steps shown active on mobile */
   .foundation-step-node {
@@ -2700,8 +2724,12 @@ img {
     transform: none !important;
   }
 
-  .foundation-step-dot  { opacity: 0 !important; }
-  .foundation-step-check { opacity: 1 !important; }
+  .foundation-step-dot {
+    opacity: 0 !important;
+  }
+  .foundation-step-check {
+    opacity: 1 !important;
+  }
 
   .foundation-step-label {
     opacity: 1 !important;
@@ -2929,7 +2957,7 @@ img {
     border-right: 1px solid #fdeccd;
   }
   /* All except last 2 */
-  .eco-card:not(:nth-last-child(-n+2)) {
+  .eco-card:not(:nth-last-child(-n + 2)) {
     border-bottom: 1px solid #fdeccd;
   }
   /* Last item if odd total — no right border */
@@ -3005,7 +3033,9 @@ img {
 }
 
 .vision-img-card:hover {
-  box-shadow: 0 0 0 2px rgba(255,176,30,0.35), 0 24px 48px rgba(0,0,0,0.18);
+  box-shadow:
+    0 0 0 2px rgba(255, 176, 30, 0.35),
+    0 24px 48px rgba(0, 0, 0, 0.18);
 }
 
 .vision-img {
@@ -3061,12 +3091,14 @@ img {
   color: #010304;
   padding: 8px 12px;
   border-radius: 8px;
-  transition: background 0.2s ease, transform 0.2s ease;
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
   cursor: default;
 }
 
 .vision-item:hover {
-  background: rgba(255,176,30,0.06);
+  background: rgba(255, 176, 30, 0.06);
   transform: translateX(4px);
 }
 
@@ -3078,16 +3110,6 @@ img {
 }
 
 /* Responsive */
-@media (max-width: 1080px) {
-  .vision-layout {
-    flex-direction: column;
-    gap: 48px;
-  }
-  .vision-img-card {
-    width: 100%;
-    height: 360px;
-  }
-}
 
 @media (max-width: 600px) {
   .vision-title {
@@ -3111,8 +3133,8 @@ img {
 
 /* Team section */
 .about-team-grid {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 30px;
   justify-content: center;
   margin-top: 60px;
@@ -3126,7 +3148,7 @@ img {
   display: flex;
   flex-direction: column;
   gap: 34px;
-  width: 460px;
+  width: 100%;
   flex-shrink: 0;
   transition:
     transform 0.3s ease,
@@ -3136,7 +3158,7 @@ img {
 
 .about-team-card:hover {
   transform: translateY(-6px);
-  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.10);
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.1);
   border-color: rgba(255, 176, 30, 0.4);
 }
 
@@ -3969,4 +3991,3 @@ img {
     gap: 32px;
   }
 }
-

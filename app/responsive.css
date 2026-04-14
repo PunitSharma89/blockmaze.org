@@ -1,4 +1,10 @@
 @media (max-width: 1499px) {
+  .vision-img-card {
+    width: 450px;
+  }
+  .role-tabs-card {
+    padding: 80px 70px;
+  }
   .footer .footer-inner .footer-brand {
     max-width: 60%;
   }
@@ -33,6 +39,18 @@
 }
 
 @media (max-width: 1024px) {
+  .vision-layout {
+    flex-direction: column;
+    gap: 16px;
+    padding: 0px;
+  }
+  .vision-img-card {
+    width: 100%;
+    height: 360px;
+  }
+  .vision-content {
+    gap: 16px;
+  }
   .hero-globe {
     width: 900px !important;
     max-width: 900px !important;
@@ -94,6 +112,60 @@
   .hero-deco--2,
   .hero-deco--3 {
     display: none;
+  }
+
+  /* Foundation Scroller — disable horizontal scroll on tablet */
+  .foundation-scroller-wrap {
+    height: auto;
+  }
+  .foundation-scroller {
+    position: relative;
+    top: auto;
+    height: auto;
+    overflow: visible;
+    padding-bottom: 40px;
+  }
+  .foundation-timeline-outer {
+    overflow: visible;
+  }
+  .foundation-timeline-inner {
+    transform: none;
+    width: 100%;
+    flex-direction: column;
+    padding: 0 24px;
+  }
+  .foundation-track {
+    display: none;
+  }
+  .foundation-steps {
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+  }
+  .foundation-step {
+    width: 100%;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  .foundation-step-node {
+    flex-shrink: 0;
+    background-color: #ffb01e;
+    border-color: #ffb01e;
+    scale: 1;
+  }
+  .foundation-step-dot {
+    display: none;
+  }
+  .foundation-step-check {
+    opacity: 1;
+  }
+  .foundation-step-label {
+    opacity: 1;
+    padding-top: 6px;
+  }
+  .foundation-header-wrap {
+    padding-bottom: 32px;
   }
 
   /* About section */
@@ -158,11 +230,119 @@
 }
 
 @media (max-width: 767px) {
+  .accountability-model-visual {
+    display: none;
+  }
+  .role-tabs-col {
+    display: flex;
+  }
+  .about-acc-card--active .about-acc-body,
+  .about-card-bullets {
+    gap: 16px;
+  }
+  .problem-slider-card-body {
+    padding: 16px;
+  }
+  .role-tabs-card {
+    padding: 40px 16px;
+  }
+  .problem-slider-card-img {
+    display: none;
+  }
+  .about-team-grid {
+    margin-top: 20px;
+  }
+  .eco-cards-grid {
+    margin-top: 0px;
+  }
+  .eco-card {
+    padding: 15px 0;
+  }
+  .foundation-timeline-outer {
+    padding: 0 16px;
+  }
+  .role-tabs-section {
+    padding: 48px 16px;
+  }
+  .foundation-scroller {
+    gap: 16px;
+  }
+  .about-team-card {
+    padding: 16px;
+  }
+  body p,
+  body li {
+    font-size: 15px !important;
+    line-height: 26px !important;
+  }
+  .vision-list {
+    gap: 0;
+  }
+  .vision-list .vision-item {
+    padding: 5px 0;
+  }
+  .foundation-scroller-wrap {
+    height: auto;
+  }
+  .foundation-scroller {
+    position: relative;
+    top: auto;
+    height: auto;
+    overflow: visible;
+    padding-bottom: 40px;
+  }
+  .foundation-timeline-outer {
+    overflow: visible;
+  }
+  .foundation-timeline-inner {
+    transform: none;
+    width: 100%;
+    flex-direction: column;
+    padding: 0 16px;
+  }
+  .foundation-track {
+    display: none;
+  }
+  .foundation-steps {
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+  }
+  .foundation-step {
+    width: 100%;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 14px;
+  }
+  .foundation-step-node {
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    background-color: #ffb01e;
+    border-color: #ffb01e;
+    scale: 1;
+  }
+  .foundation-step-dot {
+    display: none;
+  }
+  .foundation-step-check {
+    opacity: 1;
+  }
+  .foundation-step-label {
+    opacity: 1;
+    font-size: 14px;
+    line-height: 22px;
+    padding-top: 6px;
+  }
+  .foundation-header-wrap {
+    padding-bottom: 24px;
+  }
+
   .hero-globe {
-    width: 600px !important;
-    max-width: 600px !important;
-    height: 600px !important;
-    inset: auto auto -340px 50% !important;
+    width: 600px;
+    max-width: 600px;
+    height: 600px;
+    inset: auto auto -340px 50%;
   }
   .accountability-item {
     flex-direction: row-reverse;
@@ -312,6 +492,7 @@
   }
   .about-acc-card {
     padding: 20px 16px;
+    border-radius: 12px;
   }
   .about-acc-title {
     font-size: 22px;
@@ -389,8 +570,9 @@
     font-size: 13px;
     line-height: 22px;
   }
-
-  /* Docs banner */
+  .docs-banner.columnReverse {
+    flex-direction: column-reverse;
+  }
   .docs-banner {
     flex-direction: column;
     text-align: center;
