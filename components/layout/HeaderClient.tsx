@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import Navbar from "@/components/navigation/Navbar";
@@ -27,10 +28,15 @@ interface HeaderClientProps {
 
 export default function HeaderClient({ logoAlt, navItems }: HeaderClientProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const pathname = usePathname();
+
+  useEffect(() => {
+    setMobileMenuOpen(false);
+  }, [pathname]);
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 header-white">
-      <div className="mx-auto px-4 lg:px-0 lg:w-[80%] max-w-[1596px] flex items-center justify-between h-[71px]">
+      <div className="mx-auto px-4 xl:px-0 xl:w-[80%] max-w-[1596px] flex items-center justify-between h-[71px]">
         {/* Logo */}
         <Link href="/" className="flex items-center flex-shrink-0">
           <Image
