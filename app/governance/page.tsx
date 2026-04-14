@@ -522,55 +522,47 @@ export default async function GovernancePage() {
         </section>
       )}
 
-      {/* 3 ── ROLE CARDS — dark */}
+      {/* 3 ── ROLE CARDS — surface */}
       {roles.length > 0 && (
-        <section className="distinguishes-section">
+        <section
+          className="section-padding"
+          style={{ background: "var(--color-surface)" }}
+        >
           <Container>
-            <div className="distinguishes-inner">
-              <video
-                className="distinguishes-bg-video"
-                src="/images/bg-line-1.mp4"
-                autoPlay
-                loop
-                muted
-                playsInline
-              />
-              <div className="distinguishes-content">
-                <div className="distinguishes-heading">
-                  <span className="section-eyebrow section-eyebrow--dark">
-                    {data?.rolesSection?.eyebrow}
-                  </span>
-                  <h2 className="distinguishes-title">
-                    {data?.rolesSection?.heading}
-                  </h2>
+            <SectionHeading
+              label={data?.rolesSection?.eyebrow}
+              heading={data?.rolesSection?.heading ?? ""}
+            />
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {roles.map((r) => (
+                <div
+                  key={r.title}
+                  className="flex flex-col gap-3 p-6 rounded-[20px] transition-all duration-300 hover:-translate-y-1"
+                  style={{
+                    background: "var(--color-white)",
+                    border: "1px solid var(--color-border-subtle)",
+                  }}
+                >
+                  <div
+                    className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0"
+                    style={{ background: "rgba(255,176,30,0.1)" }}
+                  >
+                    <RoleIcon iconKey={r.iconKey} size={24} />
+                  </div>
+                  <h4
+                    className="text-[18px] font-semibold"
+                    style={{ color: "var(--color-dark)" }}
+                  >
+                    {r.title}
+                  </h4>
+                  <p
+                    className="text-[15px] leading-[28px]"
+                    style={{ color: "var(--color-gray-body)" }}
+                  >
+                    {r.description}
+                  </p>
                 </div>
-                <div className="distinguishes-cards">
-                  {[roles.slice(0, 3), roles.slice(3, 6)]
-                    .filter((r) => r.length > 0)
-                    .map((row, rowIdx) => (
-                      <div key={rowIdx} className="distinguishes-row">
-                        {row.map((r) => (
-                          <div key={r.title} className="distinguishes-card">
-                            <div
-                              className="flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center"
-                              style={{ background: "rgba(255,176,30,0.12)" }}
-                            >
-                              <RoleIcon iconKey={r.iconKey} size={22} />
-                            </div>
-                            <div className="distinguishes-card-body">
-                              <h4 className="distinguishes-card-title">
-                                {r.title}
-                              </h4>
-                              <p className="distinguishes-card-text">
-                                {r.description}
-                              </p>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    ))}
-                </div>
-              </div>
+              ))}
             </div>
           </Container>
         </section>
@@ -785,55 +777,47 @@ export default async function GovernancePage() {
         </section>
       )}
 
-      {/* 8 ── GET INVOLVED — dark */}
+      {/* 8 ── GET INVOLVED — surface */}
       {getInvolved.length > 0 && (
-        <section className="distinguishes-section">
+        <section
+          className="section-padding"
+          style={{ background: "var(--color-surface)" }}
+        >
           <Container>
-            <div className="distinguishes-inner">
-              <video
-                className="distinguishes-bg-video"
-                src="/images/bg-line-1.mp4"
-                autoPlay
-                loop
-                muted
-                playsInline
-              />
-              <div className="distinguishes-content">
-                <div className="distinguishes-heading">
-                  <span className="section-eyebrow section-eyebrow--dark">
-                    {data?.getInvolvedSection?.eyebrow}
-                  </span>
-                  <h2 className="distinguishes-title">
-                    {data?.getInvolvedSection?.heading}
-                  </h2>
+            <SectionHeading
+              label={data?.getInvolvedSection?.eyebrow}
+              heading={data?.getInvolvedSection?.heading ?? ""}
+            />
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {getInvolved.map((g) => (
+                <div
+                  key={g.title}
+                  className="flex flex-col gap-3 p-6 rounded-[20px] transition-all duration-300 hover:-translate-y-1"
+                  style={{
+                    background: "var(--color-white)",
+                    border: "1px solid var(--color-border-subtle)",
+                  }}
+                >
+                  <div
+                    className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0"
+                    style={{ background: "rgba(255,176,30,0.1)" }}
+                  >
+                    <RoleIcon iconKey={g.iconKey} size={24} />
+                  </div>
+                  <h4
+                    className="text-[18px] font-semibold"
+                    style={{ color: "var(--color-dark)" }}
+                  >
+                    {g.title}
+                  </h4>
+                  <p
+                    className="text-[15px] leading-[28px]"
+                    style={{ color: "var(--color-gray-body)" }}
+                  >
+                    {g.description}
+                  </p>
                 </div>
-                <div className="distinguishes-cards">
-                  {[getInvolved.slice(0, 3), getInvolved.slice(3, 6)]
-                    .filter((r) => r.length > 0)
-                    .map((row, rowIdx) => (
-                      <div key={rowIdx} className="distinguishes-row">
-                        {row.map((g) => (
-                          <div key={g.title} className="distinguishes-card">
-                            <div
-                              className="flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center"
-                              style={{ background: "rgba(255,176,30,0.12)" }}
-                            >
-                              <RoleIcon iconKey={g.iconKey} size={22} />
-                            </div>
-                            <div className="distinguishes-card-body">
-                              <h4 className="distinguishes-card-title">
-                                {g.title}
-                              </h4>
-                              <p className="distinguishes-card-text">
-                                {g.description}
-                              </p>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    ))}
-                </div>
-              </div>
+              ))}
             </div>
           </Container>
         </section>
