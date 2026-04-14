@@ -111,6 +111,34 @@ export default defineType({
       fields: [defineField({ name: "alt", title: "Alt Text", type: "string" })],
     }),
 
+    /* ── Token Allocation Breakdown & Purpose ── */
+    defineField({
+      name: "breakdownSection",
+      title: "Token Allocation Breakdown & Purpose — Section Header",
+      type: "object",
+      fields: [
+        defineField({ name: "eyebrow", title: "Eyebrow Label", type: "string" }),
+        defineField({ name: "heading", title: "Heading", type: "string" }),
+        defineField({ name: "subtext", title: "Subtext", type: "text", rows: 2 }),
+      ],
+    }),
+    defineField({
+      name: "breakdownItems",
+      title: "Breakdown Items",
+      type: "array",
+      of: [
+        defineArrayMember({
+          type: "object",
+          fields: [
+            defineField({ name: "category", title: "Category Name", type: "string" }),
+            defineField({ name: "pct", title: "Allocation %", type: "string" }),
+            defineField({ name: "purpose", title: "Purpose / Description", type: "text", rows: 3 }),
+          ],
+          preview: { select: { title: "category", subtitle: "pct" } },
+        }),
+      ],
+    }),
+
     /* ── Locking & Vesting ── */
     defineField({
       name: "lockingSection",

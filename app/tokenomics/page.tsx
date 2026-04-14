@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import Container from "@/components/layout/Container";
-import AnimatedButton from "@/components/ui/AnimatedButton";
 import SectionHeading from "@/components/ui/SectionHeading";
 import { sanityFetch } from "@/lib/sanity";
 import { tokenomicsPageQuery } from "@/lib/queries";
@@ -44,6 +44,8 @@ interface TokenomicsData {
     vesting: string;
   }[];
   allocationChartImage?: { asset?: { url: string }; alt?: string };
+  breakdownSection?: { eyebrow?: string; heading?: string; subtext?: string };
+  breakdownItems?: { category: string; pct: string; purpose: string }[];
   lockingSection?: { eyebrow?: string; heading?: string; subtext?: string };
   lockingCards?: { title: string; description: string }[];
 }
@@ -57,103 +59,332 @@ export default async function TokenomicsPage() {
   const tokenAllocation = data?.tokenAllocation ?? [];
   const lockingCards = data?.lockingCards ?? [];
 
+  const breakdownIcons = [
+    /* Founders / genesis — rocket */
+    <svg
+      key="0"
+      width="44"
+      height="44"
+      viewBox="0 0 44 44"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M22 6C22 6 30 10 30 22C30 28 26 34 22 38C18 34 14 28 14 22C14 10 22 6 22 6Z"
+        stroke="#ffb01e"
+        strokeWidth="2"
+        strokeLinejoin="round"
+      />
+      <circle cx="22" cy="22" r="3" stroke="#ffb01e" strokeWidth="2" />
+      <path
+        d="M14 28L8 34M30 28L36 34"
+        stroke="#ffb01e"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+      />
+    </svg>,
+    /* Community — people */
+    <svg
+      key="1"
+      width="44"
+      height="44"
+      viewBox="0 0 44 44"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <circle cx="22" cy="14" r="5" stroke="#ffb01e" strokeWidth="2" />
+      <path
+        d="M10 36C10 29.4 15.4 24 22 24C28.6 24 34 29.4 34 36"
+        stroke="#ffb01e"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
+      <circle cx="10" cy="16" r="3.5" stroke="#ffb01e" strokeWidth="1.6" />
+      <path
+        d="M4 32C4 27.6 6.7 24 10 24"
+        stroke="#ffb01e"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+      />
+      <circle cx="34" cy="16" r="3.5" stroke="#ffb01e" strokeWidth="1.6" />
+      <path
+        d="M40 32C40 27.6 37.3 24 34 24"
+        stroke="#ffb01e"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+      />
+    </svg>,
+    /* Institution / building */
+    <svg
+      key="2"
+      width="44"
+      height="44"
+      viewBox="0 0 44 44"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <rect
+        x="8"
+        y="18"
+        width="28"
+        height="20"
+        rx="2"
+        stroke="#ffb01e"
+        strokeWidth="2"
+      />
+      <path
+        d="M6 18L22 6L38 18"
+        stroke="#ffb01e"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <rect
+        x="18"
+        y="28"
+        width="8"
+        height="10"
+        rx="1"
+        stroke="#ffb01e"
+        strokeWidth="1.8"
+      />
+      <rect
+        x="12"
+        y="22"
+        width="5"
+        height="5"
+        rx="1"
+        stroke="#ffb01e"
+        strokeWidth="1.6"
+      />
+      <rect
+        x="27"
+        y="22"
+        width="5"
+        height="5"
+        rx="1"
+        stroke="#ffb01e"
+        strokeWidth="1.6"
+      />
+    </svg>,
+    /* Ecosystem / network tree */
+    <svg
+      key="3"
+      width="44"
+      height="44"
+      viewBox="0 0 44 44"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <circle cx="22" cy="8" r="5" stroke="#ffb01e" strokeWidth="2" />
+      <circle cx="8" cy="36" r="5" stroke="#ffb01e" strokeWidth="2" />
+      <circle cx="36" cy="36" r="5" stroke="#ffb01e" strokeWidth="2" />
+      <line x1="22" y1="13" x2="8" y2="31" stroke="#ffb01e" strokeWidth="1.8" />
+      <line
+        x1="22"
+        y1="13"
+        x2="36"
+        y2="31"
+        stroke="#ffb01e"
+        strokeWidth="1.8"
+      />
+      <line
+        x1="13"
+        y1="36"
+        x2="31"
+        y2="36"
+        stroke="#ffb01e"
+        strokeWidth="1.8"
+      />
+    </svg>,
+    /* Shield / validator */
+    <svg
+      key="4"
+      width="44"
+      height="44"
+      viewBox="0 0 44 44"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M22 4L6 10V22C6 31 14 38 22 40C30 38 38 31 38 22V10L22 4Z"
+        stroke="#ffb01e"
+        strokeWidth="2"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M15 22L19.5 27L29 17"
+        stroke="#ffb01e"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>,
+    /* Liquidity / waves */
+    <svg
+      key="5"
+      width="44"
+      height="44"
+      viewBox="0 0 44 44"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M6 18C10 14 14 22 18 18C22 14 26 22 30 18C34 14 38 18 38 18"
+        stroke="#ffb01e"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
+      <path
+        d="M6 26C10 22 14 30 18 26C22 22 26 30 30 26C34 22 38 26 38 26"
+        stroke="#ffb01e"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
+      <circle cx="22" cy="10" r="4" stroke="#ffb01e" strokeWidth="1.8" />
+      <line
+        x1="22"
+        y1="14"
+        x2="22"
+        y2="18"
+        stroke="#ffb01e"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+      />
+    </svg>,
+    /* Chart / investors */
+    <svg
+      key="6"
+      width="44"
+      height="44"
+      viewBox="0 0 44 44"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <rect
+        x="4"
+        y="6"
+        width="36"
+        height="28"
+        rx="4"
+        stroke="#ffb01e"
+        strokeWidth="2"
+      />
+      <line x1="4" y1="14" x2="40" y2="14" stroke="#ffb01e" strokeWidth="1.6" />
+      <circle cx="9" cy="10" r="1.5" fill="#ffb01e" />
+      <circle cx="14" cy="10" r="1.5" fill="#ffb01e" />
+      <path
+        d="M10 26L16 20L22 24L32 16"
+        stroke="#ffb01e"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <line
+        x1="16"
+        y1="38"
+        x2="28"
+        y2="38"
+        stroke="#ffb01e"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
+      <line
+        x1="22"
+        y1="34"
+        x2="22"
+        y2="38"
+        stroke="#ffb01e"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
+    </svg>,
+    /* Token / hexagon */
+    <svg
+      key="7"
+      width="44"
+      height="44"
+      viewBox="0 0 44 44"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M22 4L36 12V28L22 36L8 28V12L22 4Z"
+        stroke="#ffb01e"
+        strokeWidth="2"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M18 20H26M18 24H26"
+        stroke="#ffb01e"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+      />
+      <path
+        d="M20 17V27M24 17V27"
+        stroke="#ffb01e"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+      />
+    </svg>,
+  ];
+
   return (
     <>
       {/* 1 ── HERO */}
-      <section
-        className="relative overflow-hidden flex items-center"
-        style={{
-          minHeight: "500px",
-          background:
-            "linear-gradient(to left, var(--color-header-navy), var(--color-header-dark) 49%)",
-        }}
-      >
-        <div className="hero-bg-grid">
-          <Image
-            src="/images/hero-bg-grid.svg"
-            alt=""
-            fill
-            className="object-fill"
-          />
-        </div>
-        <div className="mx-auto w-[100%] lg:w-[80%] max-w-[1440px] py-20 relative z-10 flex flex-col lg:flex-row items-center gap-[60px]">
-          <div className="flex-1 flex flex-col gap-[40px]">
-            <div className="flex flex-col gap-[16px]">
-              {data?.hero?.badge && (
-                <div
-                  className="inline-flex w-fit items-center justify-center px-[16px] py-[12px] rounded-[999px] border"
-                  style={{
-                    borderColor: "var(--color-chip-border)",
-                    background: "var(--color-chip-bg)",
-                  }}
-                >
-                  <span
-                    className="text-[14px] font-medium tracking-[-0.28px] whitespace-nowrap"
-                    style={{ color: "var(--color-primary)" }}
-                  >
-                    {data.hero.badge}
-                  </span>
-                </div>
-              )}
-              <div className="flex flex-col gap-[16px]">
-                <h1
-                  className="font-bold text-[46px] leading-[62px]"
-                  style={{ color: "var(--color-white)" }}
-                >
-                  {data?.hero?.heading}
-                </h1>
-                {data?.hero?.subheading && (
-                  <h2
-                    className="text-[22px] font-medium leading-[34px]"
-                    style={{ color: "var(--color-primary)" }}
-                  >
-                    {data.hero.subheading}
-                  </h2>
-                )}
-                {data?.hero?.bodyText && (
-                  <p
-                    className="text-[16px] leading-[28px]"
-                    style={{ color: "var(--color-hero-body)" }}
-                  >
-                    {data.hero.bodyText}
-                  </p>
-                )}
-              </div>
+      <section className="about-hero">
+        <div className="about-hero-grid" />
+        <div className="about-hero-inner">
+          {data?.hero?.badge && (
+            <div className="hero-chip-v2">
+              <span className="hero-chip-dot" />
+              <span className="hero-chip-label">{data.hero.badge}</span>
             </div>
-            <div className="flex flex-wrap gap-[16px]">
-              {data?.hero?.button1Text && (
-                <AnimatedButton
-                  href={data.hero.button1Href ?? "#"}
-                  variant="primary"
-                >
-                  {data.hero.button1Text}
-                </AnimatedButton>
-              )}
-              {data?.hero?.button2Text && (
-                <AnimatedButton
-                  href={data.hero.button2Href ?? "#"}
-                  variant="white"
-                >
-                  {data.hero.button2Text}
-                </AnimatedButton>
-              )}
-            </div>
+          )}
+          <div className="hero-figma-textblock">
+            {/* <h1 className="hero-figma-h1">{data?.hero?.heading}</h1> */}
+            {data?.hero?.subheading && (
+              <h1 className="hero-figma-h1">{data.hero.subheading}</h1>
+            )}
+            {data?.hero?.bodyText && (
+              <p className="hero-figma-p">{data.hero.bodyText}</p>
+            )}
           </div>
-          <div className="hidden lg:flex flex-shrink-0 items-center justify-center w-[460px]">
+          <div className="hero-figma-btns">
+            {data?.hero?.button1Text && (
+              <Link
+                href={data.hero.button1Href ?? "#"}
+                className="hero-figma-btn-primary"
+              >
+                {data.hero.button1Text}
+              </Link>
+            )}
+            {data?.hero?.button2Text && (
+              <Link
+                href={data.hero.button2Href ?? "#"}
+                className="hero-figma-btn-white"
+              >
+                {data.hero.button2Text}
+              </Link>
+            )}
+          </div>
+          <div className="about-globe-container">
             {data?.hero?.image?.asset?.url ? (
               <Image
                 src={data.hero.image.asset.url}
                 alt={data.hero.image.alt ?? ""}
-                width={600}
+                width={950}
                 height={400}
+                className="about-globe-img"
                 priority
               />
             ) : (
               <Image
                 src="/images/tokenomics-img.png"
                 alt="Blockmaze Tokenomics"
-                width={600}
+                width={950}
                 height={400}
+                className="about-globe-img"
                 priority
               />
             )}
@@ -161,58 +392,48 @@ export default async function TokenomicsPage() {
         </div>
       </section>
 
-      {/* 2 ── CORE TOKEN UTILITY — surface */}
+      {/* 2 ── CORE TOKEN UTILITY */}
       {utilityCards.length > 0 && (
-        <section
-          className="section-padding"
-          style={{ background: "var(--color-surface)" }}
-        >
+        <section className="section-padding rfp-elig-section">
           <Container>
             <SectionHeading
               label={data?.utilitySection?.eyebrow}
               heading={data?.utilitySection?.heading ?? ""}
               subtext={data?.utilitySection?.subtext}
             />
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {utilityCards.map((card) => (
+            <div className="tokenomics-elig-grid section-content-gap">
+              {utilityCards.map((card, idx) => (
                 <div
                   key={card.title}
-                  className="flex flex-col gap-3 p-6 rounded-[20px] transition-all duration-300 hover:-translate-y-1"
-                  style={{
-                    background: "var(--color-white)",
-                    border: "1px solid var(--color-border-subtle)",
-                  }}
+                  className={`rfp-elig-card ${idx % 2 === 0 ? "rfp-elig-card--blue" : "rfp-elig-card--warm"}`}
                 >
-                  <h4
-                    className="text-[18px] font-semibold"
-                    style={{ color: "var(--color-dark)" }}
-                  >
-                    {card.title}
-                  </h4>
-                  <p
-                    className="text-[15px] leading-[28px]"
-                    style={{ color: "var(--color-gray-body)" }}
-                  >
-                    {card.description}
-                  </p>
-                  {(card.bullets ?? []).length > 0 && (
-                    <ul className="flex flex-col gap-1.5 mt-1">
-                      {(card.bullets ?? []).map((b, i) => (
-                        <li key={i} className="flex items-start gap-2">
-                          <span
-                            className="flex-shrink-0 w-1.5 h-1.5 rounded-full mt-[9px]"
-                            style={{ background: "var(--color-primary)" }}
-                          />
-                          <span
-                            className="text-[14px] leading-[26px]"
-                            style={{ color: "var(--color-gray-body)" }}
-                          >
-                            {b}
-                          </span>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
+                  <h3 className="rfp-elig-card-heading">{card.title}</h3>
+                  <div className="rfp-elig-items">
+                    {card.description && (
+                      <div className="rfp-elig-item">
+                        <Image
+                          src="/images/about-arrow.svg"
+                          alt=""
+                          width={24}
+                          height={24}
+                          className="rfp-elig-item-icon"
+                        />
+                        <p className="rfp-elig-item-text">{card.description}</p>
+                      </div>
+                    )}
+                    {(card.bullets ?? []).map((b, i) => (
+                      <div key={i} className="rfp-elig-item">
+                        <Image
+                          src="/images/about-arrow.svg"
+                          alt=""
+                          width={24}
+                          height={24}
+                          className="rfp-elig-item-icon"
+                        />
+                        <p className="rfp-elig-item-text">{b}</p>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               ))}
             </div>
@@ -309,14 +530,14 @@ export default async function TokenomicsPage() {
                 </tbody>
               </table>
             </div>
-            <div className="flex justify-center mt-10">
+            <div className="flex justify-center mt-10 role-tabs-card">
               {data?.allocationChartImage?.asset?.url ? (
                 <Image
                   src={data.allocationChartImage.asset.url}
                   alt={data.allocationChartImage.alt ?? ""}
                   width={800}
                   height={500}
-                  className="rounded-2xl"
+                  className="rounded-2xl w-100 h-auto"
                 />
               ) : (
                 <Image
@@ -324,64 +545,61 @@ export default async function TokenomicsPage() {
                   alt="Token Allocation Chart"
                   width={800}
                   height={500}
-                  className="rounded-2xl"
+                  className="rounded-2xl w-100 h-auto"
                 />
               )}
             </div>
           </Container>
         </section>
       )}
-
-      {/* 4 ── LOCKING & VESTING — white */}
-      {lockingCards.length > 0 && (
+      {(data?.breakdownItems ?? []).length > 0 && (
         <section className="section-padding bg-white">
+          <Container>
+            <SectionHeading
+              label={data?.breakdownSection?.eyebrow}
+              heading={
+                data?.breakdownSection?.heading ??
+                "Token Allocation Breakdown & Purpose"
+              }
+              subtext={data?.breakdownSection?.subtext}
+            />
+            <div className="breakdown-eco-grid">
+              {(data?.breakdownItems ?? []).map((item, idx) => (
+                <div key={idx} className="eco-card">
+                  <div className="eco-card-icon">
+                    {breakdownIcons[idx % breakdownIcons.length]}
+                  </div>
+                  <h4 className="eco-card-title">
+                    {item.category}{" "}
+                    <span style={{ color: "var(--color-primary)" }}>
+                      {item.pct}
+                    </span>
+                  </h4>
+                  <p className="eco-card-desc">{item.purpose}</p>
+                </div>
+              ))}
+            </div>
+          </Container>
+        </section>
+      )}
+
+      {/* 5 ── LOCKING & VESTING — white */}
+      {lockingCards.length > 0 && (
+        <section className="section-padding rfp-howit-section">
           <Container>
             <SectionHeading
               label={data?.lockingSection?.eyebrow}
               heading={data?.lockingSection?.heading ?? ""}
               subtext={data?.lockingSection?.subtext}
             />
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {lockingCards.map((card) => (
-                <div
-                  key={card.title}
-                  className="flex flex-col gap-3 p-6 rounded-[20px] transition-all duration-300 hover:-translate-y-1"
-                  style={{
-                    background: "var(--color-bg-default)",
-                    border: "1px solid var(--color-border-subtle)",
-                  }}
-                >
-                  <div
-                    className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
-                    style={{ background: "rgba(255,176,30,0.1)" }}
-                  >
-                    <svg
-                      width="20"
-                      height="20"
-                      viewBox="0 0 20 20"
-                      fill="none"
-                      stroke="var(--color-primary)"
-                      strokeWidth="1.6"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <rect x="3" y="9" width="14" height="10" rx="2" />
-                      <path d="M6 9V6a4 4 0 0 1 8 0v3" />
-                      <circle cx="10" cy="14" r="1.2" />
-                    </svg>
-                  </div>
-                  <h4
-                    className="text-[18px] font-semibold"
-                    style={{ color: "var(--color-dark)" }}
-                  >
-                    {card.title}
-                  </h4>
-                  <p
-                    className="text-[15px] leading-[28px]"
-                    style={{ color: "var(--color-gray-body)" }}
-                  >
-                    {card.description}
-                  </p>
+            <div className="locking-howit-grid section-content-gap">
+              {lockingCards.map((card, idx) => (
+                <div key={card.title} className="rfp-howit-card">
+                  <span className="rfp-howit-num">
+                    {String(idx + 1).padStart(2, "0")}
+                  </span>
+                  <h4 className="rfp-howit-title">{card.title}</h4>
+                  <p className="rfp-howit-desc">{card.description}</p>
                 </div>
               ))}
             </div>
