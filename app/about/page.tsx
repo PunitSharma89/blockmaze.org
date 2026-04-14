@@ -1,7 +1,6 @@
 import { Metadata } from "next";
 import Image from "next/image";
 import Container from "@/components/layout/Container";
-import Breadcrumb from "@/components/layout/Breadcrumb";
 import SectionHeading from "@/components/ui/SectionHeading";
 import FAQ from "@/components/ui/FAQ";
 import RoleTabs from "@/components/ui/RoleTabs";
@@ -170,22 +169,35 @@ const faqItems = [
 export default function AboutPage() {
   return (
     <>
-      {/* Hero — dark gradient matching home page */}
+      {/* Hero — Figma 283:76 */}
       <section className="about-hero">
-        <Container>
-          <Breadcrumb items={[{ label: "About" }]} />
-          <div className="about-hero-content">
-            <h1 className="about-hero-title">
+        <div className="about-hero-inner">
+          <div className="hero-chip-v2">
+            <span className="hero-chip-dot" />
+            <span className="hero-chip-label">About the Blockmaze Foundation &amp; Ecosystem</span>
+          </div>
+          <div className="hero-figma-textblock">
+            <h1 className="hero-figma-h1">
               Independent Governance for Regulated, Real-World{" "}
-              <span className="text-primary">Blockchain Infrastructure</span>
+              <span className="text-primary">Blockchain</span> Infrastructure
             </h1>
-            <p className="about-hero-desc">
+            <p className="hero-figma-p">
               The Blockmaze foundation maintains the governance architecture of
               the Blockmaze Layer-0 network, including issuer admission
               standards, on-chain registries, and permission frameworks.
             </p>
           </div>
-        </Container>
+          <div className="about-globe-container">
+            <Image
+              src="/images/about-globe.svg"
+              alt="Blockmaze ecosystem globe"
+              width={950}
+              height={400}
+              className="about-globe-img"
+              priority
+            />
+          </div>
+        </div>
       </section>
 
       {/* The Blockmaze Foundation */}
