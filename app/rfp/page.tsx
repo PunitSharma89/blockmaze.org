@@ -89,7 +89,7 @@ export default async function RfpPage() {
           />
         </div>
 
-        <div className="mx-auto w-[80%] max-w-[1440px] py-20 relative z-10 flex flex-col items-center text-center gap-[40px]">
+        <div className="mx-auto w-[100%] lg:w-[80%] max-w-[1440px] py-20 relative z-10 flex flex-col items-center text-center gap-[40px]">
           <div className="flex flex-col gap-[16px] items-center max-w-[780px]">
             <div
               className="inline-flex w-fit items-center justify-center px-[16px] py-[12px] rounded-[999px] border"

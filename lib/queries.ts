@@ -272,3 +272,26 @@ export const latestBlogsQuery = `*[_type == "blog"] | order(_createdAt desc)[0..
   },
   publishedAt
 }`;
+
+export const homePageQuery = `*[_type == "homePage"][0] {
+  hero { chipLabel, heading, bodyText, button1Text, button1Href, button2Text, button2Href },
+  about { heading, headingHighlight, bodyText },
+  aboutAccordion {
+    vision { title, bodyText, bullets },
+    mission { title, bodyText, bullets }
+  },
+  problemSection { heading, headingHighlight },
+  problemCards[] { icon, title, description },
+  accountabilitySection { heading, headingHighlight, subtext },
+  accountabilityServices[] { text, icon, position },
+  distinguishesSection { pill, heading, subtext },
+  uspCards[] { icon, title, description },
+  useCasesSection { eyebrow, heading, headingHighlight, subtext },
+  useCases[] { title, description, icon },
+  ecosystemSection { heading, headingHighlight, subtext },
+  ecosystemItems[] { title, href, imagePath, description, bullets },
+  docsBanner { title, buttonText, buttonHref },
+  blogsSection { eyebrow, heading, subtext },
+  faqSection { eyebrow, heading },
+  faqs[] { question, answer }
+}`;

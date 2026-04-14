@@ -29,8 +29,20 @@ interface TokenomicsData {
   utilitySection?: { eyebrow?: string; heading?: string; subtext?: string };
   utilityCards?: { title: string; description: string; bullets?: string[] }[];
   allocationSection?: { eyebrow?: string; heading?: string; subtext?: string };
-  tableHeaders?: { category?: string; pct?: string; tokens?: string; locking?: string; vesting?: string };
-  tokenAllocation?: { category: string; pct: string; tokens: string; locking: string; vesting: string }[];
+  tableHeaders?: {
+    category?: string;
+    pct?: string;
+    tokens?: string;
+    locking?: string;
+    vesting?: string;
+  };
+  tokenAllocation?: {
+    category: string;
+    pct: string;
+    tokens: string;
+    locking: string;
+    vesting: string;
+  }[];
   allocationChartImage?: { asset?: { url: string }; alt?: string };
   lockingSection?: { eyebrow?: string; heading?: string; subtext?: string };
   lockingCards?: { title: string; description: string }[];
@@ -52,36 +64,57 @@ export default async function TokenomicsPage() {
         className="relative overflow-hidden flex items-center"
         style={{
           minHeight: "500px",
-          background: "linear-gradient(to left, var(--color-header-navy), var(--color-header-dark) 49%)",
+          background:
+            "linear-gradient(to left, var(--color-header-navy), var(--color-header-dark) 49%)",
         }}
       >
         <div className="hero-bg-grid">
-          <Image src="/images/hero-bg-grid.svg" alt="" fill className="object-fill" />
+          <Image
+            src="/images/hero-bg-grid.svg"
+            alt=""
+            fill
+            className="object-fill"
+          />
         </div>
-        <div className="mx-auto w-[80%] max-w-[1440px] py-20 relative z-10 flex flex-col lg:flex-row items-center gap-[60px]">
+        <div className="mx-auto w-[100%] lg:w-[80%] max-w-[1440px] py-20 relative z-10 flex flex-col lg:flex-row items-center gap-[60px]">
           <div className="flex-1 flex flex-col gap-[40px]">
             <div className="flex flex-col gap-[16px]">
               {data?.hero?.badge && (
                 <div
                   className="inline-flex w-fit items-center justify-center px-[16px] py-[12px] rounded-[999px] border"
-                  style={{ borderColor: "var(--color-chip-border)", background: "var(--color-chip-bg)" }}
+                  style={{
+                    borderColor: "var(--color-chip-border)",
+                    background: "var(--color-chip-bg)",
+                  }}
                 >
-                  <span className="text-[14px] font-medium tracking-[-0.28px] whitespace-nowrap" style={{ color: "var(--color-primary)" }}>
+                  <span
+                    className="text-[14px] font-medium tracking-[-0.28px] whitespace-nowrap"
+                    style={{ color: "var(--color-primary)" }}
+                  >
                     {data.hero.badge}
                   </span>
                 </div>
               )}
               <div className="flex flex-col gap-[16px]">
-                <h1 className="font-bold text-[46px] leading-[62px]" style={{ color: "var(--color-white)" }}>
+                <h1
+                  className="font-bold text-[46px] leading-[62px]"
+                  style={{ color: "var(--color-white)" }}
+                >
                   {data?.hero?.heading}
                 </h1>
                 {data?.hero?.subheading && (
-                  <h2 className="text-[22px] font-medium leading-[34px]" style={{ color: "var(--color-primary)" }}>
+                  <h2
+                    className="text-[22px] font-medium leading-[34px]"
+                    style={{ color: "var(--color-primary)" }}
+                  >
                     {data.hero.subheading}
                   </h2>
                 )}
                 {data?.hero?.bodyText && (
-                  <p className="text-[16px] leading-[28px]" style={{ color: "var(--color-hero-body)" }}>
+                  <p
+                    className="text-[16px] leading-[28px]"
+                    style={{ color: "var(--color-hero-body)" }}
+                  >
                     {data.hero.bodyText}
                   </p>
                 )}
@@ -89,12 +122,18 @@ export default async function TokenomicsPage() {
             </div>
             <div className="flex flex-wrap gap-[16px]">
               {data?.hero?.button1Text && (
-                <AnimatedButton href={data.hero.button1Href ?? "#"} variant="primary">
+                <AnimatedButton
+                  href={data.hero.button1Href ?? "#"}
+                  variant="primary"
+                >
                   {data.hero.button1Text}
                 </AnimatedButton>
               )}
               {data?.hero?.button2Text && (
-                <AnimatedButton href={data.hero.button2Href ?? "#"} variant="white">
+                <AnimatedButton
+                  href={data.hero.button2Href ?? "#"}
+                  variant="white"
+                >
                   {data.hero.button2Text}
                 </AnimatedButton>
               )}
@@ -102,9 +141,21 @@ export default async function TokenomicsPage() {
           </div>
           <div className="hidden lg:flex flex-shrink-0 items-center justify-center w-[460px]">
             {data?.hero?.image?.asset?.url ? (
-              <Image src={data.hero.image.asset.url} alt={data.hero.image.alt ?? ""} width={600} height={400} priority />
+              <Image
+                src={data.hero.image.asset.url}
+                alt={data.hero.image.alt ?? ""}
+                width={600}
+                height={400}
+                priority
+              />
             ) : (
-              <Image src="/images/tokenomics-img.png" alt="Blockmaze Tokenomics" width={600} height={400} priority />
+              <Image
+                src="/images/tokenomics-img.png"
+                alt="Blockmaze Tokenomics"
+                width={600}
+                height={400}
+                priority
+              />
             )}
           </div>
         </div>
@@ -112,7 +163,10 @@ export default async function TokenomicsPage() {
 
       {/* 2 ── CORE TOKEN UTILITY — surface */}
       {utilityCards.length > 0 && (
-        <section className="section-padding" style={{ background: "var(--color-surface)" }}>
+        <section
+          className="section-padding"
+          style={{ background: "var(--color-surface)" }}
+        >
           <Container>
             <SectionHeading
               label={data?.utilitySection?.eyebrow}
@@ -124,20 +178,37 @@ export default async function TokenomicsPage() {
                 <div
                   key={card.title}
                   className="flex flex-col gap-3 p-6 rounded-[20px] transition-all duration-300 hover:-translate-y-1"
-                  style={{ background: "var(--color-white)", border: "1px solid var(--color-border-subtle)" }}
+                  style={{
+                    background: "var(--color-white)",
+                    border: "1px solid var(--color-border-subtle)",
+                  }}
                 >
-                  <h4 className="text-[18px] font-semibold" style={{ color: "var(--color-dark)" }}>
+                  <h4
+                    className="text-[18px] font-semibold"
+                    style={{ color: "var(--color-dark)" }}
+                  >
                     {card.title}
                   </h4>
-                  <p className="text-[15px] leading-[28px]" style={{ color: "var(--color-gray-body)" }}>
+                  <p
+                    className="text-[15px] leading-[28px]"
+                    style={{ color: "var(--color-gray-body)" }}
+                  >
                     {card.description}
                   </p>
                   {(card.bullets ?? []).length > 0 && (
                     <ul className="flex flex-col gap-1.5 mt-1">
                       {(card.bullets ?? []).map((b, i) => (
                         <li key={i} className="flex items-start gap-2">
-                          <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full mt-[9px]" style={{ background: "var(--color-primary)" }} />
-                          <span className="text-[14px] leading-[26px]" style={{ color: "var(--color-gray-body)" }}>{b}</span>
+                          <span
+                            className="flex-shrink-0 w-1.5 h-1.5 rounded-full mt-[9px]"
+                            style={{ background: "var(--color-primary)" }}
+                          />
+                          <span
+                            className="text-[14px] leading-[26px]"
+                            style={{ color: "var(--color-gray-body)" }}
+                          >
+                            {b}
+                          </span>
                         </li>
                       ))}
                     </ul>
@@ -197,22 +268,40 @@ export default async function TokenomicsPage() {
                           i < tokenAllocation.length - 1
                             ? "1px solid var(--color-border-subtle)"
                             : "none",
-                        background: i % 2 === 1 ? "var(--color-surface)" : "var(--color-white)",
+                        background:
+                          i % 2 === 1
+                            ? "var(--color-surface)"
+                            : "var(--color-white)",
                       }}
                     >
-                      <td className="py-3 px-5 text-[13px] leading-[22px] font-medium" style={{ color: "var(--color-dark)" }}>
+                      <td
+                        className="py-3 px-5 text-[13px] leading-[22px] font-medium"
+                        style={{ color: "var(--color-dark)" }}
+                      >
                         {row.category}
                       </td>
-                      <td className="py-3 px-5 text-[13px] font-bold whitespace-nowrap" style={{ color: "var(--color-primary)" }}>
+                      <td
+                        className="py-3 px-5 text-[13px] font-bold whitespace-nowrap"
+                        style={{ color: "var(--color-primary)" }}
+                      >
                         {row.pct}
                       </td>
-                      <td className="py-3 px-5 text-[13px] whitespace-nowrap" style={{ color: "var(--color-gray-body)" }}>
+                      <td
+                        className="py-3 px-5 text-[13px] whitespace-nowrap"
+                        style={{ color: "var(--color-gray-body)" }}
+                      >
                         {row.tokens}
                       </td>
-                      <td className="py-3 px-5 text-[13px] whitespace-nowrap" style={{ color: "var(--color-gray-body)" }}>
+                      <td
+                        className="py-3 px-5 text-[13px] whitespace-nowrap"
+                        style={{ color: "var(--color-gray-body)" }}
+                      >
                         {row.locking}
                       </td>
-                      <td className="py-3 px-5 text-[13px] whitespace-nowrap" style={{ color: "var(--color-gray-body)" }}>
+                      <td
+                        className="py-3 px-5 text-[13px] whitespace-nowrap"
+                        style={{ color: "var(--color-gray-body)" }}
+                      >
                         {row.vesting}
                       </td>
                     </tr>
@@ -257,22 +346,40 @@ export default async function TokenomicsPage() {
                 <div
                   key={card.title}
                   className="flex flex-col gap-3 p-6 rounded-[20px] transition-all duration-300 hover:-translate-y-1"
-                  style={{ background: "var(--color-bg-default)", border: "1px solid var(--color-border-subtle)" }}
+                  style={{
+                    background: "var(--color-bg-default)",
+                    border: "1px solid var(--color-border-subtle)",
+                  }}
                 >
                   <div
                     className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
                     style={{ background: "rgba(255,176,30,0.1)" }}
                   >
-                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="var(--color-primary)" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+                    <svg
+                      width="20"
+                      height="20"
+                      viewBox="0 0 20 20"
+                      fill="none"
+                      stroke="var(--color-primary)"
+                      strokeWidth="1.6"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
                       <rect x="3" y="9" width="14" height="10" rx="2" />
                       <path d="M6 9V6a4 4 0 0 1 8 0v3" />
                       <circle cx="10" cy="14" r="1.2" />
                     </svg>
                   </div>
-                  <h4 className="text-[18px] font-semibold" style={{ color: "var(--color-dark)" }}>
+                  <h4
+                    className="text-[18px] font-semibold"
+                    style={{ color: "var(--color-dark)" }}
+                  >
                     {card.title}
                   </h4>
-                  <p className="text-[15px] leading-[28px]" style={{ color: "var(--color-gray-body)" }}>
+                  <p
+                    className="text-[15px] leading-[28px]"
+                    style={{ color: "var(--color-gray-body)" }}
+                  >
                     {card.description}
                   </p>
                 </div>
