@@ -14,6 +14,7 @@ import swapPage from "./sanity/schemas/swapPage";
 import validatorPage from "./sanity/schemas/validatorPage";
 import delegatorPage from "./sanity/schemas/delegatorPage";
 import tokenomicsPage from "./sanity/schemas/tokenomicsPage";
+import homePage from "./sanity/schemas/homePage";
 import { PublishAction } from "./sanity/actions/PublishAction";
 
 export default defineConfig({
@@ -24,7 +25,7 @@ export default defineConfig({
   basePath: "/studio",
   plugins: [structureTool()],
   schema: {
-    types: [blog, category, author, news, knowledgeHub, siteSettings, technicalPage, governancePage, rfpPage, daoPage, swapPage, validatorPage, delegatorPage, tokenomicsPage],
+    types: [blog, category, author, news, knowledgeHub, siteSettings, technicalPage, governancePage, rfpPage, daoPage, swapPage, validatorPage, delegatorPage, tokenomicsPage, homePage],
   },
   document: {
     actions: (prev) => [PublishAction, ...prev],

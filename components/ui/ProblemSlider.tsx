@@ -10,7 +10,17 @@ interface ProblemCard {
   description: string
 }
 
-export default function ProblemSlider({ cards }: { cards: ProblemCard[] }) {
+interface ProblemSliderProps {
+  cards: ProblemCard[]
+  heading?: string
+  headingHighlight?: string
+}
+
+export default function ProblemSlider({
+  cards,
+  heading,
+  headingHighlight,
+}: ProblemSliderProps) {
   const trackRef = useRef<HTMLDivElement>(null)
   const [dragging, setDragging] = useState(false)
   const dragStartX = useRef(0)
@@ -38,12 +48,18 @@ export default function ProblemSlider({ cards }: { cards: ProblemCard[] }) {
   const onMouseUp = () => setDragging(false)
   const onMouseLeave = () => setDragging(false)
 
+  const defaultHeading = 'The Accountability Gap in Existing'
+  const defaultHighlight = 'Blockchain Networks'
+  const displayHeading = heading ?? defaultHeading
+  const displayHighlight = headingHighlight ?? defaultHighlight
+
   return (
     <Container>
       <div className="problem-slider-top">
         <div className="problem-slider-heading-col">
           <h2 className="section-heading">
-            The Accountability Gap in Existing <span className="text-primary">Blockchain Networks</span>
+            {displayHeading}{' '}
+            <span className="text-primary">{displayHighlight}</span>
           </h2>
         </div>
         <div className="problem-slider-arrows">
@@ -55,7 +71,6 @@ export default function ProblemSlider({ cards }: { cards: ProblemCard[] }) {
           </button>
         </div>
       </div>
-
       <div
         ref={trackRef}
         className={`problem-slider-track${dragging ? ' dragging' : ''}`}

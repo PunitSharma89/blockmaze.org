@@ -4,6 +4,7 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import Analytics from "@/components/ui/Analytics";
 import "./globals.css";
+import "./responsive.css";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -13,7 +14,8 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: {
-    default: "Blockmaze Foundation | Layer 0 Protocol Governance & Accountability Layer",
+    default:
+      "Blockmaze Foundation | Layer 0 Protocol Governance & Accountability Layer",
     template: "%s | Blockmaze Foundation",
   },
   description:
