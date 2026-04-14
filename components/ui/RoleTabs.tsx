@@ -12,50 +12,75 @@ interface RoleItem {
 export default function RoleTabs({ roles }: { roles: RoleItem[] }) {
   const [active, setActive] = useState(0)
   const current = roles[active]
+  const leftRoles  = roles.slice(0, 3)
+  const rightRoles = roles.slice(3, 6)
 
   return (
-    <div className="usecase-card">
-      {/* Left panel — active role detail */}
-      <div className="usecase-detail">
-        <div className="usecase-detail-content">
-          <div className="usecase-detail-icon-wrap">
-            <Image src={current.icon} alt="" width={32} height={32} />
-          </div>
-          <h3 className="usecase-detail-title">{current.title}</h3>
-          <p className="usecase-detail-desc">{current.description}</p>
-        </div>
-        <span className="usecase-detail-num">
-          {String(active + 1).padStart(2, '0')}
-        </span>
-      </div>
+    <section className="role-tabs-section">
+      <div className="role-tabs-card">
 
-      {/* Right panel — 3×2 tab grid */}
-      <div className="usecase-tabs">
-        <div className="usecase-tabs-row">
-          {roles.slice(0, 3).map((role, i) => (
-            <button
-              key={i}
-              className={`usecase-tab ${active === i ? 'usecase-tab--active' : ''}`}
-              onClick={() => setActive(i)}
-            >
-              <Image src={role.icon} alt="" width={32} height={32} />
-              <span className="usecase-tab-title">{role.title}</span>
-            </button>
-          ))}
+        {/* Ambient grid overlay */}
+        <div className="role-tabs-grid" />
+        {/* Radial amber glow from top center */}
+        <div className="role-tabs-glow" />
+
+        {/* Heading */}
+        <div className="role-tabs-heading-wrap">
+          <h2 className="role-tabs-heading">
+            The Role of the{' '}
+            <span className="text-primary">Blockmaze Foundation</span>
+          </h2>
         </div>
-        <div className="usecase-tabs-row">
-          {roles.slice(3, 6).map((role, i) => (
-            <button
-              key={i + 3}
-              className={`usecase-tab ${active === i + 3 ? 'usecase-tab--active' : ''}`}
-              onClick={() => setActive(i + 3)}
-            >
-              <Image src={role.icon} alt="" width={32} height={32} />
-              <span className="usecase-tab-title">{role.title}</span>
-            </button>
-          ))}
+
+        {/* 3-column layout */}
+        <div className="role-tabs-layout">
+
+          {/* Left column — roles 0–2 */}
+          <div className="role-tabs-col">
+            {leftRoles.map((role, i) => (
+              <button
+                key={i}
+                className={`role-tab-btn${active === i ? ' role-tab-btn--active' : ''}`}
+                onClick={() => setActive(i)}
+              >
+                {role.title}
+              </button>
+            ))}
+          </div>
+
+          {/* Center card — shows active role */}
+          <div className="role-tabs-center">
+            <div className="role-tabs-center-body">
+              <h3 className="role-tabs-center-title">{current.title}</h3>
+              <p className="role-tabs-center-desc">{current.description}</p>
+            </div>
+            <div className="role-tabs-center-img-wrap">
+              <Image
+                key={active}
+                src={current.icon}
+                alt={current.title}
+                width={474}
+                height={280}
+                className="role-tabs-center-img"
+              />
+            </div>
+          </div>
+
+          {/* Right column — roles 3–5 */}
+          <div className="role-tabs-col">
+            {rightRoles.map((role, i) => (
+              <button
+                key={i + 3}
+                className={`role-tab-btn${active === i + 3 ? ' role-tab-btn--active' : ''}`}
+                onClick={() => setActive(i + 3)}
+              >
+                {role.title}
+              </button>
+            ))}
+          </div>
+
         </div>
       </div>
-    </div>
+    </section>
   )
 }
