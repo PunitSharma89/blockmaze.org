@@ -30,7 +30,7 @@ export default function HeaderClient({ logoAlt, navItems }: HeaderClientProps) {
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 header-white">
-      <div className="mx-auto w-[80%] max-w-[1596px] flex items-stretch justify-between h-[71px]">
+      <div className="mx-auto px-4 lg:px-0 lg:w-[80%] max-w-[1596px] flex items-center justify-between h-[71px]">
         {/* Logo */}
         <Link href="/" className="flex items-center flex-shrink-0">
           <Image
@@ -48,7 +48,7 @@ export default function HeaderClient({ logoAlt, navItems }: HeaderClientProps) {
 
         {/* Mobile Hamburger */}
         <button
-          className="lg:hidden flex items-center p-2 text-white hover:text-primary"
+          className="lg:hidden p-2 hover:text-primary"
           onClick={() => setMobileMenuOpen(true)}
           aria-label="Open menu"
         >
