@@ -147,45 +147,59 @@ export default async function RfpPage() {
         </section>
       )}
 
-      {/* SECTION 3: RFP Program Structure — dark */}
+      {/* SECTION 3: RFP Program Structure */}
       {(data?.programCards ?? []).length > 0 && (
-        <section className="distinguishes-section">
+        <section
+          className="section-padding"
+          style={{ background: "var(--color-surface)" }}
+        >
           <Container>
-            <div className="distinguishes-inner">
-              <video
-                className="distinguishes-bg-video"
-                src="/images/bg-line-1.mp4"
-                autoPlay
-                loop
-                muted
-                playsInline
-              />
-              <div className="distinguishes-content">
-                <div className="distinguishes-heading">
-                  <span className="section-eyebrow section-eyebrow--dark">
-                    {data?.programSection?.eyebrow}
-                  </span>
-                  <h2 className="distinguishes-title">
-                    {data?.programSection?.heading}
-                  </h2>
-                </div>
-                <div className="distinguishes-cards">
-                  <div className="distinguishes-row">
-                    {data!.programCards!.map((card, idx) => (
-                      <div key={idx} className="distinguishes-card">
-                        <div className="distinguishes-card-body">
-                          <h4 className="distinguishes-card-title">
-                            {card.title}
-                          </h4>
-                          <p className="distinguishes-card-text">
-                            {card.description}
-                          </p>
-                        </div>
-                      </div>
-                    ))}
+            <SectionHeading
+              label={data?.programSection?.eyebrow}
+              heading={data?.programSection?.heading ?? ""}
+            />
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {(data?.programCards ?? []).map((card, idx) => (
+                <div
+                  key={idx}
+                  className="flex flex-col gap-3 p-6 rounded-[20px] transition-all duration-300 hover:-translate-y-1"
+                  style={{
+                    background: "var(--color-white)",
+                    border: "1px solid var(--color-border-subtle)",
+                  }}
+                >
+                  <div
+                    className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
+                    style={{ background: "rgba(255,176,30,0.1)" }}
+                  >
+                    <svg
+                      width="20"
+                      height="20"
+                      viewBox="0 0 20 20"
+                      fill="none"
+                      stroke="var(--color-primary)"
+                      strokeWidth="1.6"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <path d="M9 11l3 3L22 4" />
+                      <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
+                    </svg>
                   </div>
+                  <h4
+                    className="text-[18px] font-semibold"
+                    style={{ color: "var(--color-dark)" }}
+                  >
+                    {card.title}
+                  </h4>
+                  <p
+                    className="text-[15px] leading-[28px]"
+                    style={{ color: "var(--color-gray-body)" }}
+                  >
+                    {card.description}
+                  </p>
                 </div>
-              </div>
+              ))}
             </div>
           </Container>
         </section>
@@ -311,47 +325,29 @@ export default async function RfpPage() {
         </section>
       )}
 
-      {/* SECTION 6: Evaluation Criteria — dark */}
+      {/* SECTION 6: Evaluation Criteria */}
       {data?.evaluation && (
-        <section className="section-padding">
+        <section className="section-padding bg-white">
           <Container>
-            <div className="distinguishes-inner">
-              <video
-                className="distinguishes-bg-video"
-                src="/images/bg-line-1.mp4"
-                autoPlay
-                loop
-                muted
-                playsInline
-              />
-              <div className="distinguishes-content">
-                <div className="distinguishes-heading">
-                  <span className="section-eyebrow section-eyebrow--dark">
-                    {data.evaluation.eyebrow}
-                  </span>
-                  <h2 className="distinguishes-title">
-                    {data.evaluation.heading}
-                  </h2>
-                  <p className="distinguishes-subtext">
-                    {data.evaluation.subtext}
-                  </p>
-                </div>
-                <div className="flex flex-wrap justify-center gap-3 max-w-4xl">
-                  {(data.evaluation.criteria ?? []).map((criteria, idx) => (
-                    <span
-                      key={idx}
-                      className="inline-flex items-center px-6 py-3 rounded-full text-sm font-medium"
-                      style={{
-                        background: "rgba(255,176,30,0.12)",
-                        border: "1px solid var(--color-primary)",
-                        color: "var(--color-primary)",
-                      }}
-                    >
-                      {criteria}
-                    </span>
-                  ))}
-                </div>
-              </div>
+            <SectionHeading
+              label={data.evaluation.eyebrow}
+              heading={data.evaluation.heading ?? ""}
+              subtext={data.evaluation.subtext}
+            />
+            <div className="flex flex-wrap justify-center gap-3 max-w-4xl mx-auto">
+              {(data.evaluation.criteria ?? []).map((criteria, idx) => (
+                <span
+                  key={idx}
+                  className="inline-flex items-center px-6 py-3 rounded-full text-sm font-medium"
+                  style={{
+                    background: "rgba(255,176,30,0.08)",
+                    border: "1px solid var(--color-primary)",
+                    color: "var(--color-primary)",
+                  }}
+                >
+                  {criteria}
+                </span>
+              ))}
             </div>
           </Container>
         </section>
