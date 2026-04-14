@@ -229,6 +229,8 @@ export const tokenomicsPageQuery = `*[_type == "tokenomicsPage" && !(_id in path
   tableHeaders { category, pct, tokens, locking, vesting },
   tokenAllocation[] { category, pct, tokens, locking, vesting },
   allocationChartImage { asset-> { url }, alt },
+  breakdownSection { eyebrow, heading, subtext },
+  breakdownItems[] { category, pct, purpose },
   lockingSection { eyebrow, heading, subtext },
   lockingCards[] { title, description }
 }`;

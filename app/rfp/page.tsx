@@ -80,12 +80,8 @@ export default async function RfpPage() {
             <span className="hero-chip-label">{data?.hero?.badge}</span>
           </div>
           <div className="hero-figma-textblock">
-            <h1 className="hero-figma-h1">
-              {data?.hero?.heading}
-            </h1>
-            <p className="hero-figma-p">
-              {data?.hero?.subtext}
-            </p>
+            <h1 className="hero-figma-h1">{data?.hero?.heading}</h1>
+            <p className="hero-figma-p">{data?.hero?.subtext}</p>
           </div>
           <div className="hero-figma-btns">
             <Link
@@ -153,37 +149,45 @@ export default async function RfpPage() {
       {/* SECTION 4: How the RFP Process Works */}
       {processSteps.length > 0 && (
         <section className="rfp-process-section">
-            <div className="rfp-process-box">
-              <div className="role-tabs-glow" aria-hidden="true" />
-              <div className="rfp-process-header">
-                {data?.processSection?.eyebrow && (
-                  <span className="rfp-process-chip">{data.processSection.eyebrow}</span>
-                )}
-                <h2 className="rfp-process-heading">{data?.processSection?.heading}</h2>
-              </div>
-              <div className="rfp-process-grid">
-                {stepRows.map((row, rowIdx) => (
-                  <div key={rowIdx} className="rfp-process-row">
-                    {row.map((step, idx) => {
-                      const stepNum = rowIdx * 3 + idx + 1;
-                      return (
-                        <div key={idx} className="rfp-process-cell">
-                          <div className="rfp-process-cell-top">
-                            <div className="rfp-process-icon">
-                              <span className="rfp-process-step-num">
-                                {String(stepNum).padStart(2, "0")}
-                              </span>
-                            </div>
-                            <h4 className="rfp-process-cell-title">{step.title}</h4>
-                          </div>
-                          <p className="rfp-process-cell-desc">{step.description}</p>
-                        </div>
-                      );
-                    })}
-                  </div>
-                ))}
-              </div>
+          <div className="rfp-process-box">
+            <div className="role-tabs-glow" aria-hidden="true" />
+            <div className="rfp-process-header">
+              {data?.processSection?.eyebrow && (
+                <span className="rfp-process-chip">
+                  {data.processSection.eyebrow}
+                </span>
+              )}
+              <h2 className="rfp-process-heading">
+                {data?.processSection?.heading}
+              </h2>
             </div>
+            <div className="rfp-process-grid">
+              {stepRows.map((row, rowIdx) => (
+                <div key={rowIdx} className="rfp-process-row">
+                  {row.map((step, idx) => {
+                    const stepNum = rowIdx * 3 + idx + 1;
+                    return (
+                      <div key={idx} className="rfp-process-cell">
+                        <div className="rfp-process-cell-top">
+                          <div className="rfp-process-icon">
+                            <span className="rfp-process-step-num">
+                              {String(stepNum).padStart(2, "0")}
+                            </span>
+                          </div>
+                          <h4 className="rfp-process-cell-title">
+                            {step.title}
+                          </h4>
+                        </div>
+                        <p className="rfp-process-cell-desc">
+                          {step.description}
+                        </p>
+                      </div>
+                    );
+                  })}
+                </div>
+              ))}
+            </div>
+          </div>
         </section>
       )}
 
@@ -204,25 +208,26 @@ export default async function RfpPage() {
               subtext={data.eligibility.subtext}
             />
             <div className="rfp-elig-cards section-content-gap">
-
               {/* Eligibility card */}
               <div className="rfp-elig-card rfp-elig-card--blue">
                 <h3 className="rfp-elig-card-heading">
                   {data.eligibility.eligibilityHeading}
                 </h3>
                 <div className="rfp-elig-items">
-                  {(data.eligibility.eligibilityItems ?? []).map((item, idx) => (
-                    <div key={idx} className="rfp-elig-item">
-                      <Image
-                        src="/images/about-arrow.svg"
-                        alt=""
-                        width={24}
-                        height={24}
-                        className="rfp-elig-item-icon"
-                      />
-                      <p className="rfp-elig-item-text">{item}</p>
-                    </div>
-                  ))}
+                  {(data.eligibility.eligibilityItems ?? []).map(
+                    (item, idx) => (
+                      <div key={idx} className="rfp-elig-item">
+                        <Image
+                          src="/images/about-arrow.svg"
+                          alt=""
+                          width={24}
+                          height={24}
+                          className="rfp-elig-item-icon"
+                        />
+                        <p className="rfp-elig-item-text">{item}</p>
+                      </div>
+                    ),
+                  )}
                 </div>
               </div>
 
@@ -246,7 +251,6 @@ export default async function RfpPage() {
                   ))}
                 </div>
               </div>
-
             </div>
           </Container>
         </section>
@@ -256,8 +260,7 @@ export default async function RfpPage() {
       {data?.evaluation && (
         <section className="section-padding bg-white">
           <Container>
-            <div className="vision-layout">
-
+            <div className="vision-layout gapMob">
               {/* Left — dark image card */}
               <div className="vision-img-card">
                 <Image
@@ -271,9 +274,11 @@ export default async function RfpPage() {
 
               {/* Right — text + criteria list */}
               <div className="vision-content">
-                <div className="vision-text-block">
+                <div className="vision-text-block ">
                   {data.evaluation.eyebrow && (
-                    <span className="section-eyebrow">{data.evaluation.eyebrow}</span>
+                    <span className="section-eyebrow">
+                      {data.evaluation.eyebrow}
+                    </span>
                   )}
                   <h2 className="vision-title">
                     {data.evaluation.heading?.split(" ").slice(0, -1).join(" ")}{" "}
@@ -289,9 +294,27 @@ export default async function RfpPage() {
                   {(data.evaluation.criteria ?? []).map((criterion, idx) => (
                     <li key={idx} className="vision-item">
                       <span className="vision-item-icon">
-                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <circle cx="10" cy="10" r="9" stroke="#ffb01e" strokeWidth="1.5"/>
-                          <path d="M6.5 10L9 12.5L13.5 7.5" stroke="#ffb01e" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                        <svg
+                          width="20"
+                          height="20"
+                          viewBox="0 0 20 20"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <circle
+                            cx="10"
+                            cy="10"
+                            r="9"
+                            stroke="#ffb01e"
+                            strokeWidth="1.5"
+                          />
+                          <path
+                            d="M6.5 10L9 12.5L13.5 7.5"
+                            stroke="#ffb01e"
+                            strokeWidth="1.5"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
                         </svg>
                       </span>
                       <span>{criterion}</span>
@@ -299,7 +322,6 @@ export default async function RfpPage() {
                   ))}
                 </ul>
               </div>
-
             </div>
           </Container>
         </section>
