@@ -38,7 +38,7 @@ export default async function BlogsPage() {
   posts = result ?? [];
 
   return (
-    <>
+    <main className="blog-list">
       <Container>
         <Breadcrumb items={[{ label: "Blogs" }]} />
       </Container>
@@ -47,6 +47,7 @@ export default async function BlogsPage() {
           <SectionHeading
             heading="Latest Blogs & Research"
             subtext="Explore published insights across governance, infrastructure, and real-world asset systems."
+            className="blog-head"
           />
 
           {posts.length > 0 ? (
@@ -71,6 +72,6 @@ export default async function BlogsPage() {
           )}
         </Container>
       </section>
-    </>
+    </main>
   );
 }
