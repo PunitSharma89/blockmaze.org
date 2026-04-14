@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 import Link from "next/link";
 import type { SanityNavItem } from "@/components/layout/HeaderClient";
 
@@ -12,6 +13,11 @@ interface MobileMenuProps {
 
 export default function MobileMenu({ isOpen, onClose, navItems }: MobileMenuProps) {
   const [expandedItems, setExpandedItems] = useState<string[]>([]);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const toggleExpanded = (label: string) => {
     setExpandedItems((prev) =>
@@ -21,15 +27,17 @@ export default function MobileMenu({ isOpen, onClose, navItems }: MobileMenuProp
     );
   };
 
-  return (
+  if (!mounted) return null;
+
+  return createPortal(
     <>
       {/* Overlay */}
-      {isOpen && (
-        <div
-          className="fixed inset-0 bg-black/50 z-40 lg:hidden"
-          onClick={onClose}
-        />
-      )}
+      <div
+        className={`fixed inset-0 bg-black/50 z-40 lg:hidden transition-opacity duration-300 ${
+          isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+        }`}
+        onClick={onClose}
+      />
 
       {/* Slide-out menu */}
       <div
@@ -117,6 +125,7 @@ export default function MobileMenu({ isOpen, onClose, navItems }: MobileMenuProp
           ))}
         </nav>
       </div>
-    </>
+    </>,
+    document.body
   );
 }
