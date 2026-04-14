@@ -51,11 +51,15 @@ export default function AccountabilityScroll() {
 
   useEffect(() => {
     let gsapCtx: { revert: () => void } | null = null
+    let unmounted = false
 
     const init = async () => {
       const { default: gsap } = await import('gsap')
       const { ScrollTrigger }  = await import('gsap/ScrollTrigger')
       gsap.registerPlugin(ScrollTrigger)
+
+      // If the component unmounted while we were awaiting imports, abort
+      if (unmounted) return
 
       const section = sectionRef.current
       if (!section) return
@@ -94,7 +98,10 @@ export default function AccountabilityScroll() {
     }
 
     init()
-    return () => { gsapCtx?.revert() }
+    return () => {
+      unmounted = true
+      gsapCtx?.revert()
+    }
   }, [])
 
   return (
