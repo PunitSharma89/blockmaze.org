@@ -127,7 +127,7 @@ export default async function ValidatorPage() {
   return (
     <div className="validator-page">
       {/* 1 ── HERO */}
-      <section className="about-hero-section">
+      <section className="about-hero-section about-page-hero">
         <div className="about-hero-wrap">
           <div className="about-hero-text">
             {data?.hero?.badge && (
@@ -155,7 +155,7 @@ export default async function ValidatorPage() {
           </div>
           <div className="about-hero-img-col">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/images/about-hero.svg" alt="Blockmaze Validator Platform" className="about-hero-img" />
+            <img src="/images/Validator-hero.png" alt="Blockmaze Validator Platform" className="about-hero-img" />
           </div>
         </div>
       </section>

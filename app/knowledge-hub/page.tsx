@@ -33,7 +33,7 @@ export default async function KnowledgeHubPage() {
   return (
     <>
       {/* 1 ── HERO — same as About page */}
-      <section className="about-hero-section">
+      <section className="about-hero-section about-page-hero">
         <div className="about-hero-wrap">
           <div className="about-hero-text">
             <div className="hero-chip-v2">
@@ -57,7 +57,7 @@ export default async function KnowledgeHubPage() {
           </div>
           <div className="about-hero-img-col">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/images/about-hero.svg" alt="Blockmaze Knowledge Hub" className="about-hero-img" />
+            <img src="/images/knowledge-hero.png" alt="Blockmaze Knowledge Hub" className="about-hero-img" />
           </div>
         </div>
       </section>
