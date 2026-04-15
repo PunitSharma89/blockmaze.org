@@ -72,33 +72,39 @@ export default async function RfpPage() {
   return (
     <>
       {/* SECTION 1: Hero */}
-      <section className="about-hero">
-        <div className="about-hero-grid" />
-        <div className="about-hero-inner">
-          <div className="hero-chip-v2">
-            <span className="hero-chip-dot" />
-            <span className="hero-chip-label">{data?.hero?.badge}</span>
+      <section className="about-hero-section about-page-hero">
+        <div className="about-hero-wrap">
+          {/* Left: text */}
+          <div className="about-hero-text">
+            {data?.hero?.badge && (
+              <div className="hero-chip-v2">
+                <span className="hero-chip-dot" />
+                <span className="hero-chip-label">{data.hero.badge}</span>
+              </div>
+            )}
+            <div className="about-hero-textblock">
+              <h1 className="about-hero-h1">{data?.hero?.heading}</h1>
+              <p className="about-hero-p">{data?.hero?.subtext}</p>
+            </div>
+            {data?.hero?.buttonText && (
+              <div className="hero-figma-btns">
+                <Link
+                  href={data.hero.buttonHref ?? "#"}
+                  className="hero-figma-btn-primary"
+                >
+                  {data.hero.buttonText}
+                </Link>
+              </div>
+            )}
           </div>
-          <div className="hero-figma-textblock">
-            <h1 className="hero-figma-h1">{data?.hero?.heading}</h1>
-            <p className="hero-figma-p">{data?.hero?.subtext}</p>
-          </div>
-          <div className="hero-figma-btns">
-            <Link
-              href={data?.hero?.buttonHref ?? "#"}
-              className="hero-figma-btn-primary"
-            >
-              {data?.hero?.buttonText}
-            </Link>
-          </div>
-          <div className="about-globe-container">
-            <Image
-              src="/images/about-globe.svg"
-              alt="Blockmaze ecosystem globe"
-              width={950}
-              height={400}
-              className="about-globe-img"
-              priority
+
+          {/* Right: illustration */}
+          <div className="about-hero-img-col">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/images/rfp-dao.jpg"
+              alt="Blockmaze RFP"
+              className="about-hero-img"
             />
           </div>
         </div>

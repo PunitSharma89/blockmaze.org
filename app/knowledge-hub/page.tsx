@@ -33,36 +33,31 @@ export default async function KnowledgeHubPage() {
   return (
     <>
       {/* 1 ── HERO — same as About page */}
-      <section className="about-hero">
-        <div className="about-hero-grid" />
-        <div className="about-hero-inner">
-          <div className="hero-chip-v2">
-            <span className="hero-chip-dot" />
-            <span className="hero-chip-label">Documentation &amp; Resources</span>
+      <section className="about-hero-section">
+        <div className="about-hero-wrap">
+          <div className="about-hero-text">
+            <div className="hero-chip-v2">
+              <span className="hero-chip-dot" />
+              <span className="hero-chip-label">Documentation &amp; Resources</span>
+            </div>
+            <div className="about-hero-textblock">
+              <h1 className="about-hero-h1">
+                Blockmaze Documentation &amp;{" "}
+                <span className="text-primary">Resources</span>
+              </h1>
+              <p className="about-hero-p">
+                The Blockmaze knowledge hub serves as the single source of truth
+                for all technical specifications, governance frameworks, validator
+                standards, token economics, and real-world asset infrastructure
+                documentation. All documents are version-controlled,
+                governance-aligned, and intended for developers, validators,
+                institutions, exchanges, and ecosystem participants.
+              </p>
+            </div>
           </div>
-          <div className="hero-figma-textblock">
-            <h1 className="hero-figma-h1">
-              Blockmaze Documentation &amp;{" "}
-              <span className="text-primary">Resources</span>
-            </h1>
-            <p className="hero-figma-p">
-              The Blockmaze knowledge hub serves as the single source of truth
-              for all technical specifications, governance frameworks, validator
-              standards, token economics, and real-world asset infrastructure
-              documentation. All documents are version-controlled,
-              governance-aligned, and intended for developers, validators,
-              institutions, exchanges, and ecosystem participants.
-            </p>
-          </div>
-          <div className="about-globe-container">
-            <Image
-              src="/images/about-globe.svg"
-              alt="Blockmaze Knowledge Hub"
-              width={950}
-              height={400}
-              className="about-globe-img"
-              priority
-            />
+          <div className="about-hero-img-col">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/images/about-hero.svg" alt="Blockmaze Knowledge Hub" className="about-hero-img" />
           </div>
         </div>
       </section>
