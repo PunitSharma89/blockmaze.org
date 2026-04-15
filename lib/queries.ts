@@ -275,6 +275,10 @@ export const latestBlogsQuery = `*[_type == "blog"] | order(_createdAt desc)[0..
   publishedAt
 }`;
 
+export const aboutPageQuery = `*[_type == "aboutPage"][0] {
+  hero { chipLabel, heading, headingHighlight, headingSuffix, bodyText }
+}`;
+
 export const homePageQuery = `*[_type == "homePage"][0] {
   hero { chipLabel, heading, bodyText, button1Text, button1Href, button2Text, button2Href },
   about { heading, headingHighlight, bodyText },

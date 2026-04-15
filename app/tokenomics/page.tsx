@@ -332,62 +332,39 @@ export default async function TokenomicsPage() {
   return (
     <>
       {/* 1 ── HERO */}
-      <section className="about-hero">
-        <div className="about-hero-grid" />
-        <div className="about-hero-inner">
-          {data?.hero?.badge && (
-            <div className="hero-chip-v2">
-              <span className="hero-chip-dot" />
-              <span className="hero-chip-label">{data.hero.badge}</span>
+      <section className="about-hero-section">
+        <div className="about-hero-wrap">
+          <div className="about-hero-text">
+            {data?.hero?.badge && (
+              <div className="hero-chip-v2">
+                <span className="hero-chip-dot" />
+                <span className="hero-chip-label">{data.hero.badge}</span>
+              </div>
+            )}
+            <div className="about-hero-textblock">
+              {data?.hero?.subheading && (
+                <h1 className="about-hero-h1">{data.hero.subheading}</h1>
+              )}
+              {data?.hero?.bodyText && (
+                <p className="about-hero-p">{data.hero.bodyText}</p>
+              )}
             </div>
-          )}
-          <div className="hero-figma-textblock">
-            {/* <h1 className="hero-figma-h1">{data?.hero?.heading}</h1> */}
-            {data?.hero?.subheading && (
-              <h1 className="hero-figma-h1">{data.hero.subheading}</h1>
-            )}
-            {data?.hero?.bodyText && (
-              <p className="hero-figma-p">{data.hero.bodyText}</p>
-            )}
+            <div className="hero-figma-btns">
+              {data?.hero?.button1Text && (
+                <Link href={data.hero.button1Href ?? "#"} className="hero-figma-btn-primary">
+                  {data.hero.button1Text}
+                </Link>
+              )}
+              {data?.hero?.button2Text && (
+                <Link href={data.hero.button2Href ?? "#"} className="hero-figma-btn-white">
+                  {data.hero.button2Text}
+                </Link>
+              )}
+            </div>
           </div>
-          <div className="hero-figma-btns">
-            {data?.hero?.button1Text && (
-              <Link
-                href={data.hero.button1Href ?? "#"}
-                className="hero-figma-btn-primary"
-              >
-                {data.hero.button1Text}
-              </Link>
-            )}
-            {data?.hero?.button2Text && (
-              <Link
-                href={data.hero.button2Href ?? "#"}
-                className="hero-figma-btn-white"
-              >
-                {data.hero.button2Text}
-              </Link>
-            )}
-          </div>
-          <div className="about-globe-container">
-            {data?.hero?.image?.asset?.url ? (
-              <Image
-                src={data.hero.image.asset.url}
-                alt={data.hero.image.alt ?? ""}
-                width={950}
-                height={400}
-                className="about-globe-img"
-                priority
-              />
-            ) : (
-              <Image
-                src="/images/tokenomics-img.png"
-                alt="Blockmaze Tokenomics"
-                width={950}
-                height={400}
-                className="about-globe-img"
-                priority
-              />
-            )}
+          <div className="about-hero-img-col">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/images/about-hero.svg" alt="Blockmaze Tokenomics" className="about-hero-img" />
           </div>
         </div>
       </section>

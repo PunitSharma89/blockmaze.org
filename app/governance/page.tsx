@@ -281,36 +281,28 @@ export default async function GovernancePage() {
   return (
     <>
       {/* 1 ── HERO — same pattern as About / RFP */}
-      <section className="about-hero">
-        <div className="about-hero-grid" />
-        <div className="about-hero-inner">
-          <div className="hero-chip-v2">
-            <span className="hero-chip-dot" />
-            <span className="hero-chip-label">{data?.hero?.badge}</span>
+      <section className="about-hero-section about-page-hero">
+        <div className="about-hero-wrap">
+          <div className="about-hero-text">
+            <div className="hero-chip-v2">
+              <span className="hero-chip-dot" />
+              <span className="hero-chip-label">{data?.hero?.badge}</span>
+            </div>
+            <div className="about-hero-textblock">
+              <h1 className="about-hero-h1">{data?.hero?.heading}</h1>
+              <p className="about-hero-p">{data?.hero?.subtext}</p>
+            </div>
+            <div className="hero-figma-btns">
+              {data?.hero?.buttonText && (
+                <Link href={data.hero.buttonHref ?? "#"} className="hero-figma-btn-primary">
+                  {data.hero.buttonText}
+                </Link>
+              )}
+            </div>
           </div>
-          <div className="hero-figma-textblock">
-            <h1 className="hero-figma-h1">{data?.hero?.heading}</h1>
-            <p className="hero-figma-p">{data?.hero?.subtext}</p>
-          </div>
-          <div className="hero-figma-btns">
-            {data?.hero?.buttonText && (
-              <Link
-                href={data.hero.buttonHref ?? "#"}
-                className="hero-figma-btn-primary"
-              >
-                {data.hero.buttonText}
-              </Link>
-            )}
-          </div>
-          <div className="about-globe-container">
-            <Image
-              src="/images/about-globe.svg"
-              alt="Blockmaze governance"
-              width={950}
-              height={400}
-              className="about-globe-img"
-              priority
-            />
+          <div className="about-hero-img-col">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/images/goverence-hero.png" alt="Blockmaze governance" className="about-hero-img" />
           </div>
         </div>
       </section>
@@ -336,7 +328,7 @@ export default async function GovernancePage() {
 
       {/* 3 ── ROLES — eco-cards-grid with icons (white) */}
       {roles.length > 0 && (
-        <section className="section-padding bg-white">
+        <section className="section-padding bg-white !pt-0">
           <Container>
             <SectionHeading
               label={data?.rolesSection?.eyebrow}

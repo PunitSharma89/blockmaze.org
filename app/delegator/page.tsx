@@ -84,40 +84,32 @@ export default async function DelegatorPage() {
     <div className="delegator-page">
 
       {/* 1 ── HERO — same as validator */}
-      <section className="about-hero">
-        <div className="about-hero-grid" />
-        <div className="about-hero-inner">
-          {data?.hero?.badge && (
-            <div className="hero-chip-v2">
-              <span className="hero-chip-dot" />
-              <span className="hero-chip-label">{data.hero.badge}</span>
+      <section className="about-hero-section">
+        <div className="about-hero-wrap">
+          <div className="about-hero-text">
+            {data?.hero?.badge && (
+              <div className="hero-chip-v2">
+                <span className="hero-chip-dot" />
+                <span className="hero-chip-label">{data.hero.badge}</span>
+              </div>
+            )}
+            <div className="about-hero-textblock">
+              <h1 className="about-hero-h1">{data?.hero?.heading}</h1>
+              {data?.hero?.subtext && (
+                <p className="about-hero-p">{data.hero.subtext}</p>
+              )}
             </div>
-          )}
-          <div className="hero-figma-textblock">
-            <h1 className="hero-figma-h1">{data?.hero?.heading}</h1>
-            {data?.hero?.subtext && (
-              <p className="hero-figma-p">{data.hero.subtext}</p>
+            {data?.hero?.buttonText && (
+              <div className="hero-figma-btns">
+                <Link href={data.hero.buttonHref ?? "#"} className="hero-figma-btn-primary">
+                  {data.hero.buttonText}
+                </Link>
+              </div>
             )}
           </div>
-          {data?.hero?.buttonText && (
-            <div className="hero-figma-btns">
-              <Link
-                href={data.hero.buttonHref ?? "#"}
-                className="hero-figma-btn-primary"
-              >
-                {data.hero.buttonText}
-              </Link>
-            </div>
-          )}
-          <div className="about-globe-container">
-            <Image
-              src="/images/about-globe.svg"
-              alt="Blockmaze Delegator Platform"
-              width={950}
-              height={400}
-              className="about-globe-img"
-              priority
-            />
+          <div className="about-hero-img-col">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/images/about-hero.svg" alt="Blockmaze Delegator Platform" className="about-hero-img" />
           </div>
         </div>
       </section>

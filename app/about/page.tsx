@@ -6,6 +6,8 @@ import FAQ from "@/components/ui/FAQ";
 import RoleTabs from "@/components/ui/RoleTabs";
 import FoundationScroller from "@/components/ui/FoundationScroller";
 import AccountabilityScroll from "@/components/ui/AccountabilityScroll";
+import { sanityFetch } from "@/lib/sanity";
+import { aboutPageQuery } from "@/lib/queries";
 
 export const metadata: Metadata = {
   title: "About",
@@ -187,36 +189,54 @@ const faqItems = [
   },
 ];
 
-export default function AboutPage() {
+interface AboutData {
+  hero?: {
+    chipLabel?: string;
+    heading?: string;
+    headingHighlight?: string;
+    headingSuffix?: string;
+    bodyText?: string;
+  };
+}
+
+export default async function AboutPage() {
+  const data = await sanityFetch<AboutData>(aboutPageQuery);
+
   return (
     <>
-      {/* Hero — Figma 283:76 */}
-      <section className="about-hero">
-        <div className="about-hero-grid" />
-        <div className="about-hero-inner">
-          <div className="hero-chip-v2">
-            <span className="hero-chip-dot" />
-            <span className="hero-chip-label">About the Blockmaze Foundation &amp; Ecosystem</span>
+      {/* Hero — Figma 420:277 */}
+      <section className="about-hero-section about-page-hero">
+        <div className="about-hero-wrap">
+          {/* Left: text */}
+          <div className="about-hero-text">
+            <div className="hero-chip-v2">
+              <span className="hero-chip-dot" />
+              <span className="hero-chip-label">
+                {data?.hero?.chipLabel ?? "About the Blockmaze Foundation & Ecosystem"}
+              </span>
+            </div>
+            <div className="about-hero-textblock">
+              <h1 className="about-hero-h1">
+                {data?.hero?.heading ?? "Independent Governance for Regulated, Real-World"}{" "}
+                <span className="text-primary">
+                  {data?.hero?.headingHighlight ?? "Blockchain"}
+                </span>{" "}
+                {data?.hero?.headingSuffix ?? "Infrastructure"}
+              </h1>
+              <p className="about-hero-p">
+                {data?.hero?.bodyText ??
+                  "The Blockmaze foundation maintains the governance architecture of the Blockmaze Layer-0 network, including issuer admission standards, on-chain registries, and permission frameworks."}
+              </p>
+            </div>
           </div>
-          <div className="hero-figma-textblock">
-            <h1 className="hero-figma-h1">
-              Independent Governance for Regulated, Real-World{" "}
-              <span className="text-primary">Blockchain</span> Infrastructure
-            </h1>
-            <p className="hero-figma-p">
-              The Blockmaze foundation maintains the governance architecture of
-              the Blockmaze Layer-0 network, including issuer admission
-              standards, on-chain registries, and permission frameworks.
-            </p>
-          </div>
-          <div className="about-globe-container">
-            <Image
-              src="/images/about-globe.svg"
-              alt="Blockmaze ecosystem globe"
-              width={950}
-              height={400}
-              className="about-globe-img"
-              priority
+
+          {/* Right: illustration — absolutely centered, overflow-clip like Figma */}
+          <div className="about-hero-img-col">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/images/about-hero-1.jpg"
+              alt="Blockmaze ecosystem illustration"
+              className="about-hero-img"
             />
           </div>
         </div>

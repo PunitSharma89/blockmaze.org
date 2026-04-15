@@ -15,6 +15,7 @@ import validatorPage from "./sanity/schemas/validatorPage";
 import delegatorPage from "./sanity/schemas/delegatorPage";
 import tokenomicsPage from "./sanity/schemas/tokenomicsPage";
 import homePage from "./sanity/schemas/homePage";
+import aboutPage from "./sanity/schemas/aboutPage";
 import { PublishAction } from "./sanity/actions/PublishAction";
 
 export default defineConfig({
@@ -41,6 +42,7 @@ export default defineConfig({
       delegatorPage,
       tokenomicsPage,
       homePage,
+      aboutPage,
     ],
   },
   document: {
