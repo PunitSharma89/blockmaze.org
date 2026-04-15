@@ -2317,16 +2317,118 @@ main.max-w-1920 {
   min-width: 1px;
 }
 
-/* Image — Figma: absolute, centered horizontally, top 12px, 876×584 */
+/* Image — centered in its column, natural dimensions clipped by overflow:hidden */
 .about-hero-img {
   position: absolute;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  /* width: 876px;
-  height: 584px; */
-  object-fit: cover;
+  max-width: 92%;
+  max-height: 92%;
+  object-fit: contain;
   pointer-events: none;
+}
+
+/* ── Inner Hero — Responsive ─────────────────────────────────────────── */
+
+/* 1200px — start shrinking the fixed-width text column */
+@media (max-width: 1200px) {
+  .about-hero-text {
+    flex: 0 0 52%;
+    width: 52%;
+  }
+}
+
+/* 980px — stack to single column, center-align content */
+@media (max-width: 980px) {
+  .about-hero-wrap {
+    flex-direction: column;
+    width: 90%;
+    gap: 0;
+  }
+  .about-hero-text {
+    flex: none;
+    width: 100%;
+    padding: 60px 0 28px;
+    align-items: center;
+    text-align: center;
+  }
+  .about-hero-textblock {
+    align-items: center;
+  }
+  .about-hero-h1,
+  .about-hero-p {
+    text-align: center;
+  }
+  .about-hero-img-col {
+    flex: none;
+    width: 100%;
+    height: 280px;
+  }
+  .about-hero-h1 {
+    font-size: 32px;
+    line-height: 46px;
+  }
+}
+
+/* 767px — mobile */
+@media (max-width: 767px) {
+  .about-hero-wrap {
+    width: 100%;
+    padding: 0 24px;
+    box-sizing: border-box;
+  }
+  .about-hero-text {
+    padding: 48px 0 20px;
+  }
+  .about-hero-img-col {
+    height: 230px;
+  }
+  .about-hero-h1 {
+    font-size: 26px;
+    line-height: 38px;
+  }
+  .about-hero-p {
+    font-size: 15px;
+    line-height: 26px;
+  }
+  .about-hero-section .hero-chip-v2 {
+    font-size: 13px;
+  }
+  .about-hero-section .hero-figma-btns {
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+  }
+  .about-hero-section .hero-figma-btn-primary,
+  .about-hero-section .hero-figma-btn-white {
+    width: 100% !important;
+    text-align: center;
+    justify-content: center;
+    box-sizing: border-box;
+  }
+}
+
+/* 479px — small mobile */
+@media (max-width: 479px) {
+  .about-hero-wrap {
+    padding: 0 16px;
+  }
+  .about-hero-text {
+    padding: 40px 0 16px;
+    gap: 12px;
+  }
+  .about-hero-img-col {
+    height: 190px;
+  }
+  .about-hero-h1 {
+    font-size: 22px;
+    line-height: 32px;
+  }
+  .about-hero-p {
+    font-size: 14px;
+    line-height: 24px;
+  }
 }
 
 /* ── Foundation Scroller ─────────────────────────────────────────────── */

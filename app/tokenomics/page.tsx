@@ -332,7 +332,7 @@ export default async function TokenomicsPage() {
   return (
     <>
       {/* 1 ── HERO */}
-      <section className="about-hero-section">
+      <section className="about-hero-section about-page-hero">
         <div className="about-hero-wrap">
           <div className="about-hero-text">
             {data?.hero?.badge && (
@@ -364,7 +364,7 @@ export default async function TokenomicsPage() {
           </div>
           <div className="about-hero-img-col">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/images/about-hero.svg" alt="Blockmaze Tokenomics" className="about-hero-img" />
+            <img src="/images/Tokenomics-hero.png" alt="Blockmaze Tokenomics" className="about-hero-img" />
           </div>
         </div>
       </section>

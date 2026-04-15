@@ -56,7 +56,7 @@ export default async function SwapPage() {
   return (
     <>
       {/* 1 ── HERO */}
-      <section className="about-hero-section swap-hero">
+      <section className="about-hero-section swap-hero about-page-hero">
         <div className="about-hero-wrap">
           <div className="about-hero-text">
             {data?.hero?.badge && (
@@ -81,7 +81,7 @@ export default async function SwapPage() {
           </div>
           <div className="about-hero-img-col">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/images/about-hero.svg" alt="BMZ Swap Platform" className="about-hero-img" />
+            <img src="/images/swap-hero.png" alt="BMZ Swap Platform" className="about-hero-img" />
           </div>
         </div>
       </section>

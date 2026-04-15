@@ -64,7 +64,7 @@ export default async function DAOPage() {
   return (
     <>
       {/* 1 ── HERO */}
-      <section className="about-hero-section">
+      <section className="about-hero-section about-page-hero">
         <div className="about-hero-wrap">
           <div className="about-hero-text">
             {data?.hero?.badge && (
@@ -95,7 +95,7 @@ export default async function DAOPage() {
           </div>
           <div className="about-hero-img-col">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/images/about-hero.svg" alt="Blockmaze DAO" className="about-hero-img" />
+            <img src="/images/dao-hero.png" alt="Blockmaze DAO" className="about-hero-img" />
           </div>
         </div>
       </section>
