@@ -43,35 +43,41 @@ export default function GovernanceStructureScroll({
       if (!section) return
 
       gsapCtx = gsap.context(() => {
-        itemRefs.current.forEach((item, i) => {
-          if (!item) return
-          ScrollTrigger.create({
-            trigger: item,
-            start: 'top 62%',
-            end: 'bottom 38%',
-            onEnter:     () => setActiveIndex(i),
-            onEnterBack: () => setActiveIndex(i),
-          })
-        })
+        const lineEl = lineFillRef.current?.parentElement as HTMLElement | null
+        if (!lineEl || !lineFillRef.current) return
 
-        if (lineFillRef.current) {
-          gsap.set(lineFillRef.current, { scaleY: 0, transformOrigin: 'top center' })
-          ScrollTrigger.create({
-            trigger: section,
-            start: 'top 60%',
-            end: 'bottom 40%',
-            onUpdate: (self) => {
-              if (lineFillRef.current) {
-                gsap.to(lineFillRef.current, {
-                  scaleY: self.progress,
-                  duration: 0.15,
-                  ease: 'none',
-                  overwrite: true,
-                })
-              }
-            },
-          })
-        }
+        gsap.set(lineFillRef.current, { scaleY: 0, transformOrigin: 'top center' })
+
+        ScrollTrigger.create({
+          trigger: section,
+          start: 'top center',
+          end: 'bottom center',
+          onUpdate: (self) => {
+            const progress = self.progress
+
+            gsap.to(lineFillRef.current, {
+              scaleY: progress,
+              duration: 0.1,
+              ease: 'none',
+              overwrite: true,
+            })
+
+            const lineRect = lineEl.getBoundingClientRect()
+            const fillReachedY = lineRect.top + lineEl.offsetHeight * progress
+
+            let newActive = 0
+            itemRefs.current.forEach((item, i) => {
+              if (!item) return
+              const markerEl = item.querySelector('.ucs-marker') as HTMLElement | null
+              if (!markerEl) return
+              const markerRect = markerEl.getBoundingClientRect()
+              const markerCenterY = markerRect.top + markerRect.height / 2
+              if (fillReachedY >= markerCenterY) newActive = i
+            })
+
+            setActiveIndex(newActive)
+          },
+        })
       }, section)
     }
 
@@ -117,7 +123,7 @@ export default function GovernanceStructureScroll({
                 <div
                   key={i}
                   ref={(el) => { itemRefs.current[i] = el }}
-                  className={`ucs-item${activeIndex === i ? ' ucs-item--active' : ''}`}
+                  className={`ucs-item${activeIndex === i ? ' ucs-item--active' : i < activeIndex ? ' ucs-item--done' : ''}`}
                 >
                   <div className="ucs-marker">
                     <div className="ucs-marker-outer" />
