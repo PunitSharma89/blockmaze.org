@@ -15,7 +15,7 @@ export default function SectionHeading({
 }: SectionHeadingProps) {
   return (
     <div
-      className={`flex flex-col gap-4 items-center text-center w-full mb-3 ${className}`}
+      className={`flex flex-col gap-4 items-start md:items-center text-center w-full mb-3 ${className}`}
     >
       {label && <span className="section-eyebrow">{label}</span>}
       <h2 className="section-heading">{heading}</h2>

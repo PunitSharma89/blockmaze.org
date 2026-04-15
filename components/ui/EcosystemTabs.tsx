@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useScroll, useMotionValueEvent } from 'framer-motion'
@@ -65,8 +65,8 @@ const DEFAULT_ECOSYSTEM: EcosystemItem[] = [
   },
 ]
 
-export default function EcosystemTabs({ heading, headingHighlight, subtext, items }: EcosystemTabsProps) {
-  const ECOSYSTEM = (items && items.length > 0) ? items : DEFAULT_ECOSYSTEM
+/* ── Desktop scroll-driven version (unchanged) ─────────────────────────── */
+function EcosystemDesktop({ ECOSYSTEM }: { ECOSYSTEM: EcosystemItem[] }) {
   const THRESHOLDS = ECOSYSTEM.map((_, i) => i / ECOSYSTEM.length)
   const scrollRef = useRef<HTMLDivElement>(null)
   const [active, setActive] = useState(0)
@@ -89,6 +89,103 @@ export default function EcosystemTabs({ heading, headingHighlight, subtext, item
   const barTop = `${(active / ECOSYSTEM.length) * 100}%`
 
   return (
+    <div ref={scrollRef} className="eco-scroll">
+      <div className="eco-sticky">
+        <div className="eco-columns">
+          <div className="eco-left">
+            <div className="eco-track">
+              <div className="eco-track-indicator" style={{ top: barTop }} />
+            </div>
+            <div className="eco-nav-list">
+              {ECOSYSTEM.map((item, i) => (
+                <div key={i} className={`eco-nav-item ${active === i ? 'eco-nav-item--active' : ''}`}>
+                  <h4 className="eco-nav-title">{item.title}</h4>
+                  {active === i && <p className="eco-nav-desc">{item.description}</p>}
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="eco-right-card">
+            <div className="eco-img-container">
+              <Image src={current.imagePath} alt={current.title} width={614} height={344} className="eco-img" />
+            </div>
+            <div className="eco-card-content">
+              <h3 className="eco-card-title">{current.title}</h3>
+              <div className="eco-card-bullets">
+                {current.bullets.map((bullet, i) => (
+                  <div key={i} className="eco-card-bullet">
+                    <Image src="/images/eco-arrow.svg" alt="" width={24} height={24} className="eco-card-bullet-icon" />
+                    <span>{bullet}</span>
+                  </div>
+                ))}
+              </div>
+              <Link href={current.href} className="hero-figma-btn-primary">Learn More</Link>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+/* ── Mobile accordion version ───────────────────────────────────────────── */
+function EcosystemMobile({ ECOSYSTEM }: { ECOSYSTEM: EcosystemItem[] }) {
+  const [openIndex, setOpenIndex] = useState<number>(0)
+
+  return (
+    <div className="eco-accordion">
+      {ECOSYSTEM.map((item, i) => {
+        const isOpen = openIndex === i
+        return (
+          <div key={i} className={`eco-accordion-item${isOpen ? ' eco-accordion-item--open' : ''}`}>
+            <button
+              className="eco-accordion-trigger"
+              onClick={() => setOpenIndex(isOpen ? -1 : i)}
+              aria-expanded={isOpen}
+            >
+              <span className="eco-accordion-title">{item.title}</span>
+              <span className="eco-accordion-icon">{isOpen ? '−' : '+'}</span>
+            </button>
+
+            {isOpen && (
+              <div className="eco-accordion-body">
+                <div className="eco-img-container">
+                  <Image src={item.imagePath} alt={item.title} width={614} height={344} className="eco-img" />
+                </div>
+                <div className="eco-card-content">
+                  <p className="eco-nav-desc">{item.description}</p>
+                  <div className="eco-card-bullets">
+                    {item.bullets.map((bullet, j) => (
+                      <div key={j} className="eco-card-bullet">
+                        <Image src="/images/eco-arrow.svg" alt="" width={24} height={24} className="eco-card-bullet-icon" />
+                        <span>{bullet}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <Link href={item.href} className="hero-figma-btn-primary">Learn More</Link>
+                </div>
+              </div>
+            )}
+          </div>
+        )
+      })}
+    </div>
+  )
+}
+
+/* ── Main export ────────────────────────────────────────────────────────── */
+export default function EcosystemTabs({ heading, headingHighlight, subtext, items }: EcosystemTabsProps) {
+  const ECOSYSTEM = (items && items.length > 0) ? items : DEFAULT_ECOSYSTEM
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth <= 767)
+    check()
+    window.addEventListener('resize', check)
+    return () => window.removeEventListener('resize', check)
+  }, [])
+
+  return (
     <div className="eco-section">
       <div className="eco-heading-wrap">
         <h2 className="section-heading">
@@ -100,42 +197,10 @@ export default function EcosystemTabs({ heading, headingHighlight, subtext, item
         </p>
       </div>
 
-      <div ref={scrollRef} className="eco-scroll">
-        <div className="eco-sticky">
-          <div className="eco-columns">
-            <div className="eco-left">
-              <div className="eco-track">
-                <div className="eco-track-indicator" style={{ top: barTop }} />
-              </div>
-              <div className="eco-nav-list">
-                {ECOSYSTEM.map((item, i) => (
-                  <div key={i} className={`eco-nav-item ${active === i ? 'eco-nav-item--active' : ''}`}>
-                    <h4 className="eco-nav-title">{item.title}</h4>
-                    {active === i && <p className="eco-nav-desc">{item.description}</p>}
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div className="eco-right-card">
-              <div className="eco-img-container">
-                <Image src={current.imagePath} alt={current.title} width={614} height={344} className="eco-img" />
-              </div>
-              <div className="eco-card-content">
-                <h3 className="eco-card-title">{current.title}</h3>
-                <div className="eco-card-bullets">
-                  {current.bullets.map((bullet, i) => (
-                    <div key={i} className="eco-card-bullet">
-                      <Image src="/images/eco-arrow.svg" alt="" width={24} height={24} className="eco-card-bullet-icon" />
-                      <span>{bullet}</span>
-                    </div>
-                  ))}
-                </div>
-                <Link href={current.href} className="hero-figma-btn-primary">Learn More</Link>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      {isMobile
+        ? <EcosystemMobile ECOSYSTEM={ECOSYSTEM} />
+        : <EcosystemDesktop ECOSYSTEM={ECOSYSTEM} />
+      }
     </div>
   )
 }
