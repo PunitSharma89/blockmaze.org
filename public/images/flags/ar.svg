@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 30">
+  <!-- Saudi Arabia flag — green with white shahada -->
+  <rect width="60" height="30" fill="#006C35"/>
+  <!-- Simplified white sword and text -->
+  <text x="30" y="15" text-anchor="middle" dominant-baseline="middle" font-family="serif" font-size="7" fill="white" letter-spacing="0.5">الله أكبر</text>
+  <line x1="16" y1="22" x2="44" y2="22" stroke="white" stroke-width="1.5"/>
+  <path d="M16,22 Q15,21 16,20" stroke="white" stroke-width="1.5" fill="none"/>
+</svg>

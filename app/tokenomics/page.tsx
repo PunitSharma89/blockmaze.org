@@ -55,7 +55,9 @@ interface TokenomicsData {
 
 export default async function TokenomicsPage() {
   const locale = await getLocale();
-  const data = await sanityFetch<TokenomicsData>(tokenomicsPageQuery, { locale });
+  const data = await sanityFetch<TokenomicsData>(tokenomicsPageQuery, {
+    locale,
+  });
 
   const utilityCards = data?.utilityCards ?? [];
   const tokenAllocation = data?.tokenAllocation ?? [];
@@ -353,29 +355,30 @@ export default async function TokenomicsPage() {
             </div>
             <div className="hero-figma-btns">
               {data?.hero?.button1Text && (
-                <Link href={data.hero.button1Href ?? "#"} className="hero-figma-btn-primary">
+                <Link
+                  href={data.hero.button1Href ?? "#"}
+                  className="hero-figma-btn-primary"
+                >
                   {data.hero.button1Text}
                 </Link>
               )}
               {data?.hero?.button2Text && (
-                <Link href={data.hero.button2Href ?? "#"} className="hero-figma-btn-white">
+                <Link
+                  href={data.hero.button2Href ?? "#"}
+                  className="hero-figma-btn-white"
+                >
                   {data.hero.button2Text}
                 </Link>
               )}
             </div>
-          )}
-          <div className="hero-figma-textblock">
-            {/* <h1 className="hero-figma-h1">{data?.hero?.heading}</h1> */}
-            {data?.hero?.subheading && (
-              <h1 className="hero-figma-h1">{data.hero.subheading}</h1>
-            )}
-            {data?.hero?.bodyText && (
-              <p className="hero-figma-p">{data.hero.bodyText}</p>
-            )}
           </div>
           <div className="about-hero-img-col">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/images/Tokenomics-hero.png" alt="Blockmaze Tokenomics" className="about-hero-img" />
+            <img
+              src="/images/Tokenomics-hero.png"
+              alt="Blockmaze Tokenomics"
+              className="about-hero-img"
+            />
           </div>
         </div>
       </section>
