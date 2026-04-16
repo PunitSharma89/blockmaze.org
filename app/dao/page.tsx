@@ -278,7 +278,7 @@ export default async function DAOPage() {
             <div className="flex flex-col lg:flex-row gap-12 items-start faq-grid-gap">
               <div className="lg:w-5/12">
                 <Image
-                  src="/images/faq-img.png"
+                  src="/images/faq-svg.svg"
                   alt="Frequently Asked Questions"
                   width={454}
                   height={425}

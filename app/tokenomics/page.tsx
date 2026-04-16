@@ -377,6 +377,7 @@ export default async function TokenomicsPage() {
               label={data?.utilitySection?.eyebrow}
               heading={data?.utilitySection?.heading ?? ""}
               subtext={data?.utilitySection?.subtext}
+              className="!items-center"
             />
             <div className="tokenomics-elig-grid section-content-gap">
               {utilityCards.map((card, idx) => (
