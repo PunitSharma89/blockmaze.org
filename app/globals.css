@@ -1587,7 +1587,6 @@ main.max-w-1920 {
   opacity: 0.75;
 }
 
-/* ── Mobile accordion (replaces scroll-driven on ≤767px) ─────────────── */
 .eco-accordion {
   width: 90%;
   max-width: var(--600);
@@ -2309,7 +2308,6 @@ main.max-w-1920 {
   font-weight: 700;
   line-height: 58px;
   color: #0b0b0b;
-  text-align: left;
   width: 100%;
 }
 
@@ -2318,7 +2316,6 @@ main.max-w-1920 {
   font-weight: 400;
   line-height: 28px;
   color: #373737;
-  text-align: left;
   width: 100%;
 }
 
@@ -2334,33 +2331,14 @@ main.max-w-1920 {
 /* Image — centered in its column, natural dimensions clipped by overflow:hidden */
 .about-hero-img {
   position: absolute;
-  inset: 0;
-  z-index: 0;
-  background-image:
-    linear-gradient(
-      to right,
-      var(--color-bg-warm-card) var(--1),
-      transparent var(--1)
-    ),
-    linear-gradient(
-      to bottom,
-      var(--color-bg-warm-card) var(--1),
-      transparent var(--1)
-    );
-  background-size: var(--20) var(--30);
-  -webkit-mask-image: radial-gradient(
-    ellipse 70% 60% at 50% 0%,
-    var(--color-black) 60%,
-    transparent 100%
-  );
-  mask-image: radial-gradient(
-    ellipse 70% 60% at 50% 0%,
-    var(--color-black) 60%,
-    transparent 100%
-  );
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 92%;
+  max-height: 92%;
+  object-fit: contain;
   pointer-events: none;
 }
-
 .about-hero-inner {
   max-width: var(--960);
   margin: 0 auto;
@@ -2379,66 +2357,6 @@ main.max-w-1920 {
   width: var(--950);
   max-width: 100%;
   margin-top: var(--36);
-}
-
-/* 767px — mobile */
-@media (max-width: 767px) {
-  .about-hero-wrap {
-    width: 100%;
-    padding: 0 24px;
-    box-sizing: border-box;
-  }
-  .about-hero-text {
-    padding: 48px 0 20px;
-  }
-  .about-hero-img-col {
-    height: 230px;
-  }
-  .about-hero-h1 {
-    font-size: 26px;
-    line-height: 38px;
-  }
-  .about-hero-p {
-    font-size: 15px;
-    line-height: 26px;
-  }
-  .about-hero-section .hero-chip-v2 {
-    font-size: 13px;
-  }
-  .about-hero-section .hero-figma-btns {
-    flex-direction: column;
-    width: 100%;
-    gap: 10px;
-  }
-  .about-hero-section .hero-figma-btn-primary,
-  .about-hero-section .hero-figma-btn-white {
-    width: 100% !important;
-    text-align: center;
-    justify-content: center;
-    box-sizing: border-box;
-  }
-}
-
-/* 479px — small mobile */
-@media (max-width: 479px) {
-  .about-hero-wrap {
-    padding: 0 16px;
-  }
-  .about-hero-text {
-    padding: 40px 0 16px;
-    gap: 12px;
-  }
-  .about-hero-img-col {
-    height: 190px;
-  }
-  .about-hero-h1 {
-    font-size: 22px;
-    line-height: 32px;
-  }
-  .about-hero-p {
-    font-size: 14px;
-    line-height: 24px;
-  }
 }
 
 /* ── Foundation Scroller ─────────────────────────────────────────────── */
@@ -4466,6 +4384,25 @@ table.table td {
   position: relative;
 }
 
+.lang-switcher-flag-img {
+  display: block;
+  flex-shrink: 0;
+  border-radius: 50px;
+  width: 20px;
+  height: 20px;
+  overflow: hidden;
+  object-fit: cover;
+}
+
+/* next/image wraps img in a span — make sure corners are clipped */
+.lang-switcher-btn span,
+.lang-switcher-option span {
+  border-radius: 3px;
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex !important;
+}
+
 .lang-switcher-btn {
   display: flex;
   align-items: center;
@@ -4501,7 +4438,7 @@ table.table td {
   position: absolute;
   top: calc(100% + var(--6));
   right: 0;
-  min-width: var(--130);
+  min-width: var(--200);
   background: var(--color-white);
   border: var(--1) solid var(--color-border-default);
   border-radius: var(--10);
@@ -4553,4 +4490,9 @@ table.table td {
 [dir="rtl"] .lang-switcher-dropdown {
   right: auto;
   left: 0;
+}
+.about-hero-section {
+  background-color: #fdf7e9 !important;
+  overflow: hidden;
+  position: relative;
 }

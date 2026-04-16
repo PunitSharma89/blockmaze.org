@@ -1,12 +1,13 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import Image from "next/image";
 
 const LOCALES = [
-  { id: "en", label: "EN", full: "English" },
-  { id: "ar", label: "AR", full: "Arabic" },
-  { id: "es", label: "ES", full: "Spanish" },
-  { id: "fr", label: "FR", full: "French" },
+  { id: "en", label: "EN", full: "English", flag: "/images/flags/en.svg" },
+  { id: "ar", label: "AR", full: "Arabic",  flag: "/images/flags/ar.svg" },
+  { id: "es", label: "ES", full: "Spanish", flag: "/images/flags/es.svg" },
+  { id: "fr", label: "FR", full: "French",  flag: "/images/flags/fr.svg" },
 ];
 
 function getCurrentLocale(): string {
@@ -38,7 +39,6 @@ export default function LanguageSwitcher() {
     document.cookie = `NEXT_LOCALE=${newLocale}; path=/; max-age=31536000; SameSite=lax`;
     setLocale(newLocale);
     setOpen(false);
-    // Full reload so server re-reads cookie and fetches correct locale content
     window.location.reload();
   };
 
@@ -50,16 +50,21 @@ export default function LanguageSwitcher() {
         className="lang-switcher-btn"
         onClick={() => setOpen((v) => !v)}
         aria-label="Select language"
+        aria-expanded={open}
       >
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-          <circle cx="12" cy="12" r="10" />
-          <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
-        </svg>
-        <span>{current.label}</span>
+        <Image
+          src={current.flag}
+          alt={current.full}
+          width={20}
+          height={15}
+          className="lang-switcher-flag-img"
+        />
+        <span className="lang-switcher-label">{current.label}</span>
         <svg
           className={`lang-switcher-arrow${open ? " open" : ""}`}
-          width="12" height="12" viewBox="0 0 12 12" fill="none"
-          stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"
+          width="10" height="10" viewBox="0 0 12 12" fill="none"
+          stroke="currentColor" strokeWidth="2" strokeLinecap="round"
+          strokeLinejoin="round"
         >
           <path d="M2 4l4 4 4-4" />
         </svg>
@@ -73,7 +78,13 @@ export default function LanguageSwitcher() {
               className={`lang-switcher-option${locale === loc.id ? " active" : ""}`}
               onClick={() => switchLocale(loc.id)}
             >
-              <span className="lang-switcher-code">{loc.label}</span>
+              <Image
+                src={loc.flag}
+                alt={loc.full}
+                width={22}
+                height={16}
+                className="lang-switcher-flag-img"
+              />
               <span className="lang-switcher-name">{loc.full}</span>
             </button>
           ))}

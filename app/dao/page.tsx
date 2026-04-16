@@ -109,34 +109,6 @@ export default async function DAOPage() {
               className="about-hero-img"
             />
           </div>
-          <div className="hero-figma-btns">
-            {data?.hero?.buttonText && (
-              <Link
-                href={data.hero.buttonHref ?? "#"}
-                className="hero-figma-btn-primary"
-              >
-                {data.hero.buttonText}
-              </Link>
-            )}
-            {data?.hero?.secondButtonText && (
-              <Link
-                href={data.hero.secondButtonHref ?? "#"}
-                className="hero-figma-btn-white"
-              >
-                {data.hero.secondButtonText}
-              </Link>
-            )}
-          </div>
-          <div className="about-globe-container">
-            <Image
-              src="/images/about-globe.svg"
-              alt="Blockmaze DAO"
-              width={950}
-              height={400}
-              className="about-globe-img"
-              priority
-            />
-          </div>
         </div>
       </section>
 
