@@ -27,7 +27,18 @@ interface KnowledgeHubItem {
   publishedAt?: string;
 }
 
-const heroText: Record<string, { chip: string; heading: string; headingHighlight: string; body: string; eyebrow: string; heading2: string; exploreMore: string }> = {
+const heroText: Record<
+  string,
+  {
+    chip: string;
+    heading: string;
+    headingHighlight: string;
+    body: string;
+    eyebrow: string;
+    heading2: string;
+    exploreMore: string;
+  }
+> = {
   en: {
     chip: "Documentation & Resources",
     heading: "Blockmaze Documentation &",
@@ -68,53 +79,64 @@ const heroText: Record<string, { chip: string; heading: string; headingHighlight
 
 export default async function KnowledgeHubPage() {
   const locale = await getLocale();
-  const result = await sanityFetch<KnowledgeHubItem[]>(allKnowledgeHubQuery, { locale });
+  const result = await sanityFetch<KnowledgeHubItem[]>(allKnowledgeHubQuery, {
+    locale,
+  });
   const items = result ?? [];
 
   const t = heroText[locale] ?? heroText.en;
 
   return (
     <>
-      {/* 1 ── HERO */}
-      <section className="about-hero">
-        <div className="about-hero-grid" />
-        <div className="about-hero-inner">
-          <div className="hero-chip-v2">
-            <span className="hero-chip-dot" />
-            <span className="hero-chip-label">{t.chip}</span>
+      {/* 1 ── HERO — same as About page */}
+      <section className="about-hero-section about-page-hero">
+        <div className="about-hero-wrap">
+          <div className="about-hero-text">
+            <div className="hero-chip-v2">
+              <span className="hero-chip-dot" />
+              <span className="hero-chip-label">
+                Documentation &amp; Resources
+              </span>
+            </div>
+            <div className="about-hero-textblock">
+              <h1 className="about-hero-h1">
+                Blockmaze Documentation &amp;{" "}
+                <span className="text-primary">Resources</span>
+              </h1>
+              <p className="about-hero-p">
+                The Blockmaze knowledge hub serves as the single source of truth
+                for all technical specifications, governance frameworks,
+                validator standards, token economics, and real-world asset
+                infrastructure documentation. All documents are
+                version-controlled, governance-aligned, and intended for
+                developers, validators, institutions, exchanges, and ecosystem
+                participants.
+              </p>
+            </div>
           </div>
-          <div className="hero-figma-textblock">
-            <h1 className="hero-figma-h1">
-              {t.heading}{" "}
-              <span className="text-primary">{t.headingHighlight}</span>
-            </h1>
-            <p className="hero-figma-p">{t.body}</p>
-          </div>
-          <div className="about-globe-container">
-            <Image
-              src="/images/about-globe.svg"
+          <div className="about-hero-img-col">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/images/knowledge-hero.png"
               alt="Blockmaze Knowledge Hub"
-              width={950}
-              height={400}
-              className="about-globe-img"
-              priority
+              className="about-hero-img"
             />
           </div>
         </div>
       </section>
 
-      {/* 2 ── KNOWLEDGE ITEMS */}
+      {/* 2 ── KNOWLEDGE ITEMS — sticky scroll with full data */}
       {items.length > 0 ? (
         <KnowledgeHubScroll
-          eyebrow={t.eyebrow}
-          heading={t.heading2}
+          eyebrow="Documentation"
+          heading="Knowledge Hub Resources"
           items={items}
-          exploreMoreLabel={t.exploreMore}
         />
       ) : (
         <section className="section-padding bg-white">
           <p className="kh-empty-text">
-            Resources and documentation will be available soon. Check back for updates.
+            Resources and documentation will be available soon. Check back for
+            updates.
           </p>
         </section>
       )}

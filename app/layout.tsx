@@ -62,11 +62,7 @@ export default async function RootLayout({
   const isRtl = locale === "ar";
 
   return (
-    <html
-      lang={locale}
-      dir={isRtl ? "rtl" : "ltr"}
-      className={inter.variable}
-    >
+    <html lang={locale} dir={isRtl ? "rtl" : "ltr"} className={inter.variable}>
       <body className="font-sans antialiased">
         <NextIntlClientProvider locale={locale} messages={messages}>
           <Header locale={locale} />
