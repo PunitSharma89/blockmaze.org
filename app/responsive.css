@@ -1017,6 +1017,11 @@
   .ds-feature {
     padding: 0;
   }
+  .ds-feature:hover {
+    background: transparent;
+    border-color: transparent;
+    transform: none;
+  }
   .ds-feature-title {
     font-size: var(--15);
     line-height: var(--24);

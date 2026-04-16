@@ -59,14 +59,14 @@
 /* CSS Custom Properties */
 :root {
   /* ── RGB channel variables — use as: rgb(var(--rgb-X) / alpha) ─────── */
-  --rgb-primary: 255 176 30;       /* #ffb01e */
-  --rgb-black: 0 0 0;              /* #000000 */
-  --rgb-white: 255 255 255;        /* #ffffff */
-  --rgb-blue-light: 99 163 237;    /* #63a3ed */
-  --rgb-warm-brown: 54 41 17;      /* #362911 */
-  --rgb-warm-amber: 111 92 58;     /* #6f5c3a */
-  --rgb-amber-alt: 255 166 0;      /* #ffa600 */
-  --rgb-yellow: 255 219 67;        /* #ffdb43 */
+  --rgb-primary: 255 176 30; /* #ffb01e */
+  --rgb-black: 0 0 0; /* #000000 */
+  --rgb-white: 255 255 255; /* #ffffff */
+  --rgb-blue-light: 99 163 237; /* #63a3ed */
+  --rgb-warm-brown: 54 41 17; /* #362911 */
+  --rgb-warm-amber: 111 92 58; /* #6f5c3a */
+  --rgb-amber-alt: 255 166 0; /* #ffa600 */
+  --rgb-yellow: 255 219 67; /* #ffdb43 */
 
   --max-width: 1440px;
   --max-width-wide: 1596px;
@@ -1252,7 +1252,10 @@ main.max-w-1920 {
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(rgb(var(--rgb-white) / 0.04) var(--1), transparent var(--1)),
+    linear-gradient(
+      rgb(var(--rgb-white) / 0.04) var(--1),
+      transparent var(--1)
+    ),
     linear-gradient(
       90deg,
       rgb(var(--rgb-white) / 0.04) var(--1),
@@ -4348,6 +4351,7 @@ table.table td {
 }
 
 /* ── Language Switcher ─────────────────────────────────────── */
+/* ── Language Switcher ──────────────────────────────────────────────── */
 .lang-switcher {
   position: relative;
 }
@@ -4356,53 +4360,74 @@ table.table td {
   display: flex;
   align-items: center;
   gap: var(--6);
-  padding: var(--6) var(--10);
+  padding: var(--8) var(--10) var(--8) var(--10);
   border-radius: var(--8);
   font-size: var(--13);
-  font-weight: 500;
+  font-weight: 600;
   color: var(--color-dark);
   background: transparent;
   border: var(--1) solid var(--color-border-default);
   cursor: pointer;
   transition:
     border-color 0.2s,
+    background 0.2s,
     color 0.2s;
   white-space: nowrap;
+  line-height: 1;
 }
 
 .lang-switcher-btn:hover {
   border-color: var(--color-primary);
+  background: rgb(var(--rgb-primary) / 0.04);
   color: var(--color-primary);
 }
 
+.lang-switcher-flag-img {
+  display: block;
+  flex-shrink: 0;
+  border-radius: var(--2);
+  object-fit: cover;
+}
+
+.lang-switcher-label {
+  font-size: var(--12);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
 .lang-switcher-arrow {
-  transition: transform 0.2s;
+  transition: transform 0.2s ease;
+  opacity: 0.6;
 }
 
 .lang-switcher-arrow.open {
   transform: rotate(180deg);
+  opacity: 1;
 }
 
 .lang-switcher-dropdown {
   position: absolute;
   top: calc(100% + var(--6));
   right: 0;
-  min-width: var(--130);
+  min-width: var(--200);
   background: var(--color-white);
-  border: var(--1) solid var(--color-border-default);
-  border-radius: var(--10);
-  box-shadow: 0 var(--8) var(--24) rgb(var(--rgb-black) / 0.1);
+  border: var(--1) solid var(--color-border-subtle);
+  border-radius: var(--12);
+  box-shadow:
+    0 var(--4) var(--6) rgb(var(--rgb-black) / 0.04),
+    0 var(--10) var(--28) rgb(var(--rgb-black) / 0.1);
   overflow: hidden;
   z-index: 200;
+  padding: var(--4) 0;
 }
 
 .lang-switcher-option {
   display: flex;
   align-items: center;
-  gap: var(--8);
+  gap: var(--10);
   width: 100%;
-  padding: var(--10) var(--14);
-  font-size: var(--14);
+  padding: var(--9) var(--14);
+  font-size: var(--13);
   color: var(--color-dark);
   background: transparent;
   border: none;
@@ -4412,26 +4437,39 @@ table.table td {
 }
 
 .lang-switcher-option:hover {
-  background: var(--color-bg-warm-100);
+  background: var(--color-surface);
 }
 
 .lang-switcher-option.active {
+  background: rgb(var(--rgb-primary) / 0.06);
+}
+
+.lang-switcher-option .lang-switcher-flag-img {
+  flex-shrink: 0;
+  border-radius: var(--3);
+}
+
+.lang-switcher-option .lang-switcher-name {
+  flex: 1;
+  font-size: var(--13);
+  font-weight: 500;
+  color: var(--color-dark);
+}
+
+.lang-switcher-option.active .lang-switcher-name {
   color: var(--color-primary);
   font-weight: 600;
 }
 
-.lang-switcher-code {
-  font-weight: 600;
-  font-size: var(--12);
-  min-width: var(--24);
+.lang-switcher-option .lang-switcher-code {
+  font-size: var(--11);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--color-gray-light);
+  margin-left: auto;
 }
 
-.lang-switcher-name {
-  color: var(--color-text-muted);
-  font-size: var(--13);
-}
-
-.lang-switcher-option.active .lang-switcher-name {
+.lang-switcher-option.active .lang-switcher-code {
   color: var(--color-primary);
 }
 
