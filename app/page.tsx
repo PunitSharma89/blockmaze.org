@@ -312,7 +312,7 @@ export default async function Home() {
           <div className="flex flex-col lg:flex-row gap-12 items-center mt-12 ">
             <div className="lg:w-5/12">
               <Image
-                src="/images/faq-img.png"
+                src="/images/faq-svg.svg"
                 alt="Frequently Asked Questions"
                 width={454}
                 height={425}
