@@ -63,6 +63,7 @@ export default defineType({
     defineField({ name: "footerCopyrightRight", title: "Footer Copyright Right", type: "string" }),
 
     /* ── Header / Navigation ── */
+    defineField({ name: "language", title: "Language", type: "string", readOnly: true, hidden: true }),
     defineField({ name: "logoAlt", title: "Logo Alt Text", type: "string" }),
     defineField({
       name: "navItems",

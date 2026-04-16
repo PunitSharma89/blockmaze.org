@@ -6,6 +6,7 @@ import BlogCard from "@/components/ui/BlogCard";
 import BlogGrid from "@/components/ui/BlogGrid";
 import { sanityFetch } from "@/lib/sanity";
 import { allBlogsQuery } from "@/lib/queries";
+import { getLocale } from "@/lib/getLocale";
 
 export const dynamic = "force-dynamic";
 
@@ -33,8 +34,9 @@ interface SanityBlogPost {
 
 export default async function BlogsPage() {
   let posts: SanityBlogPost[] = [];
+  const locale = await getLocale();
 
-  const result = await sanityFetch<SanityBlogPost[]>(allBlogsQuery);
+  const result = await sanityFetch<SanityBlogPost[]>(allBlogsQuery, { locale });
   posts = result ?? [];
 
   return (

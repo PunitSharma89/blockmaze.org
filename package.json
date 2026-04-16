@@ -9,20 +9,27 @@
     "lint": "eslint",
     "go": "node scripts/publish-drafts.mjs",
     "seed-protocol": "node scripts/seed-protocol.mjs",
-    "migrate": "node scripts/migrate-to-technical-page.mjs"
+    "migrate": "node scripts/migrate-to-technical-page.mjs",
+    "translate": "node scripts/generate-translations.mjs",
+    "test-webhook": "node scripts/test-webhook.mjs"
   },
   "dependencies": {
+    "@sanity/document-internationalization": "^6.1.0",
     "@sanity/image-url": "^2.1.1",
+    "@sanity/language-filter": "^5.0.1",
     "@sanity/vision": "^5.20.0",
     "clsx": "^2.1.1",
     "cobe": "^2.0.1",
     "framer-motion": "^12.38.0",
     "gsap": "^3.14.2",
     "next": "16.2.2",
+    "next-intl": "^4.9.1",
     "next-sanity": "^12.2.2",
+    "openai": "^6.34.0",
     "react": "19.2.4",
     "react-dom": "19.2.4",
     "sanity": "^5.20.0",
+    "sanity-plugin-internationalized-array": "^5.1.0",
     "styled-components": "^6.3.12",
     "tailwind-merge": "^3.5.0"
   },

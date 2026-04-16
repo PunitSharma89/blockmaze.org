@@ -3,6 +3,7 @@ export default {
   title: "Technical Page",
   type: "document",
   fields: [
+    { name: "language", title: "Language", type: "string", readOnly: true, hidden: true },
     {
       name: "title",
       title: "Page Title",

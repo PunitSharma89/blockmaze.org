@@ -1,0 +1,94 @@
+{
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "protocol": "Blockmaze Protocol",
+    "tokenomics": "Tokenomics",
+    "governance": "Governance",
+    "dao": "DAO",
+    "validator": "Validator",
+    "delegator": "Delegator",
+    "swap": "Swap",
+    "whitepaper": "Whitepaper",
+    "rfp": "RFP",
+    "blogs": "Blogs",
+    "news": "News",
+    "knowledgeHub": "Knowledge Hub",
+    "contact": "Contact Us",
+    "learnMore": "Learn More",
+    "getStarted": "Get Started",
+    "exploreMore": "Explore More"
+  },
+  "common": {
+    "readMore": "Read More",
+    "learnMore": "Learn More",
+    "viewAll": "View All",
+    "backToTop": "Back to Top",
+    "loading": "Loading...",
+    "search": "Search",
+    "searchPlaceholder": "Search...",
+    "noResults": "No results found",
+    "publishedOn": "Published on",
+    "category": "Category",
+    "tags": "Tags",
+    "author": "Author",
+    "tableOfContents": "Table of Content",
+    "jumpToSection": "Jump to section…",
+    "home": "Home",
+    "previous": "Previous",
+    "next": "Next"
+  },
+  "blogs": {
+    "title": "Blogs",
+    "subtitle": "Latest insights on blockchain, RWA tokenization, and institutional infrastructure.",
+    "allCategories": "All Categories",
+    "noPosts": "No posts found.",
+    "relatedPosts": "Related Posts"
+  },
+  "news": {
+    "title": "News",
+    "subtitle": "Latest updates from the Blockmaze ecosystem."
+  },
+  "knowledgeHub": {
+    "title": "Knowledge Hub",
+    "subtitle": "Technical resources and documentation for the Blockmaze protocol.",
+    "heroChip": "Documentation & Resources",
+    "heroHeading": "Blockmaze Documentation &",
+    "heroHeadingHighlight": "Resources",
+    "heroBody": "The Blockmaze knowledge hub serves as the single source of truth for all technical specifications, governance frameworks, validator standards, token economics, and real-world asset infrastructure documentation. All documents are version-controlled, governance-aligned, and intended for developers, validators, institutions, exchanges, and ecosystem participants.",
+    "eyebrow": "Documentation",
+    "heading": "Knowledge Hub Resources",
+    "exploreMore": "Explore more"
+  },
+  "contact": {
+    "title": "Contact Us",
+    "name": "Your Name",
+    "email": "Your Email",
+    "subject": "Subject",
+    "message": "Your Message",
+    "send": "Send Message",
+    "success": "Message sent successfully!",
+    "error": "Something went wrong. Please try again."
+  },
+  "footer": {
+    "rights": "All rights reserved.",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Use"
+  },
+  "language": {
+    "select": "Language",
+    "en": "English",
+    "ar": "Arabic",
+    "es": "Spanish",
+    "fr": "French"
+  },
+  "useCases": {
+    "eyebrow": "Use Cases",
+    "heading": "Top Blockmaze",
+    "headingHighlight": "Use Cases"
+  },
+  "ecosystem": {
+    "heading": "Governance",
+    "headingHighlight": "Ecosystem"
+  }
+}

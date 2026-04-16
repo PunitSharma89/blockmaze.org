@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-const STEPS = [
+const DEFAULT_STEPS = [
   "Define issuer admission and authorization requirements",
   "Approve and maintain standardized token templates",
   "Enforce scheduled proof submissions",
@@ -13,7 +13,15 @@ const STEPS = [
   "Support ecosystem programs aligned with protocol standards",
 ];
 
-export default function FoundationScroller() {
+interface FoundationScrollerProps {
+  heading?: string;
+  headingHighlight?: string;
+  bodyText?: string;
+  steps?: string[];
+}
+
+export default function FoundationScroller({ heading, headingHighlight, bodyText, steps: stepsProp }: FoundationScrollerProps) {
+  const STEPS = stepsProp && stepsProp.length > 0 ? stepsProp : DEFAULT_STEPS;
   // wrapperRef = tall outer div that consumes scroll space (CSS sticky approach)
   const wrapperRef    = useRef<HTMLDivElement>(null);
   const sectionRef    = useRef<HTMLElement>(null);
@@ -115,18 +123,11 @@ export default function FoundationScroller() {
         <div className="foundation-header-wrap">
           <div className="foundation-header">
             <h2 className="section-heading">
-              The Blockmaze{" "}
-              <span className="text-primary">Foundation</span>
+              {heading ?? "The Blockmaze"}{" "}
+              <span className="text-primary">{headingHighlight ?? "Foundation"}</span>
             </h2>
             <p className="foundation-desc">
-              The Blockmaze foundation is an independent, non-profit entity
-              responsible for overseeing governance and issuer accountability at
-              the Layer-0 level. It defines issuer eligibility, manages
-              registries, enforces proof requirements, and administers governance
-              actions within clearly defined authority boundaries. It also
-              supports research, grants, and ecosystem initiatives that strengthen
-              validator participation and developer engagement within the
-              network&apos;s governance framework.
+              {bodyText ?? "The Blockmaze foundation is an independent, non-profit entity responsible for overseeing governance and issuer accountability at the Layer-0 level. It defines issuer eligibility, manages registries, enforces proof requirements, and administers governance actions within clearly defined authority boundaries. It also supports research, grants, and ecosystem initiatives that strengthen validator participation and developer engagement within the network's governance framework."}
             </p>
           </div>
         </div>

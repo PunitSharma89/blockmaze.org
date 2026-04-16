@@ -6,6 +6,7 @@ import Link from "next/link";
 import Image from "next/image";
 import Navbar from "@/components/navigation/Navbar";
 import MobileMenu from "@/components/navigation/MobileMenu";
+import LanguageSwitcher from "@/components/ui/LanguageSwitcher";
 
 export interface NavChild {
   label: string;
@@ -52,26 +53,29 @@ export default function HeaderClient({ logoAlt, navItems }: HeaderClientProps) {
         {/* Desktop Navigation */}
         <Navbar navItems={navItems} />
 
-        {/* Mobile Hamburger */}
-        <button
-          className="lg:hidden p-2 hover:text-primary"
-          onClick={() => setMobileMenuOpen(true)}
-          aria-label="Open menu"
-        >
-          <svg
-            className="w-6 h-6"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
+        {/* Language Switcher + Mobile Hamburger */}
+        <div className="flex items-center gap-2">
+          <LanguageSwitcher />
+          <button
+            className="lg:hidden p-2 hover:text-primary"
+            onClick={() => setMobileMenuOpen(true)}
+            aria-label="Open menu"
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M4 6h16M4 12h16M4 18h16"
-            />
-          </svg>
-        </button>
+            <svg
+              className="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M4 6h16M4 12h16M4 18h16"
+              />
+            </svg>
+          </button>
+        </div>
       </div>
 
       {/* Mobile Menu */}

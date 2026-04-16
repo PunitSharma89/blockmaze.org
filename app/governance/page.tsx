@@ -7,6 +7,7 @@ import FAQ from "@/components/ui/FAQ";
 import GovernanceStructureScroll from "@/components/ui/GovernanceStructureScroll";
 import { sanityFetch } from "@/lib/sanity";
 import { governancePageQuery } from "@/lib/queries";
+import { getLocale } from "@/lib/getLocale";
 
 export const metadata: Metadata = {
   title: "Governance",
@@ -264,7 +265,10 @@ function RoleIcon({ iconKey, size = 28 }: { iconKey: string; size?: number }) {
 /* ─── PAGE ──────────────────────────────────────────────────── */
 
 export default async function GovernancePage() {
-  const data = await sanityFetch<GovernanceData>(governancePageQuery);
+  const locale = await getLocale();
+  const data = await sanityFetch<GovernanceData>(governancePageQuery, {
+    locale,
+  });
 
   const roles = data?.roles ?? [];
   const scopeItems = data?.scopeItems ?? [];
@@ -294,7 +298,10 @@ export default async function GovernancePage() {
             </div>
             <div className="hero-figma-btns">
               {data?.hero?.buttonText && (
-                <Link href={data.hero.buttonHref ?? "#"} className="hero-figma-btn-primary">
+                <Link
+                  href={data.hero.buttonHref ?? "#"}
+                  className="hero-figma-btn-primary"
+                >
                   {data.hero.buttonText}
                 </Link>
               )}
@@ -302,7 +309,21 @@ export default async function GovernancePage() {
           </div>
           <div className="about-hero-img-col">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/images/goverence-hero.png" alt="Blockmaze governance" className="about-hero-img" />
+            <img
+              src="/images/goverence-hero.png"
+              alt="Blockmaze governance"
+              className="about-hero-img"
+            />
+          </div>
+          <div className="about-globe-container">
+            <Image
+              src="/images/about-globe.svg"
+              alt="Blockmaze governance"
+              width={950}
+              height={400}
+              className="about-globe-img"
+              priority
+            />
           </div>
         </div>
       </section>
@@ -356,7 +377,6 @@ export default async function GovernancePage() {
             <div className="ds-box">
               <div className="ds-bg-glow" aria-hidden="true" />
               <div className="ds-layout responsive-block">
-
                 {/* Left */}
                 <div className="ds-left">
                   <div className="ds-left-text">
@@ -380,25 +400,33 @@ export default async function GovernancePage() {
 
                 {/* Right — 3×2 feature grid */}
                 <div className="ds-right">
-                  {[[scopeItems[0], scopeItems[1]], [scopeItems[2], scopeItems[3]], [scopeItems[4], scopeItems[5]]].map((row, ri) => (
+                  {[
+                    [scopeItems[0], scopeItems[1]],
+                    [scopeItems[2], scopeItems[3]],
+                    [scopeItems[4], scopeItems[5]],
+                  ].map((row, ri) => (
                     <div key={ri} className="ds-row">
-                      {row.map((item) =>
-                        item && (
-                          <div key={item.title} className="ds-feature">
-                            <div className="ds-feature-top">
-                              <div className="ds-icon-wrap">
-                                <RoleIcon iconKey={item.iconKey} size={44} />
+                      {row.map(
+                        (item) =>
+                          item && (
+                            <div key={item.title} className="ds-feature">
+                              <div className="ds-feature-top">
+                                <div className="ds-icon-wrap">
+                                  <RoleIcon iconKey={item.iconKey} size={44} />
+                                </div>
+                                <h4 className="ds-feature-title">
+                                  {item.title}
+                                </h4>
                               </div>
-                              <h4 className="ds-feature-title">{item.title}</h4>
+                              <p className="ds-feature-desc">
+                                {item.description}
+                              </p>
                             </div>
-                            <p className="ds-feature-desc">{item.description}</p>
-                          </div>
-                        )
+                          ),
                       )}
                     </div>
                   ))}
                 </div>
-
               </div>
             </div>
           </Container>

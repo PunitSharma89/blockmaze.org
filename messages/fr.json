@@ -1,0 +1,94 @@
+{
+  "nav": {
+    "home": "Accueil",
+    "about": "À propos",
+    "protocol": "Protocole Blockmaze",
+    "tokenomics": "Tokenomics",
+    "governance": "Gouvernance",
+    "dao": "DAO",
+    "validator": "Validateur",
+    "delegator": "Délégataire",
+    "swap": "Échanger",
+    "whitepaper": "Livre blanc",
+    "rfp": "RFP",
+    "blogs": "Blogs",
+    "news": "Actualités",
+    "knowledgeHub": "Centre de connaissances",
+    "contact": "Contactez-nous",
+    "learnMore": "En savoir plus",
+    "getStarted": "Commencer",
+    "exploreMore": "Explorer plus"
+  },
+  "common": {
+    "readMore": "Lire la suite",
+    "learnMore": "En savoir plus",
+    "viewAll": "Voir tout",
+    "backToTop": "Retour en haut",
+    "loading": "Chargement...",
+    "search": "Rechercher",
+    "searchPlaceholder": "Rechercher...",
+    "noResults": "Aucun résultat trouvé",
+    "publishedOn": "Publié le",
+    "category": "Catégorie",
+    "tags": "Étiquettes",
+    "author": "Auteur",
+    "tableOfContents": "Table des matières",
+    "jumpToSection": "Aller à la section…",
+    "home": "Accueil",
+    "previous": "Précédent",
+    "next": "Suivant"
+  },
+  "blogs": {
+    "title": "Blogs",
+    "subtitle": "Dernières perspectives sur la blockchain, la tokenisation RWA et l'infrastructure institutionnelle.",
+    "allCategories": "Toutes les catégories",
+    "noPosts": "Aucun article trouvé.",
+    "relatedPosts": "Articles connexes"
+  },
+  "news": {
+    "title": "Actualités",
+    "subtitle": "Dernières mises à jour de l'écosystème Blockmaze."
+  },
+  "knowledgeHub": {
+    "title": "Centre de connaissances",
+    "subtitle": "Ressources techniques et documentation pour le protocole Blockmaze.",
+    "heroChip": "Documentation & Ressources",
+    "heroHeading": "Documentation &",
+    "heroHeadingHighlight": "Ressources Blockmaze",
+    "heroBody": "Le centre de connaissances Blockmaze constitue la source de vérité unique pour toutes les spécifications techniques, les cadres de gouvernance, les normes des validateurs, l'économie des tokens et la documentation de l'infrastructure des actifs réels. Tous les documents sont versionnés, alignés sur la gouvernance et destinés aux développeurs, validateurs, institutions, exchanges et participants de l'écosystème.",
+    "eyebrow": "Documentation",
+    "heading": "Ressources du Centre de Connaissances",
+    "exploreMore": "Explorer plus"
+  },
+  "contact": {
+    "title": "Contactez-nous",
+    "name": "Votre nom",
+    "email": "Votre email",
+    "subject": "Sujet",
+    "message": "Votre message",
+    "send": "Envoyer le message",
+    "success": "Message envoyé avec succès !",
+    "error": "Quelque chose s'est mal passé. Veuillez réessayer."
+  },
+  "footer": {
+    "rights": "Tous droits réservés.",
+    "privacy": "Politique de confidentialité",
+    "terms": "Conditions d'utilisation"
+  },
+  "language": {
+    "select": "Langue",
+    "en": "Anglais",
+    "ar": "Arabe",
+    "es": "Espagnol",
+    "fr": "Français"
+  },
+  "useCases": {
+    "eyebrow": "Cas d'utilisation",
+    "heading": "Top Blockmaze",
+    "headingHighlight": "Cas d'utilisation"
+  },
+  "ecosystem": {
+    "heading": "Gouvernance",
+    "headingHighlight": "Écosystème"
+  }
+}

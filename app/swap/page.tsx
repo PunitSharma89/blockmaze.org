@@ -6,6 +6,7 @@ import SectionHeading from "@/components/ui/SectionHeading";
 import GovernanceStructureScroll from "@/components/ui/GovernanceStructureScroll";
 import { sanityFetch } from "@/lib/sanity";
 import { swapPageQuery } from "@/lib/queries";
+import { getLocale } from "@/lib/getLocale";
 
 export const metadata: Metadata = {
   title: "RWA Swap Platform | On-Chain Asset Exchange Protocol",
@@ -48,10 +49,10 @@ interface SwapData {
 /* ─── PAGE ──────────────────────────────────────────────────── */
 
 export default async function SwapPage() {
-  const data = await sanityFetch<SwapData>(swapPageQuery);
+  const locale = await getLocale();
+  const data = await sanityFetch<SwapData>(swapPageQuery, { locale });
 
   const steps = data?.steps ?? [];
-
 
   return (
     <>
@@ -73,7 +74,10 @@ export default async function SwapPage() {
             </div>
             {data?.hero?.buttonText && (
               <div className="hero-figma-btns">
-                <Link href={data.hero.buttonHref ?? "#"} className="hero-figma-btn-primary">
+                <Link
+                  href={data.hero.buttonHref ?? "#"}
+                  className="hero-figma-btn-primary"
+                >
                   {data.hero.buttonText}
                 </Link>
               </div>
@@ -81,7 +85,11 @@ export default async function SwapPage() {
           </div>
           <div className="about-hero-img-col">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/images/swap-hero.png" alt="BMZ Swap Platform" className="about-hero-img" />
+            <img
+              src="/images/swap-hero.png"
+              alt="BMZ Swap Platform"
+              className="about-hero-img"
+            />
           </div>
         </div>
       </section>
@@ -100,7 +108,6 @@ export default async function SwapPage() {
         <section className="section-padding bg-white">
           <Container>
             <div className="vision-layout">
-
               {/* Left — image */}
               <div className="vision-img-card">
                 {data.governanceSection.image?.asset?.url ? (
@@ -131,7 +138,10 @@ export default async function SwapPage() {
                     </span>
                   )}
                   <h2 className="vision-title">
-                    {data.governanceSection.heading?.split(" ").slice(0, -1).join(" ")}{" "}
+                    {data.governanceSection.heading
+                      ?.split(" ")
+                      .slice(0, -1)
+                      .join(" ")}{" "}
                     <span className="text-primary">
                       {data.governanceSection.heading?.split(" ").slice(-1)[0]}
                     </span>
@@ -140,11 +150,12 @@ export default async function SwapPage() {
                     <p className="vision-desc">{data.governanceSection.text}</p>
                   )}
                   {data.governanceSection.text2 && (
-                    <p className="vision-desc">{data.governanceSection.text2}</p>
+                    <p className="vision-desc">
+                      {data.governanceSection.text2}
+                    </p>
                   )}
                 </div>
               </div>
-
             </div>
           </Container>
         </section>
@@ -158,7 +169,10 @@ export default async function SwapPage() {
               label={data.lockInSection.eyebrow}
               heading={
                 <>
-                  {data.lockInSection.heading?.split(" ").slice(0, -1).join(" ")}{" "}
+                  {data.lockInSection.heading
+                    ?.split(" ")
+                    .slice(0, -1)
+                    .join(" ")}{" "}
                   <span className="text-primary">
                     {data.lockInSection.heading?.split(" ").slice(-1)[0]}
                   </span>
