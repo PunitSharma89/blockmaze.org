@@ -1587,7 +1587,6 @@ main.max-w-1920 {
   opacity: 0.75;
 }
 
-/* ── Mobile accordion (replaces scroll-driven on ≤767px) ─────────────── */
 .eco-accordion {
   width: 90%;
   max-width: var(--600);
@@ -2273,37 +2272,77 @@ main.max-w-1920 {
   overflow: hidden;
   position: relative;
 }
-
-/* Fading grid overlay */
-.about-hero-grid {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  background-image:
-    linear-gradient(
-      to right,
-      var(--color-bg-warm-card) var(--1),
-      transparent var(--1)
-    ),
-    linear-gradient(
-      to bottom,
-      var(--color-bg-warm-card) var(--1),
-      transparent var(--1)
-    );
-  background-size: var(--20) var(--30);
-  -webkit-mask-image: radial-gradient(
-    ellipse 70% 60% at 50% 0%,
-    var(--color-black) 60%,
-    transparent 100%
-  );
-  mask-image: radial-gradient(
-    ellipse 70% 60% at 50% 0%,
-    var(--color-black) 60%,
-    transparent 100%
-  );
-  pointer-events: none;
+.about-hero-section {
+  background-color: #fdf7e9 !important;
+  overflow: hidden;
+  position: relative;
+}
+/* Full-bleed flex row, Figma px-240 adapted to project container */
+.about-hero-wrap {
+  width: 80%;
+  max-width: 1440px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 30px;
 }
 
+/* Left: text column — Figma w-705 py-100 */
+.about-hero-text {
+  flex: 0 0 705px;
+  width: 705px;
+  padding: 130px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.about-hero-textblock {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.about-hero-h1 {
+  font-size: 38px;
+  font-weight: 700;
+  line-height: 58px;
+  color: #0b0b0b;
+  width: 100%;
+}
+
+.about-hero-p {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 28px;
+  color: #373737;
+  width: 100%;
+}
+
+/* Right: illustration column — Figma flex-1 self-stretch overflow-clip */
+.about-hero-img-col {
+  flex: 1 0 0;
+  align-self: stretch;
+  position: relative;
+  overflow: hidden;
+  min-width: 1px;
+}
+
+/* Image — centered in its column, natural dimensions clipped by overflow:hidden */
+.about-hero-img {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 92%;
+  max-height: 92%;
+  object-fit: contain;
+  pointer-events: none;
+}
 .about-hero-inner {
   max-width: var(--960);
   margin: 0 auto;
@@ -2322,12 +2361,6 @@ main.max-w-1920 {
   width: var(--950);
   max-width: 100%;
   margin-top: var(--36);
-}
-
-.about-globe-img {
-  width: 100%;
-  height: auto;
-  display: block;
 }
 
 /* ── Foundation Scroller ─────────────────────────────────────────────── */
@@ -4354,6 +4387,25 @@ table.table td {
 /* ── Language Switcher ──────────────────────────────────────────────── */
 .lang-switcher {
   position: relative;
+}
+
+.lang-switcher-flag-img {
+  display: block;
+  flex-shrink: 0;
+  border-radius: 50px;
+  width: 20px;
+  height: 20px;
+  overflow: hidden;
+  object-fit: cover;
+}
+
+/* next/image wraps img in a span — make sure corners are clipped */
+.lang-switcher-btn span,
+.lang-switcher-option span {
+  border-radius: 3px;
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex !important;
 }
 
 .lang-switcher-btn {
