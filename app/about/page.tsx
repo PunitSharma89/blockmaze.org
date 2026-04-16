@@ -368,7 +368,7 @@ const DEFAULT_TEAM = [
   {
     name: "Puneet Mangal",
     role: "Co-Founder & Chief Operating Officer, Blockmaze",
-    photo: "/images/Mask-group-19.png",
+    photo: "/images/puneet.png",
     linkedin: "https://www.linkedin.com/in/puneetmangal/",
     bio: "Puneet Mangal is a seasoned entrepreneur with extensive experience in manufacturing, distribution, and global trade of metals and steel products, along with strategic venture-style investments in emerging businesses. As Co-Founder and COO of Blockmaze, he oversees operational execution, infrastructure build-out, and institutional partnerships. His background in real-world asset industries brings grounded commercial insight to Blockmaze's tokenization framework, ensuring that digital representations of assets are anchored in practical supply chain realities, capital discipline, and scalable operational processes.",
   },
@@ -522,7 +522,11 @@ export default async function AboutPage() {
       </section>
 
       {/* Accountability Scroll */}
-      <AccountabilityScroll items={accountabilityItems} />
+      <AccountabilityScroll
+        items={accountabilityItems}
+        heading={data?.accountabilitySection?.heading}
+        headingHighlight={data?.accountabilitySection?.headingHighlight}
+      />
 
       {/* Long-Term Vision */}
       <section className="section-padding bg-white">

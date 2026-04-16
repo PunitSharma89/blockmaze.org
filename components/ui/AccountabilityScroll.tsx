@@ -15,9 +15,11 @@ const DEFAULT_ITEMS = [
 
 interface AccountabilityScrollProps {
   items?: { title: string; description: string; icon: string }[];
+  heading?: string;
+  headingHighlight?: string;
 }
 
-export default function AccountabilityScroll({ items: itemsProp }: AccountabilityScrollProps = {}) {
+export default function AccountabilityScroll({ items: itemsProp, heading, headingHighlight }: AccountabilityScrollProps = {}) {
   const ITEMS = itemsProp && itemsProp.length > 0 ? itemsProp : DEFAULT_ITEMS;
   const sectionRef  = useRef<HTMLElement>(null)
   const itemRefs    = useRef<(HTMLDivElement | null)[]>([])
@@ -93,8 +95,9 @@ export default function AccountabilityScroll({ items: itemsProp }: Accountabilit
           {/* LEFT: sticky panel */}
           <div className="ucs-left">
             <h2 className="section-heading">
-              Why Accountability Must Be Embedded at the{' '}
-              <span className="text-primary">Protocol</span> Layer
+              {heading ?? "Why Accountability Must Be Embedded at the"}{' '}
+              <span className="text-primary">{headingHighlight ?? "Protocol"}</span>{' '}
+              {heading ? "" : "Layer"}
             </h2>
             <div className="ucs-counter">
               <span className="ucs-counter-current">

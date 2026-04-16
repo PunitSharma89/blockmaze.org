@@ -36,7 +36,13 @@ export default async function BlogsPage() {
   let posts: SanityBlogPost[] = [];
   const locale = await getLocale();
 
-  const result = await sanityFetch<SanityBlogPost[]>(allBlogsQuery, { locale });
+  let result = await sanityFetch<SanityBlogPost[]>(allBlogsQuery, { locale });
+
+  // Fallback to English if no translated posts exist for this locale
+  if ((!result || result.length === 0) && locale !== "en") {
+    result = await sanityFetch<SanityBlogPost[]>(allBlogsQuery, { locale: "en" });
+  }
+
   posts = result ?? [];
 
   return (

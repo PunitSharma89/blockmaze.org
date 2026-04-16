@@ -101,6 +101,48 @@ Rules:
 }
 
 /**
+ * Translate a raw HTML string, preserving all tags exactly.
+ * Uses a direct prompt (not numbered list) since HTML is multi-line.
+ */
+export async function translateHtml(
+  html: string,
+  targetLocale: SupportedLocale,
+): Promise<string> {
+  if (!html || !html.trim()) return html;
+
+  if (isMockMode) {
+    return `<!-- [${targetLocale.toUpperCase()}] -->${html}`;
+  }
+
+  const { default: OpenAI } = await import("openai");
+  const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+  const language = LANGUAGE_NAMES[targetLocale];
+
+  const response = await openai.chat.completions.create({
+    model: "gpt-4o",
+    temperature: 0.2,
+    messages: [
+      {
+        role: "system",
+        content: `You are a professional translator. Translate the following HTML document to ${language}.
+Rules:
+- Return ONLY the translated HTML — no explanations, no code fences, no extra text
+- Preserve ALL HTML tags, attributes, classes, and styles exactly as-is
+- Only translate visible text content between tags
+- Do NOT translate proper nouns: Blockmaze, BMZ, Layer-0, RWA, DAO, DeFi, NFT
+- Maintain formal/professional tone`,
+      },
+      {
+        role: "user",
+        content: html,
+      },
+    ],
+  });
+
+  return response.choices[0]?.message?.content?.trim() ?? html;
+}
+
+/**
  * Translate a full Portable Text array.
  * Extracts span texts, translates them, reinserts into the original structure.
  */

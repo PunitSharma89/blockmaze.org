@@ -9,7 +9,7 @@ import { sanityFetch } from "@/lib/sanity";
 import { blogBySlugQuery, blogSlugsQuery } from "@/lib/queries";
 import { getLocale } from "@/lib/getLocale";
 
-export const revalidate = 60;
+export const dynamic = "force-dynamic";
 
 interface SanityBlogPost {
   _id: string;
@@ -49,7 +49,10 @@ export async function generateStaticParams() {
 export async function generateMetadata(props: { params: Params }): Promise<Metadata> {
   const { slug } = await props.params;
   const locale = await getLocale();
-  const post = await sanityFetch<SanityBlogPost>(blogBySlugQuery, { slug, locale });
+  let post = await sanityFetch<SanityBlogPost>(blogBySlugQuery, { slug, locale });
+  if (!post && locale !== "en") {
+    post = await sanityFetch<SanityBlogPost>(blogBySlugQuery, { slug, locale: "en" });
+  }
   if (!post) return { title: "Post Not Found" };
   return {
     title: post.seo?.metaTitle || post.title,
@@ -145,7 +148,12 @@ export default async function BlogPostPage(props: { params: Params }) {
   const { slug } = await props.params;
   const locale = await getLocale();
 
-  const post = await sanityFetch<SanityBlogPost>(blogBySlugQuery, { slug, locale });
+  let post = await sanityFetch<SanityBlogPost>(blogBySlugQuery, { slug, locale });
+
+  // Fallback to English if no translation exists for this locale
+  if (!post && locale !== "en") {
+    post = await sanityFetch<SanityBlogPost>(blogBySlugQuery, { slug, locale: "en" });
+  }
 
   if (!post) notFound();
 

@@ -13,7 +13,22 @@ export default {
       name: "slug",
       title: "Slug",
       type: "slug",
-      options: { source: "title", maxLength: 96 },
+      options: {
+        source: "title",
+        maxLength: 96,
+        // Allow the same slug across different language variants
+        isUnique: async (slug: string, context: { document: { _id?: string; language?: string }; getClient: (opts: { apiVersion: string }) => { fetch: (query: string, params: Record<string, unknown>) => Promise<number> } }) => {
+          const { document, getClient } = context;
+          const client = getClient({ apiVersion: "2024-01-01" });
+          const language = document?.language ?? "en";
+          const docId = document?._id ?? "";
+          const count = await client.fetch(
+            `count(*[_type == "blog" && slug.current == $slug && coalesce(language, "en") == $language && _id != $id && !(_id in path("drafts.**"))])`,
+            { slug, language, id: docId.replace(/^drafts\./, "") }
+          ) as number;
+          return count === 0;
+        },
+      },
       validation: (Rule: { required: () => unknown }) => Rule.required(),
     },
     {

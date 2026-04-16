@@ -20,6 +20,7 @@ import {
   translateStrings,
   translatePortableTextBlocks,
   translateObject,
+  translateHtml,
   type SupportedLocale,
 } from "@/lib/openaiTranslate";
 
@@ -139,6 +140,9 @@ async function buildTranslatedDocument(
   const translated = { ...doc };
 
   if (type === "blog") {
+    // Always preserve the original English slug — URL must never change
+    translated.slug = doc.slug;
+
     // Translate plain text fields
     const [title, excerpt] = await translateStrings(
       [doc.title ?? "", doc.excerpt ?? ""],
@@ -152,10 +156,9 @@ async function buildTranslatedDocument(
       translated.body = await translatePortableTextBlocks(doc.body, locale);
     }
 
-    // Translate rawHtml field if present (plain text only, not HTML tags)
+    // Translate rawHtml field — uses HTML-aware translation that preserves tags
     if (doc.rawHtml) {
-      const [translatedHtml] = await translateStrings([doc.rawHtml], locale);
-      translated.rawHtml = translatedHtml;
+      translated.rawHtml = await translateHtml(doc.rawHtml, locale);
     }
 
     // Translate SEO fields
