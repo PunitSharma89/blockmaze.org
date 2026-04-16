@@ -47,6 +47,12 @@ export default function TechnicalPageClient({ slug, fallbackTitle }: Props) {
     el.scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
+  function scrollToSection(sectionId: string) {
+    const el = document.getElementById(sectionId);
+    if (!el) return;
+    el.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
   useEffect(() => {
     setLocale(getCookieLocale());
   }, []);

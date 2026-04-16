@@ -266,7 +266,9 @@ function RoleIcon({ iconKey, size = 28 }: { iconKey: string; size?: number }) {
 
 export default async function GovernancePage() {
   const locale = await getLocale();
-  const data = await sanityFetch<GovernanceData>(governancePageQuery, { locale });
+  const data = await sanityFetch<GovernanceData>(governancePageQuery, {
+    locale,
+  });
 
   const roles = data?.roles ?? [];
   const scopeItems = data?.scopeItems ?? [];
@@ -283,26 +285,35 @@ export default async function GovernancePage() {
   return (
     <>
       {/* 1 ── HERO — same pattern as About / RFP */}
-      <section className="about-hero">
-        <div className="about-hero-grid" />
-        <div className="about-hero-inner">
-          <div className="hero-chip-v2">
-            <span className="hero-chip-dot" />
-            <span className="hero-chip-label">{data?.hero?.badge}</span>
+      <section className="about-hero-section about-page-hero">
+        <div className="about-hero-wrap">
+          <div className="about-hero-text">
+            <div className="hero-chip-v2">
+              <span className="hero-chip-dot" />
+              <span className="hero-chip-label">{data?.hero?.badge}</span>
+            </div>
+            <div className="about-hero-textblock">
+              <h1 className="about-hero-h1">{data?.hero?.heading}</h1>
+              <p className="about-hero-p">{data?.hero?.subtext}</p>
+            </div>
+            <div className="hero-figma-btns">
+              {data?.hero?.buttonText && (
+                <Link
+                  href={data.hero.buttonHref ?? "#"}
+                  className="hero-figma-btn-primary"
+                >
+                  {data.hero.buttonText}
+                </Link>
+              )}
+            </div>
           </div>
-          <div className="hero-figma-textblock">
-            <h1 className="hero-figma-h1">{data?.hero?.heading}</h1>
-            <p className="hero-figma-p">{data?.hero?.subtext}</p>
-          </div>
-          <div className="hero-figma-btns">
-            {data?.hero?.buttonText && (
-              <Link
-                href={data.hero.buttonHref ?? "#"}
-                className="hero-figma-btn-primary"
-              >
-                {data.hero.buttonText}
-              </Link>
-            )}
+          <div className="about-hero-img-col">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/images/goverence-hero.png"
+              alt="Blockmaze governance"
+              className="about-hero-img"
+            />
           </div>
           <div className="about-globe-container">
             <Image
@@ -338,7 +349,7 @@ export default async function GovernancePage() {
 
       {/* 3 ── ROLES — eco-cards-grid with icons (white) */}
       {roles.length > 0 && (
-        <section className="section-padding bg-white">
+        <section className="section-padding bg-white !pt-0">
           <Container>
             <SectionHeading
               label={data?.rolesSection?.eyebrow}
@@ -366,7 +377,6 @@ export default async function GovernancePage() {
             <div className="ds-box">
               <div className="ds-bg-glow" aria-hidden="true" />
               <div className="ds-layout responsive-block">
-
                 {/* Left */}
                 <div className="ds-left">
                   <div className="ds-left-text">
@@ -390,25 +400,33 @@ export default async function GovernancePage() {
 
                 {/* Right — 3×2 feature grid */}
                 <div className="ds-right">
-                  {[[scopeItems[0], scopeItems[1]], [scopeItems[2], scopeItems[3]], [scopeItems[4], scopeItems[5]]].map((row, ri) => (
+                  {[
+                    [scopeItems[0], scopeItems[1]],
+                    [scopeItems[2], scopeItems[3]],
+                    [scopeItems[4], scopeItems[5]],
+                  ].map((row, ri) => (
                     <div key={ri} className="ds-row">
-                      {row.map((item) =>
-                        item && (
-                          <div key={item.title} className="ds-feature">
-                            <div className="ds-feature-top">
-                              <div className="ds-icon-wrap">
-                                <RoleIcon iconKey={item.iconKey} size={44} />
+                      {row.map(
+                        (item) =>
+                          item && (
+                            <div key={item.title} className="ds-feature">
+                              <div className="ds-feature-top">
+                                <div className="ds-icon-wrap">
+                                  <RoleIcon iconKey={item.iconKey} size={44} />
+                                </div>
+                                <h4 className="ds-feature-title">
+                                  {item.title}
+                                </h4>
                               </div>
-                              <h4 className="ds-feature-title">{item.title}</h4>
+                              <p className="ds-feature-desc">
+                                {item.description}
+                              </p>
                             </div>
-                            <p className="ds-feature-desc">{item.description}</p>
-                          </div>
-                        )
+                          ),
                       )}
                     </div>
                   ))}
                 </div>
-
               </div>
             </div>
           </Container>
@@ -500,7 +518,7 @@ export default async function GovernancePage() {
             <div className="flex flex-col lg:flex-row gap-12 items-start faq-grid-gap">
               <div className="lg:w-5/12">
                 <Image
-                  src="/images/faq-img.png"
+                  src="/images/faq-svg.svg"
                   alt="Frequently Asked Questions"
                   width={454}
                   height={425}

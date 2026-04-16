@@ -59,14 +59,14 @@
 /* CSS Custom Properties */
 :root {
   /* ── RGB channel variables — use as: rgb(var(--rgb-X) / alpha) ─────── */
-  --rgb-primary: 255 176 30;       /* #ffb01e */
-  --rgb-black: 0 0 0;              /* #000000 */
-  --rgb-white: 255 255 255;        /* #ffffff */
-  --rgb-blue-light: 99 163 237;    /* #63a3ed */
-  --rgb-warm-brown: 54 41 17;      /* #362911 */
-  --rgb-warm-amber: 111 92 58;     /* #6f5c3a */
-  --rgb-amber-alt: 255 166 0;      /* #ffa600 */
-  --rgb-yellow: 255 219 67;        /* #ffdb43 */
+  --rgb-primary: 255 176 30; /* #ffb01e */
+  --rgb-black: 0 0 0; /* #000000 */
+  --rgb-white: 255 255 255; /* #ffffff */
+  --rgb-blue-light: 99 163 237; /* #63a3ed */
+  --rgb-warm-brown: 54 41 17; /* #362911 */
+  --rgb-warm-amber: 111 92 58; /* #6f5c3a */
+  --rgb-amber-alt: 255 166 0; /* #ffa600 */
+  --rgb-yellow: 255 219 67; /* #ffdb43 */
 
   --max-width: 1440px;
   --max-width-wide: 1596px;
@@ -1252,7 +1252,10 @@ main.max-w-1920 {
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(rgb(var(--rgb-white) / 0.04) var(--1), transparent var(--1)),
+    linear-gradient(
+      rgb(var(--rgb-white) / 0.04) var(--1),
+      transparent var(--1)
+    ),
     linear-gradient(
       90deg,
       rgb(var(--rgb-white) / 0.04) var(--1),
@@ -2271,8 +2274,65 @@ main.max-w-1920 {
   position: relative;
 }
 
-/* Fading grid overlay */
-.about-hero-grid {
+/* Full-bleed flex row, Figma px-240 adapted to project container */
+.about-hero-wrap {
+  width: 80%;
+  max-width: 1440px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 30px;
+}
+
+/* Left: text column — Figma w-705 py-100 */
+.about-hero-text {
+  flex: 0 0 705px;
+  width: 705px;
+  padding: 130px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.about-hero-textblock {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.about-hero-h1 {
+  font-size: 38px;
+  font-weight: 700;
+  line-height: 58px;
+  color: #0b0b0b;
+  text-align: left;
+  width: 100%;
+}
+
+.about-hero-p {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 28px;
+  color: #373737;
+  text-align: left;
+  width: 100%;
+}
+
+/* Right: illustration column — Figma flex-1 self-stretch overflow-clip */
+.about-hero-img-col {
+  flex: 1 0 0;
+  align-self: stretch;
+  position: relative;
+  overflow: hidden;
+  min-width: 1px;
+}
+
+/* Image — centered in its column, natural dimensions clipped by overflow:hidden */
+.about-hero-img {
   position: absolute;
   inset: 0;
   z-index: 0;
@@ -2321,10 +2381,64 @@ main.max-w-1920 {
   margin-top: var(--36);
 }
 
-.about-globe-img {
-  width: 100%;
-  height: auto;
-  display: block;
+/* 767px — mobile */
+@media (max-width: 767px) {
+  .about-hero-wrap {
+    width: 100%;
+    padding: 0 24px;
+    box-sizing: border-box;
+  }
+  .about-hero-text {
+    padding: 48px 0 20px;
+  }
+  .about-hero-img-col {
+    height: 230px;
+  }
+  .about-hero-h1 {
+    font-size: 26px;
+    line-height: 38px;
+  }
+  .about-hero-p {
+    font-size: 15px;
+    line-height: 26px;
+  }
+  .about-hero-section .hero-chip-v2 {
+    font-size: 13px;
+  }
+  .about-hero-section .hero-figma-btns {
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+  }
+  .about-hero-section .hero-figma-btn-primary,
+  .about-hero-section .hero-figma-btn-white {
+    width: 100% !important;
+    text-align: center;
+    justify-content: center;
+    box-sizing: border-box;
+  }
+}
+
+/* 479px — small mobile */
+@media (max-width: 479px) {
+  .about-hero-wrap {
+    padding: 0 16px;
+  }
+  .about-hero-text {
+    padding: 40px 0 16px;
+    gap: 12px;
+  }
+  .about-hero-img-col {
+    height: 190px;
+  }
+  .about-hero-h1 {
+    font-size: 22px;
+    line-height: 32px;
+  }
+  .about-hero-p {
+    font-size: 14px;
+    line-height: 24px;
+  }
 }
 
 /* ── Foundation Scroller ─────────────────────────────────────────────── */

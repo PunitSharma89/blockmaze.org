@@ -6,11 +6,24 @@ export default defineType({
   type: "document",
   preview: {
     select: { title: "title" },
-    prepare({ title }) { return { title: title || "About Page" }; },
+    prepare({ title }) {
+      return { title: title || "About Page" };
+    },
   },
   fields: [
-    defineField({ name: "title", title: "Document Title", type: "string", description: "Internal label only." }),
-    defineField({ name: "language", title: "Language", type: "string", readOnly: true, hidden: true }),
+    defineField({
+      name: "title",
+      title: "Document Title",
+      type: "string",
+      description: "Internal label only.",
+    }),
+    defineField({
+      name: "language",
+      title: "Language",
+      type: "string",
+      readOnly: true,
+      hidden: true,
+    }),
 
     /* ── Hero ── */
     defineField({
@@ -20,8 +33,17 @@ export default defineType({
       fields: [
         defineField({ name: "chipLabel", title: "Chip Label", type: "string" }),
         defineField({ name: "heading", title: "Heading", type: "string" }),
-        defineField({ name: "headingHighlight", title: "Highlighted Word", type: "string" }),
-        defineField({ name: "bodyText", title: "Body Text", type: "text", rows: 3 }),
+        defineField({
+          name: "headingHighlight",
+          title: "Highlighted Word",
+          type: "string",
+        }),
+        defineField({
+          name: "bodyText",
+          title: "Body Text",
+          type: "text",
+          rows: 3,
+        }),
       ],
     }),
 
@@ -32,8 +54,17 @@ export default defineType({
       type: "object",
       fields: [
         defineField({ name: "heading", title: "Heading", type: "string" }),
-        defineField({ name: "headingHighlight", title: "Highlighted Word", type: "string" }),
-        defineField({ name: "bodyText", title: "Body Text", type: "text", rows: 4 }),
+        defineField({
+          name: "headingHighlight",
+          title: "Highlighted Word",
+          type: "string",
+        }),
+        defineField({
+          name: "bodyText",
+          title: "Body Text",
+          type: "text",
+          rows: 4,
+        }),
         defineField({
           name: "steps",
           title: "Steps",
@@ -50,7 +81,11 @@ export default defineType({
       type: "object",
       fields: [
         defineField({ name: "heading", title: "Heading", type: "string" }),
-        defineField({ name: "headingHighlight", title: "Highlighted Word", type: "string" }),
+        defineField({
+          name: "headingHighlight",
+          title: "Highlighted Word",
+          type: "string",
+        }),
       ],
     }),
     defineField({
@@ -63,7 +98,12 @@ export default defineType({
           fields: [
             defineField({ name: "icon", title: "Icon Path", type: "string" }),
             defineField({ name: "title", title: "Title", type: "string" }),
-            defineField({ name: "description", title: "Description", type: "text", rows: 2 }),
+            defineField({
+              name: "description",
+              title: "Description",
+              type: "text",
+              rows: 2,
+            }),
           ],
           preview: { select: { title: "title" } },
         }),
@@ -77,7 +117,11 @@ export default defineType({
       type: "object",
       fields: [
         defineField({ name: "heading", title: "Heading", type: "string" }),
-        defineField({ name: "headingHighlight", title: "Highlighted Word", type: "string" }),
+        defineField({
+          name: "headingHighlight",
+          title: "Highlighted Word",
+          type: "string",
+        }),
       ],
     }),
     defineField({
@@ -89,7 +133,12 @@ export default defineType({
           type: "object",
           fields: [
             defineField({ name: "title", title: "Title", type: "string" }),
-            defineField({ name: "description", title: "Description", type: "text", rows: 3 }),
+            defineField({
+              name: "description",
+              title: "Description",
+              type: "text",
+              rows: 3,
+            }),
           ],
           preview: { select: { title: "title" } },
         }),
@@ -103,7 +152,11 @@ export default defineType({
       type: "object",
       fields: [
         defineField({ name: "heading", title: "Heading", type: "string" }),
-        defineField({ name: "headingHighlight", title: "Highlighted Word", type: "string" }),
+        defineField({
+          name: "headingHighlight",
+          title: "Highlighted Word",
+          type: "string",
+        }),
       ],
     }),
     defineField({
@@ -116,7 +169,12 @@ export default defineType({
           fields: [
             defineField({ name: "icon", title: "Icon Path", type: "string" }),
             defineField({ name: "title", title: "Title", type: "string" }),
-            defineField({ name: "description", title: "Description", type: "text", rows: 3 }),
+            defineField({
+              name: "description",
+              title: "Description",
+              type: "text",
+              rows: 3,
+            }),
           ],
           preview: { select: { title: "title" } },
         }),
@@ -130,7 +188,12 @@ export default defineType({
       type: "object",
       fields: [
         defineField({ name: "heading", title: "Heading", type: "string" }),
-        defineField({ name: "bodyText", title: "Body Text", type: "text", rows: 3 }),
+        defineField({
+          name: "bodyText",
+          title: "Body Text",
+          type: "text",
+          rows: 3,
+        }),
         defineField({
           name: "bullets",
           title: "Bullet Points",
@@ -147,8 +210,17 @@ export default defineType({
       type: "object",
       fields: [
         defineField({ name: "heading", title: "Heading", type: "string" }),
-        defineField({ name: "headingHighlight", title: "Highlighted Word", type: "string" }),
-        defineField({ name: "subtext", title: "Subtext", type: "text", rows: 2 }),
+        defineField({
+          name: "headingHighlight",
+          title: "Highlighted Word",
+          type: "string",
+        }),
+        defineField({
+          name: "subtext",
+          title: "Subtext",
+          type: "text",
+          rows: 2,
+        }),
       ],
     }),
     defineField({
@@ -160,9 +232,17 @@ export default defineType({
           type: "object",
           fields: [
             defineField({ name: "name", title: "Name", type: "string" }),
-            defineField({ name: "role", title: "Role / Title", type: "string" }),
+            defineField({
+              name: "role",
+              title: "Role / Title",
+              type: "string",
+            }),
             defineField({ name: "photo", title: "Photo Path", type: "string" }),
-            defineField({ name: "linkedin", title: "LinkedIn URL", type: "string" }),
+            defineField({
+              name: "linkedin",
+              title: "LinkedIn URL",
+              type: "string",
+            }),
             defineField({ name: "bio", title: "Bio", type: "text", rows: 4 }),
           ],
           preview: { select: { title: "name", subtitle: "role" } },
@@ -177,7 +257,11 @@ export default defineType({
       type: "object",
       fields: [
         defineField({ name: "heading", title: "Heading", type: "string" }),
-        defineField({ name: "headingHighlight", title: "Highlighted Word", type: "string" }),
+        defineField({
+          name: "headingHighlight",
+          title: "Highlighted Word",
+          type: "string",
+        }),
       ],
     }),
     defineField({
@@ -188,8 +272,17 @@ export default defineType({
         defineArrayMember({
           type: "object",
           fields: [
-            defineField({ name: "question", title: "Question", type: "string" }),
-            defineField({ name: "answer", title: "Answer", type: "text", rows: 3 }),
+            defineField({
+              name: "question",
+              title: "Question",
+              type: "string",
+            }),
+            defineField({
+              name: "answer",
+              title: "Answer",
+              type: "text",
+              rows: 3,
+            }),
           ],
           preview: { select: { title: "question" } },
         }),

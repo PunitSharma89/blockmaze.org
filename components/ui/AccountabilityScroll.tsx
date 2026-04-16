@@ -25,7 +25,7 @@ export default function AccountabilityScroll({ items: itemsProp }: Accountabilit
   const [activeIndex, setActiveIndex] = useState(0)
 
   useEffect(() => {
-    let gsapCtx: { revert: () => void } | null = null
+    let gsapCtx: { revert: () => void } | undefined
     let unmounted = false
 
     const init = async () => {
@@ -33,42 +33,48 @@ export default function AccountabilityScroll({ items: itemsProp }: Accountabilit
       const { ScrollTrigger }  = await import('gsap/ScrollTrigger')
       gsap.registerPlugin(ScrollTrigger)
 
-      // If the component unmounted while we were awaiting imports, abort
       if (unmounted) return
 
       const section = sectionRef.current
       if (!section) return
 
       gsapCtx = gsap.context(() => {
-        itemRefs.current.forEach((item, i) => {
-          if (!item) return
-          ScrollTrigger.create({
-            trigger: item,
-            start: 'top 62%',
-            end: 'bottom 38%',
-            onEnter:     () => setActiveIndex(i),
-            onEnterBack: () => setActiveIndex(i),
-          })
-        })
+        const lineEl = lineFillRef.current?.parentElement as HTMLElement | null
+        if (!lineEl || !lineFillRef.current) return
 
-        if (lineFillRef.current) {
-          gsap.set(lineFillRef.current, { scaleY: 0, transformOrigin: 'top center' })
-          ScrollTrigger.create({
-            trigger: section,
-            start: 'top 60%',
-            end: 'bottom 40%',
-            onUpdate: (self) => {
-              if (lineFillRef.current) {
-                gsap.to(lineFillRef.current, {
-                  scaleY: self.progress,
-                  duration: 0.15,
-                  ease: 'none',
-                  overwrite: true,
-                })
-              }
-            },
-          })
-        }
+        gsap.set(lineFillRef.current, { scaleY: 0, transformOrigin: 'top center' })
+
+        ScrollTrigger.create({
+          trigger: section,
+          start: 'top center',
+          end: 'bottom center',
+          onUpdate: (self) => {
+            const progress = self.progress
+
+            gsap.to(lineFillRef.current, {
+              scaleY: progress,
+              duration: 0.1,
+              ease: 'none',
+              overwrite: true,
+            })
+
+            const lineRect   = lineEl.getBoundingClientRect()
+            const lineHeight = lineEl.offsetHeight
+            const fillReachedY = lineRect.top + lineHeight * progress
+
+            let newActive = 0
+            itemRefs.current.forEach((item, i) => {
+              if (!item) return
+              const markerEl = item.querySelector('.ucs-marker') as HTMLElement | null
+              if (!markerEl) return
+              const markerRect    = markerEl.getBoundingClientRect()
+              const markerCenterY = markerRect.top + markerRect.height / 2
+              if (fillReachedY >= markerCenterY) newActive = i
+            })
+
+            setActiveIndex(newActive)
+          },
+        })
       }, section)
     }
 
@@ -81,7 +87,7 @@ export default function AccountabilityScroll({ items: itemsProp }: Accountabilit
 
   return (
     <section ref={sectionRef} className="ucs-section">
-      <Container>
+      <Container className="max-responsive">
         <div className="ucs-inner">
 
           {/* LEFT: sticky panel */}
@@ -104,7 +110,6 @@ export default function AccountabilityScroll({ items: itemsProp }: Accountabilit
           {/* RIGHT: scroll timeline */}
           <div className="ucs-right">
             <div className="ucs-timeline">
-
               <div className="ucs-line">
                 <div ref={lineFillRef} className="ucs-line-fill" />
               </div>
@@ -113,7 +118,13 @@ export default function AccountabilityScroll({ items: itemsProp }: Accountabilit
                 <div
                   key={i}
                   ref={(el) => { itemRefs.current[i] = el }}
-                  className={`ucs-item${activeIndex === i ? ' ucs-item--active' : ''}`}
+                  className={`ucs-item${
+                    activeIndex === i
+                      ? ' ucs-item--active'
+                      : i < activeIndex
+                      ? ' ucs-item--done'
+                      : ''
+                  }`}
                 >
                   <div className="ucs-marker">
                     <div className="ucs-marker-outer" />
