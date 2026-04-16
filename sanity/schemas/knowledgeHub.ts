@@ -47,6 +47,13 @@ export default {
       title: "Published At",
       type: "datetime",
     },
+    {
+      name: "language",
+      title: "Language",
+      type: "string",
+      readOnly: true,
+      hidden: true,
+    },
   ],
   preview: {
     select: {

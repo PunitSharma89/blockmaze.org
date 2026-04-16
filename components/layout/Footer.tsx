@@ -14,8 +14,8 @@ interface SiteSettings {
   footerCopyrightRight?: string;
 }
 
-export default async function Footer() {
-  const settings = await sanityFetch<SiteSettings>(siteSettingsQuery);
+export default async function Footer({ locale = "en" }: { locale?: string }) {
+  const settings = await sanityFetch<SiteSettings>(siteSettingsQuery, { locale });
 
   const companyLinks = settings?.footerCompanyLinks ?? [];
   const quickLinks = settings?.footerQuickLinks ?? [];

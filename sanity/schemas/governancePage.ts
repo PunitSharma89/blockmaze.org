@@ -5,6 +5,7 @@ export default defineType({
   title: "Governance Page",
   type: "document",
   fields: [
+    defineField({ name: "language", title: "Language", type: "string", readOnly: true, hidden: true }),
     defineField({
       name: "hero",
       title: "Hero Section",

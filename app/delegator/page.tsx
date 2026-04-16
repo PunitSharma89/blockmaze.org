@@ -6,6 +6,7 @@ import SectionHeading from "@/components/ui/SectionHeading";
 import GovernanceStructureScroll from "@/components/ui/GovernanceStructureScroll";
 import { sanityFetch } from "@/lib/sanity";
 import { delegatorPageQuery } from "@/lib/queries";
+import { getLocale } from "@/lib/getLocale";
 
 export const metadata: Metadata = {
   title:
@@ -74,7 +75,8 @@ interface DelegatorData {
 /* ─── PAGE ──────────────────────────────────────────────────── */
 
 export default async function DelegatorPage() {
-  const data = await sanityFetch<DelegatorData>(delegatorPageQuery);
+  const locale = await getLocale();
+  const data = await sanityFetch<DelegatorData>(delegatorPageQuery, { locale });
 
   const benefits = data?.benefits ?? [];
   const steps = data?.steps ?? [];
@@ -82,7 +84,6 @@ export default async function DelegatorPage() {
 
   return (
     <div className="delegator-page">
-
       {/* 1 ── HERO — same as validator */}
       <section className="about-hero-section about-page-hero">
         <div className="about-hero-wrap">
@@ -101,7 +102,10 @@ export default async function DelegatorPage() {
             </div>
             {data?.hero?.buttonText && (
               <div className="hero-figma-btns">
-                <Link href={data.hero.buttonHref ?? "#"} className="hero-figma-btn-primary">
+                <Link
+                  href={data.hero.buttonHref ?? "#"}
+                  className="hero-figma-btn-primary"
+                >
                   {data.hero.buttonText}
                 </Link>
               </div>
@@ -109,7 +113,11 @@ export default async function DelegatorPage() {
           </div>
           <div className="about-hero-img-col">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/images/delegator-hero.png" alt="Blockmaze Delegator Platform" className="about-hero-img" />
+            <img
+              src="/images/delegator-hero.png"
+              alt="Blockmaze Delegator Platform"
+              className="about-hero-img"
+            />
           </div>
         </div>
       </section>
@@ -147,7 +155,6 @@ export default async function DelegatorPage() {
         <section className="section-padding bg-white">
           <Container>
             <div className="vision-layout">
-
               {/* Left — image */}
               <div className="vision-img-card">
                 {data.evaluateSection.image?.asset?.url ? (
@@ -178,7 +185,10 @@ export default async function DelegatorPage() {
                     </span>
                   )}
                   <h2 className="vision-title">
-                    {data.evaluateSection.heading?.split(" ").slice(0, -1).join(" ")}{" "}
+                    {data.evaluateSection.heading
+                      ?.split(" ")
+                      .slice(0, -1)
+                      .join(" ")}{" "}
                     <span className="text-primary">
                       {data.evaluateSection.heading?.split(" ").slice(-1)[0]}
                     </span>
@@ -187,7 +197,9 @@ export default async function DelegatorPage() {
                     <p className="vision-desc">{data.evaluateSection.text}</p>
                   )}
                   {data.evaluateSection.subtext && (
-                    <p className="vision-desc">{data.evaluateSection.subtext}</p>
+                    <p className="vision-desc">
+                      {data.evaluateSection.subtext}
+                    </p>
                   )}
                 </div>
                 {(data.evaluateSection.items ?? []).length > 0 && (
@@ -195,9 +207,27 @@ export default async function DelegatorPage() {
                     {(data.evaluateSection.items ?? []).map((item, i) => (
                       <li key={i} className="vision-item">
                         <span className="vision-item-icon">
-                          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="10" cy="10" r="9" stroke="#ffb01e" strokeWidth="1.5"/>
-                            <path d="M6.5 10L9 12.5L13.5 7.5" stroke="#ffb01e" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                          <svg
+                            width="20"
+                            height="20"
+                            viewBox="0 0 20 20"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <circle
+                              cx="10"
+                              cy="10"
+                              r="9"
+                              stroke="#ffb01e"
+                              strokeWidth="1.5"
+                            />
+                            <path
+                              d="M6.5 10L9 12.5L13.5 7.5"
+                              stroke="#ffb01e"
+                              strokeWidth="1.5"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
                           </svg>
                         </span>
                         <span>{item}</span>
@@ -206,10 +236,11 @@ export default async function DelegatorPage() {
                   </ul>
                 )}
               </div>
-
             </div>
             {data.evaluateSection.note && (
-              <p className="delegator-evaluate-note">{data.evaluateSection.note}</p>
+              <p className="delegator-evaluate-note">
+                {data.evaluateSection.note}
+              </p>
             )}
           </Container>
         </section>
@@ -255,7 +286,6 @@ export default async function DelegatorPage() {
 
             {/* Earning + Unbonding — 2 col */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4 section-content-gap">
-
               {/* Earning */}
               {data?.earningCard && (
                 <div className="delegator-card">
@@ -269,16 +299,22 @@ export default async function DelegatorPage() {
                       />
                     </div>
                   )}
-                  <h4 className="delegator-card-title">{data.earningCard.heading}</h4>
+                  <h4 className="delegator-card-title">
+                    {data.earningCard.heading}
+                  </h4>
                   {data.earningCard.text && (
-                    <p className="delegator-card-text">{data.earningCard.text}</p>
+                    <p className="delegator-card-text">
+                      {data.earningCard.text}
+                    </p>
                   )}
                   {(data.earningCard.rewardItems ?? []).length > 0 && (
                     <ul className="delegator-card-bullets">
                       {(data.earningCard.rewardItems ?? []).map((item, i) => (
                         <li key={i} className="delegator-card-bullet">
                           <span className="delegator-bullet-dot" />
-                          <span className="delegator-card-bullet-text">{item}</span>
+                          <span className="delegator-card-bullet-text">
+                            {item}
+                          </span>
                         </li>
                       ))}
                     </ul>
@@ -302,16 +338,22 @@ export default async function DelegatorPage() {
                       />
                     </div>
                   )}
-                  <h4 className="delegator-card-title">{data.unbondingCard.heading}</h4>
+                  <h4 className="delegator-card-title">
+                    {data.unbondingCard.heading}
+                  </h4>
                   {data.unbondingCard.text && (
-                    <p className="delegator-card-text">{data.unbondingCard.text}</p>
+                    <p className="delegator-card-text">
+                      {data.unbondingCard.text}
+                    </p>
                   )}
                   {(data.unbondingCard.timeline ?? []).length > 0 && (
                     <ul className="delegator-card-bullets">
                       {(data.unbondingCard.timeline ?? []).map((item, i) => (
                         <li key={i} className="delegator-card-bullet">
                           <span className="delegator-bullet-dot" />
-                          <span className="delegator-card-bullet-text">{item}</span>
+                          <span className="delegator-card-bullet-text">
+                            {item}
+                          </span>
                         </li>
                       ))}
                     </ul>
@@ -336,7 +378,9 @@ export default async function DelegatorPage() {
                     />
                   </div>
                 )}
-                <h4 className="delegator-card-title">{data.risksCard.heading}</h4>
+                <h4 className="delegator-card-title">
+                  {data.risksCard.heading}
+                </h4>
                 {data.risksCard.intro && (
                   <p className="delegator-card-text">{data.risksCard.intro}</p>
                 )}
@@ -353,7 +397,6 @@ export default async function DelegatorPage() {
           </Container>
         </section>
       )}
-
     </div>
   );
 }

@@ -85,6 +85,13 @@ export default {
         { name: "ogImage", title: "OG Image", type: "image" },
       ],
     },
+    {
+      name: "language",
+      title: "Language",
+      type: "string",
+      readOnly: true,
+      hidden: true,
+    },
   ],
   orderings: [
     {

@@ -27,9 +27,19 @@ interface Props {
   fallbackTitle?: string;
 }
 
+const SUPPORTED_LOCALES = ["en", "ar", "es", "fr"];
+
+function getCookieLocale(): string {
+  if (typeof document === "undefined") return "en";
+  const match = document.cookie.match(/(?:^|;\s*)NEXT_LOCALE=([^;]+)/);
+  const val = match ? match[1] : "en";
+  return SUPPORTED_LOCALES.includes(val) ? val : "en";
+}
+
 export default function TechnicalPageClient({ slug, fallbackTitle }: Props) {
   const [data, setData] = useState<TechnicalPageData | null>(null);
   const [activeId, setActiveId] = useState<string>("");
+  const [locale, setLocale] = useState<string>("en");
 
   function scrollToSection(sectionId: string) {
     const el = document.getElementById(sectionId);
@@ -38,8 +48,12 @@ export default function TechnicalPageClient({ slug, fallbackTitle }: Props) {
   }
 
   useEffect(() => {
-    sanityFetch<TechnicalPageData>(technicalPageQuery, { slug }).then(setData);
-  }, [slug]);
+    setLocale(getCookieLocale());
+  }, []);
+
+  useEffect(() => {
+    sanityFetch<TechnicalPageData>(technicalPageQuery, { slug, locale }).then(setData);
+  }, [slug, locale]);
 
   useEffect(() => {
     const handleScroll = () => {

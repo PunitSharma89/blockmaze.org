@@ -1,106 +1,112 @@
-'use client'
+"use client";
 
-import { useEffect, useRef, useState } from 'react'
-import Link from 'next/link'
-import Container from '@/components/layout/Container'
+import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
+import Container from "@/components/layout/Container";
 
 interface KnowledgeHubItem {
-  _id: string
-  title: string
-  excerpt?: string
-  bulletPoints?: string[]
-  link?: string
+  _id: string;
+  title: string;
+  excerpt?: string;
+  bulletPoints?: string[];
+  link?: string;
 }
 
 interface KnowledgeHubScrollProps {
-  eyebrow?: string
-  heading?: string
-  items: KnowledgeHubItem[]
+  eyebrow?: string;
+  heading?: string;
+  items: KnowledgeHubItem[];
+  exploreMoreLabel?: string;
 }
 
 export default function KnowledgeHubScroll({
   eyebrow,
   heading,
   items = [],
+  exploreMoreLabel = "Explore more",
 }: KnowledgeHubScrollProps) {
-  const sectionRef  = useRef<HTMLElement>(null)
-  const itemRefs    = useRef<(HTMLDivElement | null)[]>([])
-  const lineFillRef = useRef<HTMLDivElement>(null)
-  const [activeIndex, setActiveIndex] = useState(0)
+  const sectionRef = useRef<HTMLElement>(null);
+  const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const lineFillRef = useRef<HTMLDivElement>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
 
   useEffect(() => {
-    let gsapCtx: { revert: () => void } | null = null
+    let gsapCtx: { revert: () => void } | null = null;
 
     const init = async () => {
-      const { default: gsap } = await import('gsap')
-      const { ScrollTrigger }  = await import('gsap/ScrollTrigger')
-      gsap.registerPlugin(ScrollTrigger)
+      const { default: gsap } = await import("gsap");
+      const { ScrollTrigger } = await import("gsap/ScrollTrigger");
+      gsap.registerPlugin(ScrollTrigger);
 
-      const section = sectionRef.current
-      if (!section) return
+      const section = sectionRef.current;
+      if (!section) return;
 
       gsapCtx = gsap.context(() => {
         itemRefs.current.forEach((item, i) => {
-          if (!item) return
+          if (!item) return;
           ScrollTrigger.create({
             trigger: item,
-            start: 'top 50%',
-            end: 'bottom 50%',
-            onEnter:     () => setActiveIndex(i),
+            start: "top 50%",
+            end: "bottom 50%",
+            onEnter: () => setActiveIndex(i),
             onEnterBack: () => setActiveIndex(i),
-          })
-        })
+          });
+        });
 
         if (lineFillRef.current) {
-          gsap.set(lineFillRef.current, { scaleY: 0, transformOrigin: 'top center' })
+          gsap.set(lineFillRef.current, {
+            scaleY: 0,
+            transformOrigin: "top center",
+          });
 
-          const firstItem = itemRefs.current[0]
-          const lastItem  = itemRefs.current[itemRefs.current.length - 1]
+          const firstItem = itemRefs.current[0];
+          const lastItem = itemRefs.current[itemRefs.current.length - 1];
 
           if (firstItem && lastItem) {
             ScrollTrigger.create({
               trigger: firstItem,
-              start: 'top 50%',
+              start: "top 50%",
               endTrigger: lastItem,
-              end: 'bottom 50%',
+              end: "bottom 50%",
               onUpdate: (self) => {
                 if (lineFillRef.current) {
                   gsap.to(lineFillRef.current, {
                     scaleY: self.progress,
                     duration: 0.15,
-                    ease: 'none',
+                    ease: "none",
                     overwrite: true,
-                  })
+                  });
                 }
               },
-            })
+            });
           }
         }
-      }, section)
-    }
+      }, section);
+    };
 
-    init()
-    return () => { gsapCtx?.revert() }
-  }, [])
+    init();
+    return () => {
+      gsapCtx?.revert();
+    };
+  }, []);
 
-  if (!items.length) return null
+  if (!items.length) return null;
 
   return (
     <section ref={sectionRef} className="ucs-section">
       <Container>
         <div className="ucs-inner">
-
           {/* LEFT: sticky panel */}
           <div className="ucs-left">
             {eyebrow && <span className="section-eyebrow">{eyebrow}</span>}
             <h2 className="section-heading">{heading}</h2>
             <div className="ucs-counter">
               <span className="ucs-counter-current">
-                {String(activeIndex + 1).padStart(2, '0')}
+                {String(activeIndex + 1).padStart(2, "0")}
               </span>
               <span className="ucs-counter-sep">/</span>
               <span className="ucs-counter-total">
-                {String(items.length).padStart(2, '0')}
+                {String(items.length).padStart(2, "0")}
               </span>
             </div>
           </div>
@@ -114,8 +120,10 @@ export default function KnowledgeHubScroll({
               {items.map((item, i) => (
                 <div
                   key={item._id}
-                  ref={(el) => { itemRefs.current[i] = el }}
-                  className={`ucs-item${activeIndex === i ? ' ucs-item--active' : ''}`}
+                  ref={(el) => {
+                    itemRefs.current[i] = el;
+                  }}
+                  className={`ucs-item${activeIndex === i ? " ucs-item--active" : ""}`}
                 >
                   <div className="ucs-marker">
                     <div className="ucs-marker-outer" />
@@ -137,8 +145,11 @@ export default function KnowledgeHubScroll({
                       </ul>
                     )}
                     {item.link && (
-                      <Link href={item.link} className="hero-figma-btn-primary kh-item-btn">
-                        Explore more
+                      <Link
+                        href={item.link}
+                        className="hero-figma-btn-primary kh-item-btn"
+                      >
+                        {exploreMoreLabel}
                       </Link>
                     )}
                   </div>
@@ -146,9 +157,8 @@ export default function KnowledgeHubScroll({
               ))}
             </div>
           </div>
-
         </div>
       </Container>
     </section>
-  )
+  );
 }

@@ -6,6 +6,7 @@ import SectionHeading from "@/components/ui/SectionHeading";
 import GovernanceStructureScroll from "@/components/ui/GovernanceStructureScroll";
 import { sanityFetch } from "@/lib/sanity";
 import { validatorPageQuery } from "@/lib/queries";
+import { getLocale } from "@/lib/getLocale";
 
 export const metadata: Metadata = {
   title: "Blockmaze Validator | Node Rewards | Layer-0 Blockchain Staking",
@@ -58,27 +59,63 @@ function Icon({ iconKey, size = 24 }: { iconKey: string; size?: number }) {
   switch (iconKey) {
     case "shield":
       return (
-        <svg width={s} height={s} viewBox="0 0 28 28" fill="none" stroke={color} strokeWidth={sw} strokeLinecap="round" strokeLinejoin="round">
+        <svg
+          width={s}
+          height={s}
+          viewBox="0 0 28 28"
+          fill="none"
+          stroke={color}
+          strokeWidth={sw}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
           <path d="M14 3L24 8v7c0 6-4 11-10 13C8 26 4 21 4 15V8l10-5z" />
         </svg>
       );
     case "document":
       return (
-        <svg width={s} height={s} viewBox="0 0 28 28" fill="none" stroke={color} strokeWidth={sw} strokeLinecap="round" strokeLinejoin="round">
+        <svg
+          width={s}
+          height={s}
+          viewBox="0 0 28 28"
+          fill="none"
+          stroke={color}
+          strokeWidth={sw}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
           <rect x="4" y="6" width="20" height="16" rx="3" />
           <path d="M9 12h10M9 16h6" />
         </svg>
       );
     case "chart":
       return (
-        <svg width={s} height={s} viewBox="0 0 28 28" fill="none" stroke={color} strokeWidth={sw} strokeLinecap="round" strokeLinejoin="round">
+        <svg
+          width={s}
+          height={s}
+          viewBox="0 0 28 28"
+          fill="none"
+          stroke={color}
+          strokeWidth={sw}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
           <path d="M6 22l4-8 4 4 4-6 4 10" />
           <path d="M4 22h20" />
         </svg>
       );
     case "network":
       return (
-        <svg width={s} height={s} viewBox="0 0 28 28" fill="none" stroke={color} strokeWidth={sw} strokeLinecap="round" strokeLinejoin="round">
+        <svg
+          width={s}
+          height={s}
+          viewBox="0 0 28 28"
+          fill="none"
+          stroke={color}
+          strokeWidth={sw}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
           <circle cx="14" cy="9" r="4" />
           <circle cx="6" cy="20" r="3" />
           <circle cx="22" cy="20" r="3" />
@@ -87,14 +124,32 @@ function Icon({ iconKey, size = 24 }: { iconKey: string; size?: number }) {
       );
     case "clock":
       return (
-        <svg width={s} height={s} viewBox="0 0 28 28" fill="none" stroke={color} strokeWidth={sw} strokeLinecap="round" strokeLinejoin="round">
+        <svg
+          width={s}
+          height={s}
+          viewBox="0 0 28 28"
+          fill="none"
+          stroke={color}
+          strokeWidth={sw}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
           <circle cx="14" cy="14" r="10" />
           <path d="M14 8v6l4 4" />
         </svg>
       );
     case "lock":
       return (
-        <svg width={s} height={s} viewBox="0 0 28 28" fill="none" stroke={color} strokeWidth={sw} strokeLinecap="round" strokeLinejoin="round">
+        <svg
+          width={s}
+          height={s}
+          viewBox="0 0 28 28"
+          fill="none"
+          stroke={color}
+          strokeWidth={sw}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
           <rect x="5" y="13" width="18" height="12" rx="2" />
           <path d="M9 13V9a5 5 0 0 1 10 0v4" />
           <circle cx="14" cy="19" r="1.5" />
@@ -102,7 +157,16 @@ function Icon({ iconKey, size = 24 }: { iconKey: string; size?: number }) {
       );
     default:
       return (
-        <svg width={s} height={s} viewBox="0 0 28 28" fill="none" stroke={color} strokeWidth={sw} strokeLinecap="round" strokeLinejoin="round">
+        <svg
+          width={s}
+          height={s}
+          viewBox="0 0 28 28"
+          fill="none"
+          stroke={color}
+          strokeWidth={sw}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
           <circle cx="14" cy="14" r="10" />
         </svg>
       );
@@ -112,7 +176,8 @@ function Icon({ iconKey, size = 24 }: { iconKey: string; size?: number }) {
 /* ─── PAGE ──────────────────────────────────────────────────── */
 
 export default async function ValidatorPage() {
-  const data = await sanityFetch<ValidatorData>(validatorPageQuery);
+  const locale = await getLocale();
+  const data = await sanityFetch<ValidatorData>(validatorPageQuery, { locale });
 
   const whoCards = data?.whoCards ?? [];
   const steps = data?.steps ?? [];
@@ -147,7 +212,10 @@ export default async function ValidatorPage() {
             </div>
             {data?.hero?.buttonText && (
               <div className="hero-figma-btns">
-                <Link href={data.hero.buttonHref ?? "#"} className="hero-figma-btn-primary">
+                <Link
+                  href={data.hero.buttonHref ?? "#"}
+                  className="hero-figma-btn-primary"
+                >
                   {data.hero.buttonText}
                 </Link>
               </div>
@@ -155,7 +223,11 @@ export default async function ValidatorPage() {
           </div>
           <div className="about-hero-img-col">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/images/Validator-hero.png" alt="Blockmaze Validator Platform" className="about-hero-img" />
+            <img
+              src="/images/Validator-hero.png"
+              alt="Blockmaze Validator Platform"
+              className="about-hero-img"
+            />
           </div>
         </div>
       </section>
@@ -228,7 +300,9 @@ export default async function ValidatorPage() {
                         </div>
                         <h4 className="rfp-process-cell-title">{card.title}</h4>
                       </div>
-                      <p className="rfp-process-cell-desc">{card.description}</p>
+                      <p className="rfp-process-cell-desc">
+                        {card.description}
+                      </p>
                     </div>
                   ))}
                 </div>

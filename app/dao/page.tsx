@@ -6,6 +6,7 @@ import SectionHeading from "@/components/ui/SectionHeading";
 import FAQ from "@/components/ui/FAQ";
 import { sanityFetch } from "@/lib/sanity";
 import { daoPageQuery } from "@/lib/queries";
+import { getLocale } from "@/lib/getLocale";
 
 export const metadata: Metadata = {
   title: "DAO Governance Platform | Quadratic Voting for RWAs",
@@ -47,7 +48,8 @@ interface DaoData {
 /* ─── PAGE ──────────────────────────────────────────────────── */
 
 export default async function DAOPage() {
-  const data = await sanityFetch<DaoData>(daoPageQuery);
+  const locale = await getLocale();
+  const data = await sanityFetch<DaoData>(daoPageQuery, { locale });
 
   const aboutCards = data?.aboutCards ?? [];
   const marqueeItems = data?.marqueeItems ?? [];
@@ -82,12 +84,18 @@ export default async function DAOPage() {
             </div>
             <div className="hero-figma-btns">
               {data?.hero?.buttonText && (
-                <Link href={data.hero.buttonHref ?? "#"} className="hero-figma-btn-primary">
+                <Link
+                  href={data.hero.buttonHref ?? "#"}
+                  className="hero-figma-btn-primary"
+                >
                   {data.hero.buttonText}
                 </Link>
               )}
               {data?.hero?.secondButtonText && (
-                <Link href={data.hero.secondButtonHref ?? "#"} className="hero-figma-btn-white">
+                <Link
+                  href={data.hero.secondButtonHref ?? "#"}
+                  className="hero-figma-btn-white"
+                >
                   {data.hero.secondButtonText}
                 </Link>
               )}
@@ -95,25 +103,36 @@ export default async function DAOPage() {
           </div>
           <div className="about-hero-img-col">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/images/dao-hero.png" alt="Blockmaze DAO" className="about-hero-img" />
+            <img
+              src="/images/dao-hero.png"
+              alt="Blockmaze DAO"
+              className="about-hero-img"
+            />
           </div>
         </div>
       </section>
 
       {/* 2 ── ABOUT + CARDS */}
-      {(data?.aboutSection?.heading || data?.aboutText || aboutCards.length > 0) && (
+      {(data?.aboutSection?.heading ||
+        data?.aboutText ||
+        aboutCards.length > 0) && (
         <section className="about-section">
           <Container>
             <div className="about-new-wrap">
               <div className="flex flex-col gap-[20px] items-center text-center w-full">
                 <h2 className="section-heading">
-                  {data?.aboutSection?.heading?.split(" ").slice(0, -1).join(" ")}{" "}
+                  {data?.aboutSection?.heading
+                    ?.split(" ")
+                    .slice(0, -1)
+                    .join(" ")}{" "}
                   <span className="text-primary">
                     {data?.aboutSection?.heading?.split(" ").slice(-1)[0]}
                   </span>
                 </h2>
                 {data?.aboutText && (
-                  <p className="section-subtext about-subtext">{data.aboutText}</p>
+                  <p className="section-subtext about-subtext">
+                    {data.aboutText}
+                  </p>
                 )}
               </div>
               {aboutCards.length > 0 && (
@@ -178,11 +197,17 @@ export default async function DAOPage() {
             <div className="role-tabs-glow" aria-hidden="true" />
             <div className="rfp-process-header">
               {data?.stepsSection?.eyebrow && (
-                <span className="rfp-process-chip">{data.stepsSection.eyebrow}</span>
+                <span className="rfp-process-chip">
+                  {data.stepsSection.eyebrow}
+                </span>
               )}
-              <h2 className="rfp-process-heading">{data?.stepsSection?.heading}</h2>
+              <h2 className="rfp-process-heading">
+                {data?.stepsSection?.heading}
+              </h2>
               {data?.stepsSection?.subtext && (
-                <p className="rfp-process-subheading">{data.stepsSection.subtext}</p>
+                <p className="rfp-process-subheading">
+                  {data.stepsSection.subtext}
+                </p>
               )}
             </div>
             <div className="rfp-process-grid">
@@ -198,9 +223,13 @@ export default async function DAOPage() {
                               {String(stepNum).padStart(2, "0")}
                             </span>
                           </div>
-                          <h4 className="rfp-process-cell-title">{step.title}</h4>
+                          <h4 className="rfp-process-cell-title">
+                            {step.title}
+                          </h4>
                         </div>
-                        <p className="rfp-process-cell-desc">{step.description}</p>
+                        <p className="rfp-process-cell-desc">
+                          {step.description}
+                        </p>
                       </div>
                     );
                   })}

@@ -1,0 +1,94 @@
+{
+  "nav": {
+    "home": "Inicio",
+    "about": "Acerca de",
+    "protocol": "Protocolo Blockmaze",
+    "tokenomics": "Tokenómica",
+    "governance": "Gobernanza",
+    "dao": "DAO",
+    "validator": "Validador",
+    "delegator": "Delegador",
+    "swap": "Intercambiar",
+    "whitepaper": "Libro Blanco",
+    "rfp": "RFP",
+    "blogs": "Blogs",
+    "news": "Noticias",
+    "knowledgeHub": "Centro de Conocimiento",
+    "contact": "Contáctanos",
+    "learnMore": "Aprende Más",
+    "getStarted": "Comenzar",
+    "exploreMore": "Explorar Más"
+  },
+  "common": {
+    "readMore": "Leer Más",
+    "learnMore": "Aprende Más",
+    "viewAll": "Ver Todo",
+    "backToTop": "Volver al Inicio",
+    "loading": "Cargando...",
+    "search": "Buscar",
+    "searchPlaceholder": "Buscar...",
+    "noResults": "No se encontraron resultados",
+    "publishedOn": "Publicado en",
+    "category": "Categoría",
+    "tags": "Etiquetas",
+    "author": "Autor",
+    "tableOfContents": "Tabla de Contenido",
+    "jumpToSection": "Saltar a la sección…",
+    "home": "Inicio",
+    "previous": "Anterior",
+    "next": "Siguiente"
+  },
+  "blogs": {
+    "title": "Blogs",
+    "subtitle": "Últimas ideas sobre blockchain, tokenización RWA e infraestructura institucional.",
+    "allCategories": "Todas las Categorías",
+    "noPosts": "No se encontraron publicaciones.",
+    "relatedPosts": "Publicaciones Relacionadas"
+  },
+  "news": {
+    "title": "Noticias",
+    "subtitle": "Últimas actualizaciones del ecosistema Blockmaze."
+  },
+  "knowledgeHub": {
+    "title": "Centro de Conocimiento",
+    "subtitle": "Recursos técnicos y documentación para el protocolo Blockmaze.",
+    "heroChip": "Documentación y Recursos",
+    "heroHeading": "Documentación y",
+    "heroHeadingHighlight": "Recursos de Blockmaze",
+    "heroBody": "El centro de conocimiento de Blockmaze sirve como la fuente única de verdad para todas las especificaciones técnicas, marcos de gobernanza, estándares de validadores, economía de tokens y documentación de infraestructura de activos del mundo real. Todos los documentos están controlados por versiones, alineados con la gobernanza y destinados a desarrolladores, validadores, instituciones, exchanges y participantes del ecosistema.",
+    "eyebrow": "Documentación",
+    "heading": "Recursos del Centro de Conocimiento",
+    "exploreMore": "Explorar más"
+  },
+  "contact": {
+    "title": "Contáctanos",
+    "name": "Tu Nombre",
+    "email": "Tu Correo Electrónico",
+    "subject": "Asunto",
+    "message": "Tu Mensaje",
+    "send": "Enviar Mensaje",
+    "success": "¡Mensaje enviado con éxito!",
+    "error": "Algo salió mal. Por favor, inténtalo de nuevo."
+  },
+  "footer": {
+    "rights": "Todos los derechos reservados.",
+    "privacy": "Política de Privacidad",
+    "terms": "Términos de Uso"
+  },
+  "language": {
+    "select": "Idioma",
+    "en": "Inglés",
+    "ar": "Árabe",
+    "es": "Español",
+    "fr": "Francés"
+  },
+  "useCases": {
+    "eyebrow": "Casos de Uso",
+    "heading": "Top Blockmaze",
+    "headingHighlight": "Casos de Uso"
+  },
+  "ecosystem": {
+    "heading": "Gobernanza",
+    "headingHighlight": "Ecosistema"
+  }
+}

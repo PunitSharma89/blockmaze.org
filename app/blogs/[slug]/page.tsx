@@ -7,6 +7,7 @@ import Container from "@/components/layout/Container";
 import Breadcrumb from "@/components/layout/Breadcrumb";
 import { sanityFetch } from "@/lib/sanity";
 import { blogBySlugQuery, blogSlugsQuery } from "@/lib/queries";
+import { getLocale } from "@/lib/getLocale";
 
 export const revalidate = 60;
 
@@ -47,7 +48,8 @@ export async function generateStaticParams() {
 
 export async function generateMetadata(props: { params: Params }): Promise<Metadata> {
   const { slug } = await props.params;
-  const post = await sanityFetch<SanityBlogPost>(blogBySlugQuery, { slug });
+  const locale = await getLocale();
+  const post = await sanityFetch<SanityBlogPost>(blogBySlugQuery, { slug, locale });
   if (!post) return { title: "Post Not Found" };
   return {
     title: post.seo?.metaTitle || post.title,
@@ -141,8 +143,9 @@ const portableTextComponents: PortableTextComponents = {
 
 export default async function BlogPostPage(props: { params: Params }) {
   const { slug } = await props.params;
+  const locale = await getLocale();
 
-  const post = await sanityFetch<SanityBlogPost>(blogBySlugQuery, { slug });
+  const post = await sanityFetch<SanityBlogPost>(blogBySlugQuery, { slug, locale });
 
   if (!post) notFound();
 

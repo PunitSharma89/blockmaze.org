@@ -2,6 +2,9 @@ import { Metadata } from "next";
 import Container from "@/components/layout/Container";
 import Breadcrumb from "@/components/layout/Breadcrumb";
 import ContactForm from "@/components/ui/ContactForm";
+import { sanityFetch } from "@/lib/sanity";
+import { contactPageQuery } from "@/lib/queries";
+import { getLocale } from "@/lib/getLocale";
 
 export const metadata: Metadata = {
   title: "Contact Us",
@@ -9,7 +12,13 @@ export const metadata: Metadata = {
     "Get in touch with the Blockmaze Foundation. Our team is ready to assist users, partners, developers, and media.",
 };
 
-export default function ContactUsPage() {
+export default async function ContactUsPage() {
+  const locale = await getLocale();
+  const data = await sanityFetch<{ heading?: string; bodyText?: string }>(
+    contactPageQuery,
+    { locale }
+  );
+
   return (
     <>
       <Container>
@@ -22,11 +31,10 @@ export default function ContactUsPage() {
               {/* Left Side */}
               <div className="w-full lg:w-1/3">
                 <h1 className="text-gray-dark mb-4">
-                  Need help? We&apos;ve got you covered.
+                  {data?.heading ?? "Need help? We\u2019ve got you covered."}
                 </h1>
                 <p className="text-gray-DEFAULT mb-8 leading-relaxed">
-                  Our team is ready to assist users, partners, developers, and
-                  media, and will reply within 24-48 hours.
+                  {data?.bodyText ?? "Our team is ready to assist users, partners, developers, and media, and will reply within 24-48 hours."}
                 </p>
               </div>
 

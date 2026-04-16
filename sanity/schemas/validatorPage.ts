@@ -5,6 +5,7 @@ export default defineType({
   title: "Validator Page",
   type: "document",
   fields: [
+    defineField({ name: "language", title: "Language", type: "string", readOnly: true, hidden: true }),
     /* ── Hero ── */
     defineField({
       name: "hero",
