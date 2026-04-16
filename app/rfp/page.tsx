@@ -6,6 +6,7 @@ import SectionHeading from "@/components/ui/SectionHeading";
 import FAQ from "@/components/ui/FAQ";
 import { sanityFetch } from "@/lib/sanity";
 import { rfpPageQuery } from "@/lib/queries";
+import { getLocale } from "@/lib/getLocale";
 
 export const metadata: Metadata = {
   title: "RFP | Blockmaze",
@@ -60,7 +61,8 @@ interface RfpData {
 /* ─── PAGE ──────────────────────────────────────────────────── */
 
 export default async function RfpPage() {
-  const data = await sanityFetch<RfpData>(rfpPageQuery);
+  const locale = await getLocale();
+  const data = await sanityFetch<RfpData>(rfpPageQuery, { locale });
 
   // Split process steps into rows of 3
   const processSteps = data?.processSteps ?? [];

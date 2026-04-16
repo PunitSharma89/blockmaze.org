@@ -6,6 +6,7 @@ import SectionHeading from "@/components/ui/SectionHeading";
 import GovernanceStructureScroll from "@/components/ui/GovernanceStructureScroll";
 import { sanityFetch } from "@/lib/sanity";
 import { swapPageQuery } from "@/lib/queries";
+import { getLocale } from "@/lib/getLocale";
 
 export const metadata: Metadata = {
   title: "RWA Swap Platform | On-Chain Asset Exchange Protocol",
@@ -48,7 +49,8 @@ interface SwapData {
 /* ─── PAGE ──────────────────────────────────────────────────── */
 
 export default async function SwapPage() {
-  const data = await sanityFetch<SwapData>(swapPageQuery);
+  const locale = await getLocale();
+  const data = await sanityFetch<SwapData>(swapPageQuery, { locale });
 
   const steps = data?.steps ?? [];
 

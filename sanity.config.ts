@@ -1,5 +1,6 @@
 import { defineConfig } from "sanity";
 import { structureTool } from "sanity/structure";
+import { documentInternationalization } from "@sanity/document-internationalization";
 import blog from "./sanity/schemas/blog";
 import category from "./sanity/schemas/category";
 import author from "./sanity/schemas/author";
@@ -15,7 +16,17 @@ import validatorPage from "./sanity/schemas/validatorPage";
 import delegatorPage from "./sanity/schemas/delegatorPage";
 import tokenomicsPage from "./sanity/schemas/tokenomicsPage";
 import homePage from "./sanity/schemas/homePage";
+import aboutPage from "./sanity/schemas/aboutPage";
+import contactPage from "./sanity/schemas/contactPage";
+import legalPage from "./sanity/schemas/legalPage";
 import { PublishAction } from "./sanity/actions/PublishAction";
+
+const supportedLanguages = [
+  { id: "en", title: "English", isDefault: true },
+  { id: "ar", title: "Arabic" },
+  { id: "es", title: "Spanish" },
+  { id: "fr", title: "French" },
+];
 
 export default defineConfig({
   name: "blockmaze",
@@ -23,7 +34,19 @@ export default defineConfig({
   projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || "3qbrvzvt",
   dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || "production",
   basePath: "/studio",
-  plugins: [structureTool()],
+  plugins: [
+    structureTool(),
+    documentInternationalization({
+      supportedLanguages,
+      schemaTypes: [
+        "blog", "news", "knowledgeHub", "homePage", "siteSettings",
+        "governancePage", "rfpPage", "daoPage", "swapPage",
+        "validatorPage", "delegatorPage", "tokenomicsPage",
+        "aboutPage", "contactPage",
+        "technicalPage", "legalPage",
+      ],
+    }),
+  ],
   schema: {
     types: [
       blog,
@@ -41,6 +64,9 @@ export default defineConfig({
       delegatorPage,
       tokenomicsPage,
       homePage,
+      aboutPage,
+      contactPage,
+      legalPage,
     ],
   },
   document: {

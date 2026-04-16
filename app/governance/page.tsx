@@ -7,6 +7,7 @@ import FAQ from "@/components/ui/FAQ";
 import GovernanceStructureScroll from "@/components/ui/GovernanceStructureScroll";
 import { sanityFetch } from "@/lib/sanity";
 import { governancePageQuery } from "@/lib/queries";
+import { getLocale } from "@/lib/getLocale";
 
 export const metadata: Metadata = {
   title: "Governance",
@@ -264,7 +265,8 @@ function RoleIcon({ iconKey, size = 28 }: { iconKey: string; size?: number }) {
 /* ─── PAGE ──────────────────────────────────────────────────── */
 
 export default async function GovernancePage() {
-  const data = await sanityFetch<GovernanceData>(governancePageQuery);
+  const locale = await getLocale();
+  const data = await sanityFetch<GovernanceData>(governancePageQuery, { locale });
 
   const roles = data?.roles ?? [];
   const scopeItems = data?.scopeItems ?? [];

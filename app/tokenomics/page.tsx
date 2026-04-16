@@ -5,6 +5,7 @@ import Container from "@/components/layout/Container";
 import SectionHeading from "@/components/ui/SectionHeading";
 import { sanityFetch } from "@/lib/sanity";
 import { tokenomicsPageQuery } from "@/lib/queries";
+import { getLocale } from "@/lib/getLocale";
 
 export const metadata: Metadata = {
   title: "Tokenomics - Blockmaze Foundation",
@@ -53,7 +54,8 @@ interface TokenomicsData {
 /* ─── PAGE ──────────────────────────────────────────────────── */
 
 export default async function TokenomicsPage() {
-  const data = await sanityFetch<TokenomicsData>(tokenomicsPageQuery);
+  const locale = await getLocale();
+  const data = await sanityFetch<TokenomicsData>(tokenomicsPageQuery, { locale });
 
   const utilityCards = data?.utilityCards ?? [];
   const tokenAllocation = data?.tokenAllocation ?? [];

@@ -6,6 +6,7 @@ import SectionHeading from "@/components/ui/SectionHeading";
 import GovernanceStructureScroll from "@/components/ui/GovernanceStructureScroll";
 import { sanityFetch } from "@/lib/sanity";
 import { validatorPageQuery } from "@/lib/queries";
+import { getLocale } from "@/lib/getLocale";
 
 export const metadata: Metadata = {
   title: "Blockmaze Validator | Node Rewards | Layer-0 Blockchain Staking",
@@ -112,7 +113,8 @@ function Icon({ iconKey, size = 24 }: { iconKey: string; size?: number }) {
 /* ─── PAGE ──────────────────────────────────────────────────── */
 
 export default async function ValidatorPage() {
-  const data = await sanityFetch<ValidatorData>(validatorPageQuery);
+  const locale = await getLocale();
+  const data = await sanityFetch<ValidatorData>(validatorPageQuery, { locale });
 
   const whoCards = data?.whoCards ?? [];
   const steps = data?.steps ?? [];

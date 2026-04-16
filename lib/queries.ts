@@ -1,4 +1,4 @@
-export const allBlogsQuery = `*[_type == "blog" && !(_id in path("drafts.**"))] | order(_createdAt desc) {
+export const allBlogsQuery = `*[_type == "blog" && !(_id in path("drafts.**")) && coalesce(language, "en") == $locale] | order(_createdAt desc) {
   _id,
   title,
   slug,
@@ -22,7 +22,7 @@ export const allBlogsQuery = `*[_type == "blog" && !(_id in path("drafts.**"))] 
   seo
 }`;
 
-export const blogBySlugQuery = `*[_type == "blog" && !(_id in path("drafts.**")) && slug.current == $slug][0] {
+export const blogBySlugQuery = `*[_type == "blog" && !(_id in path("drafts.**")) && slug.current == $slug && coalesce(language, "en") == $locale][0] {
   _id,
   title,
   slug,
@@ -59,7 +59,7 @@ export const allCategoriesQuery = `*[_type == "category"] | order(title asc) {
   description
 }`;
 
-export const blogsByCategoryQuery = `*[_type == "blog" && category->slug.current == $slug] | order(publishedAt desc) {
+export const blogsByCategoryQuery = `*[_type == "blog" && category->slug.current == $slug && coalesce(language, "en") == $locale] | order(publishedAt desc) {
   _id,
   title,
   slug,
@@ -93,7 +93,7 @@ export const allNewsQuery = `*[_type == "news"] | order(publishedAt desc) {
   publishedAt
 }`;
 
-export const allKnowledgeHubQuery = `*[_type == "knowledgeHub" && !(_id in path("drafts.**"))] | order(_createdAt desc) {
+export const allKnowledgeHubQuery = `*[_type == "knowledgeHub" && !(_id in path("drafts.**")) && coalesce(language, "en") == $locale] | order(_createdAt desc) {
   _id,
   title,
   slug,
@@ -110,7 +110,7 @@ export const allKnowledgeHubQuery = `*[_type == "knowledgeHub" && !(_id in path(
   publishedAt
 }`;
 
-export const technicalPageQuery = `*[_type == "technicalPage" && !(_id in path("drafts.**")) && slug.current == $slug][0] {
+export const technicalPageQuery = `*[_type == "technicalPage" && !(_id in path("drafts.**")) && slug.current == $slug && coalesce(language, "en") == $locale][0] {
   _id,
   title,
   slug,
@@ -126,7 +126,7 @@ export const technicalPageQuery = `*[_type == "technicalPage" && !(_id in path("
   }
 }`;
 
-export const governancePageQuery = `*[_type == "governancePage" && !(_id in path("drafts.**"))][0] {
+export const governancePageQuery = `*[_type == "governancePage" && !(_id in path("drafts.**")) && coalesce(language, "en") == $locale][0] {
   hero { badge, heading, subtext, buttonText, buttonHref, secondButtonText, secondButtonHref, image { asset-> { url }, alt } },
   about { eyebrow, heading, text },
   rolesSection { eyebrow, heading },
@@ -144,7 +144,7 @@ export const governancePageQuery = `*[_type == "governancePage" && !(_id in path
   faqs[] { question, answer }
 }`;
 
-export const rfpPageQuery = `*[_type == "rfpPage" && !(_id in path("drafts.**"))][0] {
+export const rfpPageQuery = `*[_type == "rfpPage" && !(_id in path("drafts.**")) && coalesce(language, "en") == $locale][0] {
   hero { badge, heading, subtext, buttonText, buttonHref },
   about { eyebrow, heading, text },
   programSection { eyebrow, heading },
@@ -158,7 +158,7 @@ export const rfpPageQuery = `*[_type == "rfpPage" && !(_id in path("drafts.**"))
   faqs[] { question, answer }
 }`;
 
-export const daoPageQuery = `*[_type == "daoPage" && !(_id in path("drafts.**"))][0] {
+export const daoPageQuery = `*[_type == "daoPage" && !(_id in path("drafts.**")) && coalesce(language, "en") == $locale][0] {
   hero { badge, heading, subtext, subtext2, buttonText, buttonHref, secondButtonText, secondButtonHref, image { asset-> { url }, alt } },
   aboutSection { eyebrow, heading },
   aboutText,
@@ -177,7 +177,7 @@ export const daoPageQuery = `*[_type == "daoPage" && !(_id in path("drafts.**"))
   faqs[] { question, answer }
 }`;
 
-export const swapPageQuery = `*[_type == "swapPage" && !(_id in path("drafts.**"))][0] {
+export const swapPageQuery = `*[_type == "swapPage" && !(_id in path("drafts.**")) && coalesce(language, "en") == $locale][0] {
   hero { badge, heading, subtext, buttonText, buttonHref, button2Text, button2Href, image { asset-> { url }, alt } },
   stepsSection { eyebrow, heading },
   steps[] { title, description },
@@ -187,7 +187,7 @@ export const swapPageQuery = `*[_type == "swapPage" && !(_id in path("drafts.**"
   ctaSection { heading, subtext, buttonText, buttonHref }
 }`;
 
-export const validatorPageQuery = `*[_type == "validatorPage" && !(_id in path("drafts.**"))][0] {
+export const validatorPageQuery = `*[_type == "validatorPage" && !(_id in path("drafts.**")) && coalesce(language, "en") == $locale][0] {
   hero { badge, heading, subtext, subtext2, buttonText, buttonHref, image { asset-> { url }, alt } },
   whoSection { eyebrow, heading },
   whoCards[] { imagePath, title },
@@ -203,7 +203,7 @@ export const validatorPageQuery = `*[_type == "validatorPage" && !(_id in path("
   ctaSection { heading, subtext, buttonText, buttonHref }
 }`;
 
-export const delegatorPageQuery = `*[_type == "delegatorPage" && !(_id in path("drafts.**"))][0] {
+export const delegatorPageQuery = `*[_type == "delegatorPage" && !(_id in path("drafts.**")) && coalesce(language, "en") == $locale][0] {
   hero { badge, heading, subtext, buttonText, buttonHref, image { asset-> { url }, alt } },
   benefitsSection { eyebrow, heading },
   benefits[] { iconPath, title, description },
@@ -221,7 +221,7 @@ export const delegatorPageQuery = `*[_type == "delegatorPage" && !(_id in path("
   ctaSection { heading, subtext, buttonText, buttonHref }
 }`;
 
-export const tokenomicsPageQuery = `*[_type == "tokenomicsPage" && !(_id in path("drafts.**"))][0] {
+export const tokenomicsPageQuery = `*[_type == "tokenomicsPage" && !(_id in path("drafts.**")) && coalesce(language, "en") == $locale][0] {
   hero { badge, heading, subheading, bodyText, button1Text, button1Href, button2Text, button2Href, image { asset-> { url }, alt } },
   utilitySection { eyebrow, heading, subtext },
   utilityCards[] { title, description, bullets },
@@ -235,7 +235,7 @@ export const tokenomicsPageQuery = `*[_type == "tokenomicsPage" && !(_id in path
   lockingCards[] { title, description }
 }`;
 
-export const siteSettingsQuery = `*[_type == "siteSettings"][0] {
+export const siteSettingsQuery = `*[_type == "siteSettings" && coalesce(language, "en") == $locale][0] {
   footerDescription,
   footerEmail,
   footerCompanyHeading,
@@ -254,9 +254,9 @@ export const siteSettingsQuery = `*[_type == "siteSettings"][0] {
   }
 }`;
 
-export const blogSlugsQuery = `*[_type == "blog"] { slug }`;
+export const blogSlugsQuery = `*[_type == "blog" && coalesce(language, "en") == "en"] { slug }`;
 
-export const latestBlogsQuery = `*[_type == "blog"] | order(_createdAt desc)[0...3] {
+export const latestBlogsQuery = `*[_type == "blog" && coalesce(language, "en") == $locale] | order(_createdAt desc)[0...3] {
   _id,
   title,
   slug,
@@ -275,7 +275,7 @@ export const latestBlogsQuery = `*[_type == "blog"] | order(_createdAt desc)[0..
   publishedAt
 }`;
 
-export const homePageQuery = `*[_type == "homePage"][0] {
+export const homePageQuery = `*[_type == "homePage" && coalesce(language, "en") == $locale][0] {
   hero { chipLabel, heading, bodyText, button1Text, button1Href, button2Text, button2Href },
   about { heading, headingHighlight, bodyText },
   aboutAccordion {
@@ -296,4 +296,30 @@ export const homePageQuery = `*[_type == "homePage"][0] {
   blogsSection { eyebrow, heading, subtext },
   faqSection { eyebrow, heading },
   faqs[] { question, answer }
+}`;
+
+export const aboutPageQuery = `*[_type == "aboutPage" && !(_id in path("drafts.**")) && coalesce(language, "en") == $locale][0] {
+  hero { chipLabel, heading, headingHighlight, bodyText },
+  foundationSection { heading, headingHighlight, bodyText, steps },
+  rolesSection { heading, headingHighlight },
+  roles[] { icon, title, description },
+  ecosystemSection { heading, headingHighlight },
+  ecosystemComponents[] { title, description },
+  accountabilitySection { heading, headingHighlight },
+  accountabilityItems[] { icon, title, description },
+  visionSection { heading, bodyText, bullets },
+  leadershipSection { heading, headingHighlight, subtext },
+  team[] { name, role, photo, linkedin, bio },
+  faqSection { heading, headingHighlight },
+  faqs[] { question, answer }
+}`;
+
+export const contactPageQuery = `*[_type == "contactPage" && !(_id in path("drafts.**")) && coalesce(language, "en") == $locale][0] {
+  heading,
+  bodyText
+}`;
+
+export const legalPageQuery = `*[_type == "legalPage" && !(_id in path("drafts.**")) && slug.current == $slug && coalesce(language, "en") == $locale][0] {
+  pageTitle,
+  sections[] { heading, paragraphs, bullets }
 }`;

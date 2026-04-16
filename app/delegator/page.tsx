@@ -6,6 +6,7 @@ import SectionHeading from "@/components/ui/SectionHeading";
 import GovernanceStructureScroll from "@/components/ui/GovernanceStructureScroll";
 import { sanityFetch } from "@/lib/sanity";
 import { delegatorPageQuery } from "@/lib/queries";
+import { getLocale } from "@/lib/getLocale";
 
 export const metadata: Metadata = {
   title:
@@ -74,7 +75,8 @@ interface DelegatorData {
 /* ─── PAGE ──────────────────────────────────────────────────── */
 
 export default async function DelegatorPage() {
-  const data = await sanityFetch<DelegatorData>(delegatorPageQuery);
+  const locale = await getLocale();
+  const data = await sanityFetch<DelegatorData>(delegatorPageQuery, { locale });
 
   const benefits = data?.benefits ?? [];
   const steps = data?.steps ?? [];

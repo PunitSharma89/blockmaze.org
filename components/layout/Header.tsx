@@ -7,8 +7,8 @@ interface HeaderSettings {
   navItems?: SanityNavItem[];
 }
 
-export default async function Header() {
-  const settings = await sanityFetch<HeaderSettings>(siteSettingsQuery);
+export default async function Header({ locale = "en" }: { locale?: string }) {
+  const settings = await sanityFetch<HeaderSettings>(siteSettingsQuery, { locale });
 
   return (
     <HeaderClient

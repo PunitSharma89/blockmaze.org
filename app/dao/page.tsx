@@ -6,6 +6,7 @@ import SectionHeading from "@/components/ui/SectionHeading";
 import FAQ from "@/components/ui/FAQ";
 import { sanityFetch } from "@/lib/sanity";
 import { daoPageQuery } from "@/lib/queries";
+import { getLocale } from "@/lib/getLocale";
 
 export const metadata: Metadata = {
   title: "DAO Governance Platform | Quadratic Voting for RWAs",
@@ -47,7 +48,8 @@ interface DaoData {
 /* ─── PAGE ──────────────────────────────────────────────────── */
 
 export default async function DAOPage() {
-  const data = await sanityFetch<DaoData>(daoPageQuery);
+  const locale = await getLocale();
+  const data = await sanityFetch<DaoData>(daoPageQuery, { locale });
 
   const aboutCards = data?.aboutCards ?? [];
   const marqueeItems = data?.marqueeItems ?? [];

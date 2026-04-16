@@ -14,6 +14,7 @@ import { Globe } from "@/components/ui/Globe";
 import AboutAccordion from "@/components/ui/AboutAccordion";
 import { sanityFetch } from "@/lib/sanity";
 import { homePageQuery, latestBlogsQuery } from "@/lib/queries";
+import { getLocale } from "@/lib/getLocale";
 
 /* ─── TYPES ─────────────────────────────────────────────────── */
 
@@ -79,9 +80,10 @@ interface BlogPost {
 /* ─── PAGE ──────────────────────────────────────────────────── */
 
 export default async function Home() {
+  const locale = await getLocale();
   const [data, blogs] = await Promise.all([
-    sanityFetch<HomeData>(homePageQuery),
-    sanityFetch<BlogPost[]>(latestBlogsQuery),
+    sanityFetch<HomeData>(homePageQuery, { locale }),
+    sanityFetch<BlogPost[]>(latestBlogsQuery, { locale }),
   ]);
 
   const problemCards = data?.problemCards ?? [];

@@ -4,7 +4,20 @@ export default defineType({
   name: "homePage",
   title: "Home Page",
   type: "document",
+  preview: {
+    select: { title: "title" },
+    prepare({ title }) {
+      return { title: title || "Home Page" };
+    },
+  },
   fields: [
+    defineField({
+      name: "title",
+      title: "Document Title",
+      type: "string",
+      description: "Internal label only (e.g. 'Home Page'). Not shown on the website.",
+    }),
+
     /* ── Hero ── */
     defineField({
       name: "hero",
@@ -268,6 +281,14 @@ export default defineType({
           ],
         }),
       ],
+    }),
+
+    defineField({
+      name: "language",
+      title: "Language",
+      type: "string",
+      readOnly: true,
+      hidden: true,
     }),
   ],
 });

@@ -16,12 +16,14 @@ interface KnowledgeHubScrollProps {
   eyebrow?: string
   heading?: string
   items: KnowledgeHubItem[]
+  exploreMoreLabel?: string
 }
 
 export default function KnowledgeHubScroll({
   eyebrow,
   heading,
   items = [],
+  exploreMoreLabel = "Explore more",
 }: KnowledgeHubScrollProps) {
   const sectionRef  = useRef<HTMLElement>(null)
   const itemRefs    = useRef<(HTMLDivElement | null)[]>([])
@@ -138,7 +140,7 @@ export default function KnowledgeHubScroll({
                     )}
                     {item.link && (
                       <Link href={item.link} className="hero-figma-btn-primary kh-item-btn">
-                        Explore more
+                        {exploreMoreLabel}
                       </Link>
                     )}
                   </div>

@@ -4,46 +4,21 @@ import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import Container from '@/components/layout/Container'
 
-const ITEMS = [
-  {
-    title: 'Settlement Does Not Verify Issuer Authority',
-    description:
-      'Transaction finality confirms that a transfer occurred. It does not confirm whether the issuer has legal authorization or maintains required backing.',
-    icon: '/images/usecase-icon-coin.svg',
-  },
-  {
-    title: 'Real-World Assets Carry External Obligations',
-    description:
-      'Assets tied to reserves, registries, or regulated frameworks depend on off-chain commitments. These commitments must be defined and monitored through structured protocol rules.',
-    icon: '/images/usecase-icon-building.svg',
-  },
-  {
-    title: 'Application-Level Controls Create Fragmentation',
-    description:
-      'When each platform defines its own compliance logic, standards vary, and oversight becomes inconsistent. This weakens credibility across networks.',
-    icon: '/images/usecase-icon-chain.svg',
-  },
-  {
-    title: 'Shared Registries Provide Consistency',
-    description:
-      'Embedding issuer eligibility and standing records at Layer-0 ensures that accountability signals apply uniformly across connected chains.',
-    icon: '/images/usecase-icon-globe.svg',
-  },
-  {
-    title: 'Enforcement Requires Defined Boundaries',
-    description:
-      'Accountability mechanisms must operate within clear authority limits. Governance can adjust permissions and record standing changes without interfering with settlement.',
-    icon: '/images/usecase-icon-building.svg',
-  },
-  {
-    title: 'Separation Preserves Neutral Finality',
-    description:
-      'By separating issuer responsibility from consensus, transaction history remains irreversible while accountability remains structured and visible at the protocol level.',
-    icon: '/images/usecase-icon-chain.svg',
-  },
+const DEFAULT_ITEMS = [
+  { title: 'Settlement Does Not Verify Issuer Authority', description: 'Transaction finality confirms that a transfer occurred. It does not confirm whether the issuer has legal authorization or maintains required backing.', icon: '/images/usecase-icon-coin.svg' },
+  { title: 'Real-World Assets Carry External Obligations', description: 'Assets tied to reserves, registries, or regulated frameworks depend on off-chain commitments. These commitments must be defined and monitored through structured protocol rules.', icon: '/images/usecase-icon-building.svg' },
+  { title: 'Application-Level Controls Create Fragmentation', description: 'When each platform defines its own compliance logic, standards vary, and oversight becomes inconsistent. This weakens credibility across networks.', icon: '/images/usecase-icon-chain.svg' },
+  { title: 'Shared Registries Provide Consistency', description: 'Embedding issuer eligibility and standing records at Layer-0 ensures that accountability signals apply uniformly across connected chains.', icon: '/images/usecase-icon-globe.svg' },
+  { title: 'Enforcement Requires Defined Boundaries', description: 'Accountability mechanisms must operate within clear authority limits. Governance can adjust permissions and record standing changes without interfering with settlement.', icon: '/images/usecase-icon-building.svg' },
+  { title: 'Separation Preserves Neutral Finality', description: 'By separating issuer responsibility from consensus, transaction history remains irreversible while accountability remains structured and visible at the protocol level.', icon: '/images/usecase-icon-chain.svg' },
 ]
 
-export default function AccountabilityScroll() {
+interface AccountabilityScrollProps {
+  items?: { title: string; description: string; icon: string }[];
+}
+
+export default function AccountabilityScroll({ items: itemsProp }: AccountabilityScrollProps = {}) {
+  const ITEMS = itemsProp && itemsProp.length > 0 ? itemsProp : DEFAULT_ITEMS;
   const sectionRef  = useRef<HTMLElement>(null)
   const itemRefs    = useRef<(HTMLDivElement | null)[]>([])
   const lineFillRef = useRef<HTMLDivElement>(null)
