@@ -70,14 +70,12 @@ const ecosystemIcons = [
     <path d="M6 22L22 30L38 22" stroke="#ffb01e" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
     <path d="M6 29L22 37L38 29" stroke="#ffb01e" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
   </svg>,
-  /* Issuer Framework — document with badge */
+  /* Issuer Framework — document */
   <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" key="2">
     <rect x="6" y="4" width="24" height="32" rx="3" stroke="#ffb01e" strokeWidth="2"/>
     <line x1="12" y1="13" x2="24" y2="13" stroke="#ffb01e" strokeWidth="1.8" strokeLinecap="round"/>
     <line x1="12" y1="19" x2="24" y2="19" stroke="#ffb01e" strokeWidth="1.8" strokeLinecap="round"/>
     <line x1="12" y1="25" x2="20" y2="25" stroke="#ffb01e" strokeWidth="1.8" strokeLinecap="round"/>
-    <circle cx="33" cy="33" r="7" fill="none" stroke="#ffb01e" strokeWidth="2"/>
-    <path d="M29.5 33L32 35.5L36.5 30.5" stroke="#ffb01e" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
   </svg>,
   /* Validator Participation — shield with check */
   <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" key="3">
@@ -368,7 +366,7 @@ export default async function AboutPage() {
           <div className="about-faq-grid">
             <div className="about-faq-img">
               <Image
-                src="/images/faq-img.png"
+                src="/images/faq-svg.svg"
                 alt="Frequently Asked Questions"
                 width={454}
                 height={425}
