@@ -2276,6 +2276,7 @@ main.max-w-1920 {
   background-color: #fdf7e9 !important;
   overflow: hidden;
   position: relative;
+  min-height: 600px;
 }
 /* Full-bleed flex row, Figma px-240 adapted to project container */
 .about-hero-wrap {

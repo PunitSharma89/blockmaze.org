@@ -308,20 +308,12 @@ export default async function GovernancePage() {
             </div>
           </div>
           <div className="about-hero-img-col">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
+            <Image
               src="/images/goverence-hero.png"
               alt="Blockmaze governance"
+              width={600}
+              height={500}
               className="about-hero-img"
-            />
-          </div>
-          <div className="about-globe-container">
-            <Image
-              src="/images/about-globe.svg"
-              alt="Blockmaze governance"
-              width={950}
-              height={400}
-              className="about-globe-img"
               priority
             />
           </div>
