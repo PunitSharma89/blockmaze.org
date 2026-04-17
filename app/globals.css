@@ -4175,9 +4175,7 @@ table.table td {
 }
 
 /* Blog post HTML content — resets WordPress alignment and styles elements consistently */
-.prose-content * {
-  text-align: left !important;
-}
+
 .prose-content p {
   color: var(--color-gray-DEFAULT);
   margin-bottom: 1rem;
