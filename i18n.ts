@@ -1,10 +1,19 @@
 import { getRequestConfig } from "next-intl/server";
+import { cookies } from "next/headers";
 
-// This file is kept for next-intl compatibility.
-// Locale detection is handled via NEXT_LOCALE cookie in app/layout.tsx.
+const SUPPORTED_LOCALES = ["en", "ar", "es", "fr"];
+
 export default getRequestConfig(async () => {
-  return {
-    locale: "en",
-    messages: (await import("./messages/en.json")).default,
-  };
+  const cookieStore = await cookies();
+  const cookieLocale = cookieStore.get("NEXT_LOCALE")?.value;
+  const locale = SUPPORTED_LOCALES.includes(cookieLocale ?? "") ? (cookieLocale as string) : "en";
+
+  let messages = {};
+  try {
+    messages = (await import(`./messages/${locale}.json`)).default;
+  } catch {
+    messages = (await import("./messages/en.json")).default;
+  }
+
+  return { locale, messages };
 });

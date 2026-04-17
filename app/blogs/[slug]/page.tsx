@@ -144,6 +144,20 @@ const portableTextComponents: PortableTextComponents = {
   },
 };
 
+const CATEGORY_TRANSLATIONS: Record<string, Record<string, string>> = {
+  "Layer-0 Protocol": { ar: "بروتوكول Layer-0", es: "Protocolo Layer-0", fr: "Protocole Layer-0" },
+  "Blockchain Regulation": { ar: "تنظيم البلوكشين", es: "Regulación Blockchain", fr: "Réglementation Blockchain" },
+  "Blockchain Asset Tokenization": { ar: "ترميز أصول البلوكشين", es: "Tokenización de Activos Blockchain", fr: "Tokenisation d'Actifs Blockchain" },
+  "Blockchain Governance Framework": { ar: "إطار حوكمة البلوكشين", es: "Marco de Gobernanza Blockchain", fr: "Cadre de Gouvernance Blockchain" },
+  "Blockchain Infrastructure": { ar: "بنية البلوكشين التحتية", es: "Infraestructura Blockchain", fr: "Infrastructure Blockchain" },
+  "Real-World Asset Tokenization": { ar: "ترميز الأصول الحقيقية", es: "Tokenización de Activos del Mundo Real", fr: "Tokenisation d'Actifs Réels" },
+};
+
+function getLocalizedCategory(title: string, locale: string): string {
+  if (locale === "en") return title;
+  return CATEGORY_TRANSLATIONS[title]?.[locale] ?? title;
+}
+
 export default async function BlogPostPage(props: { params: Params }) {
   const { slug } = await props.params;
   const locale = await getLocale();
@@ -191,7 +205,7 @@ export default async function BlogPostPage(props: { params: Params }) {
             <div className="flex items-center gap-4 mb-4">
               {post.category && (
                 <span className="text-primary text-sm font-semibold uppercase tracking-wider">
-                  {post.category.title}
+                  {getLocalizedCategory(post.category.title, locale)}
                 </span>
               )}
               {publishedDate && (

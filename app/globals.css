@@ -4123,8 +4123,11 @@ table.table td {
 }
 
 /* Protocol page HTML content — reset WordPress alignment */
-.prose-protocol * {
+[dir="ltr"] .prose-protocol * {
   text-align: left !important;
+}
+[dir="rtl"] .prose-protocol * {
+  text-align: right !important;
 }
 .prose-protocol p {
   color: var(--color-gray-DEFAULT);
@@ -4173,8 +4176,6 @@ table.table td {
   color: var(--color-gray-DEFAULT);
   text-decoration: none;
 }
-
-/* Blog post HTML content — resets WordPress alignment and styles elements consistently */
 
 .prose-content p {
   color: var(--color-gray-DEFAULT);

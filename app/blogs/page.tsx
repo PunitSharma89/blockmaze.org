@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
 import Container from "@/components/layout/Container";
 import Breadcrumb from "@/components/layout/Breadcrumb";
 import SectionHeading from "@/components/ui/SectionHeading";
@@ -7,6 +8,15 @@ import BlogGrid from "@/components/ui/BlogGrid";
 import { sanityFetch } from "@/lib/sanity";
 import { allBlogsQuery } from "@/lib/queries";
 import { getLocale } from "@/lib/getLocale";
+
+const CATEGORY_TRANSLATIONS: Record<string, Record<string, string>> = {
+  "Layer-0 Protocol": { ar: "بروتوكول Layer-0", es: "Protocolo Layer-0", fr: "Protocole Layer-0" },
+  "Blockchain Regulation": { ar: "تنظيم البلوكشين", es: "Regulación Blockchain", fr: "Réglementation Blockchain" },
+  "Blockchain Asset Tokenization": { ar: "ترميز أصول البلوكشين", es: "Tokenización de Activos Blockchain", fr: "Tokenisation d'Actifs Blockchain" },
+  "Blockchain Governance Framework": { ar: "إطار حوكمة البلوكشين", es: "Marco de Gobernanza Blockchain", fr: "Cadre de Gobernanza Blockchain" },
+  "Blockchain Infrastructure": { ar: "بنية البلوكشين التحتية", es: "Infraestructura Blockchain", fr: "Infrastructure Blockchain" },
+  "Real-World Asset Tokenization": { ar: "ترميز الأصول الحقيقية", es: "Tokenización de Activos del Mundo Real", fr: "Tokenisation d'Actifs Réels" },
+};
 
 export const dynamic = "force-dynamic";
 
@@ -35,6 +45,7 @@ interface SanityBlogPost {
 export default async function BlogsPage() {
   let posts: SanityBlogPost[] = [];
   const locale = await getLocale();
+  const t = await getTranslations({ locale, namespace: "blogs" });
 
   let result = await sanityFetch<SanityBlogPost[]>(allBlogsQuery, { locale });
 
@@ -53,8 +64,8 @@ export default async function BlogsPage() {
       <section className="section-padding">
         <Container>
           <SectionHeading
-            heading="Latest Blogs & Research"
-            subtext="Explore published insights across governance, infrastructure, and real-world asset systems."
+            heading={t("heading")}
+            subtext={t("subtext")}
             className="blog-head"
           />
 
@@ -67,7 +78,7 @@ export default async function BlogsPage() {
                   slug={post.slug.current}
                   image={post.featuredImage?.asset?.url ?? ""}
                   excerpt={post.excerpt}
-                  category={post.category?.title}
+                  category={post.category?.title ? (CATEGORY_TRANSLATIONS[post.category.title]?.[locale] ?? post.category.title) : undefined}
                   categorySlug={post.category?.slug?.current}
                   publishedAt={post.publishedAt}
                 />
