@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import DOMPurify from "isomorphic-dompurify";
 import { sanityFetch } from "@/lib/sanity";
 import { technicalPageQuery } from "@/lib/queries";
 
@@ -156,7 +157,7 @@ export default function TechnicalPageClient({ slug, fallbackTitle }: Props) {
               {section.rawHtml ? (
                 <div
                   className="prose-protocol"
-                  dangerouslySetInnerHTML={{ __html: section.rawHtml }}
+                  dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(section.rawHtml) }}
                 />
               ) : (
                 <h2 className="tech-page-section-heading">

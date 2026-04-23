@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { revalidatePath } from "next/cache";
 
 export async function POST(req: NextRequest) {
-  const secret = req.nextUrl.searchParams.get("secret");
+  const secret = req.headers.get("x-revalidate-secret");
   const path = req.nextUrl.searchParams.get("path");
 
   if (secret !== process.env.REVALIDATION_SECRET) {

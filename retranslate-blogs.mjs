@@ -1,7 +1,8 @@
 // Uses unofficial Google Translate API (no key needed)
-const SANITY_PROJECT = "3qbrvzvt";
-const SANITY_DATASET = "production";
-const SANITY_TOKEN = "skEjtFLgRovPLJkNvJJlxGQDYNHck4wCdC25KFvZYK7AcXAbx9sr2ZuO6cAOxvUA9vBcHyQAHUsPSOtP5kL4dMahDKx9gFRU9CUrMgoMf0CoCEsepyYaruEDh9aaCx9puI7nDp3HaIsmwZreA85krBAcczy6sdCGQWr4i4n9qeJ2gwanX1vI";
+const SANITY_PROJECT = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
+const SANITY_DATASET = process.env.NEXT_PUBLIC_SANITY_DATASET ?? "production";
+const SANITY_TOKEN = process.env.SANITY_API_TOKEN;
+if (!SANITY_TOKEN) { console.error("SANITY_API_TOKEN env var is required"); process.exit(1); }
 
 const LANG_MAP = { ar: "ar", es: "es", fr: "fr" };
 const sleep = (ms) => new Promise(r => setTimeout(r, ms));

@@ -42,7 +42,7 @@ export default function BlogCard({
     <article className="group flex flex-col">
       {/* Image */}
       <Link href={`/blogs/${slug}`} className="block overflow-hidden mb-4">
-        <div className="relative aspect-[4/3] w-full overflow-hidden bg-black rounded-[16px]">
+        <div className="relative aspect-[16/9] w-full overflow-hidden bg-black rounded-[16px]">
           {image ? (
             <Image
               src={image}

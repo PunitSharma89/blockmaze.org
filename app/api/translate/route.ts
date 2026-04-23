@@ -47,10 +47,7 @@ export async function POST(req: NextRequest) {
     const secret = req.headers.get("sanity-webhook-signature") ??
       req.nextUrl.searchParams.get("secret");
 
-    if (
-      process.env.SANITY_WEBHOOK_SECRET &&
-      secret !== process.env.SANITY_WEBHOOK_SECRET
-    ) {
+    if (!process.env.SANITY_WEBHOOK_SECRET || secret !== process.env.SANITY_WEBHOOK_SECRET) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
@@ -253,8 +250,8 @@ async function revalidatePages(type: string) {
   for (const path of pathsToRevalidate) {
     try {
       await fetch(
-        `${process.env.NEXT_PUBLIC_SITE_URL}/api/revalidate?path=${encodeURIComponent(path)}&secret=${process.env.REVALIDATION_SECRET}`,
-        { method: "POST" }
+        `${process.env.NEXT_PUBLIC_SITE_URL}/api/revalidate?path=${encodeURIComponent(path)}`,
+        { method: "POST", headers: { "x-revalidate-secret": process.env.REVALIDATION_SECRET ?? "" } }
       );
     } catch {
       // Non-critical — pages will revalidate on next ISR cycle anyway

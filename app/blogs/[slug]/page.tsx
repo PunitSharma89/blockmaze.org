@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
+import DOMPurify from "isomorphic-dompurify";
 import { PortableText, PortableTextComponents } from "@portabletext/react";
 import Container from "@/components/layout/Container";
 import Breadcrumb from "@/components/layout/Breadcrumb";
@@ -233,7 +234,7 @@ export default async function BlogPostPage(props: { params: Params }) {
             {post.rawHtml ? (
               <div
                 className="prose-content"
-                dangerouslySetInnerHTML={{ __html: post.rawHtml }}
+                dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(post.rawHtml) }}
               />
             ) : post.body && post.body.length > 0 ? (
               <div className="prose-content">
